@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis de Audiencias — UPB</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #1A1A1A;
+    --yellow: #FFC000;
+    --white: #FFFFFF;
+    --bg: #F5F5F5;
+    --t2: #333333;
+    --t3: #999999;
+    --t4: #666666;
+    --purple: #534AB7;
+    --blue: #185FA5;
+    --amber: #BA7517;
+    --green: #3B6D11;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--black);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--black);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 56px;
+  }
+  .logo-circle {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--yellow);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--black);
+    flex-shrink: 0;
+  }
+  .nav-title { color: var(--white); font-size: 15px; font-weight: 500; }
+  .nav-sub { color: var(--t3); font-size: 11px; margin-left: auto; }
+  .nav-links { display: flex; gap: 4px; margin-left: auto; }
+  .nav-link {
+    color: var(--t3); font-size: 11px; padding: 4px 10px;
+    border-radius: 999px; cursor: pointer; border: none; background: transparent;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .nav-link:hover, .nav-link.active { color: var(--white); background: rgba(255,255,255,0.1); }
+
+  /* LAYOUT */
+  .page { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--yellow);
+  }
+  .section-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 18px; font-weight: 600; color: var(--black); }
+  .section-sub { font-size: 12px; color: var(--t4); font-weight: 300; margin-left: auto; }
+
+  /* OVERVIEW CARDS */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .ov-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 24px;
+    border: 0.5px solid #E0E0E0;
+    position: relative;
+    overflow: hidden;
+  }
+  .ov-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--yellow);
+  }
+  .ov-unit { font-size: 10px; font-weight: 500; color: var(--t3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+  .ov-level { font-size: 22px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+  .ov-count { font-size: 36px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
+  .ov-desc { font-size: 11px; color: var(--t4); font-weight: 300; line-height: 1.6; }
+
+  /* CAMPAIGN TABLE */
+  .camp-section { margin-bottom: 48px; scroll-margin-top: 70px; }
+  .camp-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 12px; overflow: hidden; border: 0.5px solid #E0E0E0; }
+  .camp-table thead tr { background: var(--black); }
+  .camp-table th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 600; color: var(--white); letter-spacing: 0.05em; text-transform: uppercase; }
+  .camp-table td { padding: 10px 14px; vertical-align: top; border-bottom: 0.5px solid #F0F0F0; font-size: 11px; color: var(--t2); line-height: 1.5; }
+  .camp-table tr:last-child td { border-bottom: none; }
+  .camp-table tr:nth-child(even) td { background: #FAFAFA; }
+
+  .tag-pill {
+    display: inline-block; font-size: 10px; padding: 2px 8px;
+    border-radius: 999px; margin: 2px 2px 2px 0;
+    font-weight: 500; white-space: nowrap;
+  }
+  .tag-edu { background: #EAF3DE; color: #27500A; }
+  .tag-tech { background: #E6F1FB; color: #0C447C; }
+  .tag-biz { background: #FAEEDA; color: #633806; }
+  .tag-hum { background: #FBEAF0; color: #72243E; }
+  .tag-other { background: #F1EFE8; color: #5F5E5A; }
+
+  .edu-badge {
+    display: inline-block; font-size: 10px; padding: 3px 9px;
+    border-radius: 999px; font-weight: 600;
+    background: #EEEDFE; color: #3C3489;
+    white-space: nowrap; margin-bottom: 4px;
+  }
+  .edu-badge.green { background: #EAF3DE; color: #27500A; }
+
+  .extra-text { font-size: 10px; color: var(--t3); font-weight: 300; margin-top: 4px; line-height: 1.5; }
+
+  /* PREGRADO CARDS */
+  .pre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .pre-card {
+    background: var(--white); border-radius: 12px; padding: 20px;
+    border: 0.5px solid #E0E0E0; position: relative; overflow: hidden;
+  }
+  .pre-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--yellow); }
+  .pre-name { font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 12px; }
+  .pre-row { margin-bottom: 10px; }
+  .pre-label { font-size: 10px; font-weight: 600; color: var(--t3); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .pre-val { font-size: 11px; color: var(--t2); }
+
+  /* OPEN CARDS */
+  .open-big { background: var(--white); border-radius: 12px; padding: 24px; border: 0.5px solid #E0E0E0; margin-bottom: 16px; position: relative; overflow: hidden; }
+  .open-big::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--yellow); }
+  .open-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .open-sm { background: var(--white); border-radius: 12px; padding: 20px; border: 0.5px solid #E0E0E0; position: relative; overflow: hidden; }
+  .open-sm::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--yellow); }
+
+  /* INSIGHTS */
+  .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 48px; }
+  .insight-card {
+    background: var(--white); border-radius: 12px; padding: 20px;
+    border: 0.5px solid #E0E0E0;
+    border-left: 4px solid var(--yellow);
+  }
+  .insight-title { font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 8px; }
+  .insight-body { font-size: 11px; color: var(--t4); font-weight: 300; line-height: 1.7; }
+
+  /* REFERENTES */
+  .ref-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .ref-chip {
+    background: #EEEDFE; color: #3C3489;
+    font-size: 11px; font-weight: 500;
+    padding: 5px 12px; border-radius: 999px;
+  }
+
+  /* SPACER */
+  .spacer { height: 48px; }
+  h2.section-anchor { scroll-margin-top: 70px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo-circle">A</div>
+  <span class="nav-title">Análisis de audiencias — UPB</span>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="scrollTo('overview')">Resumen</button>
+    <button class="nav-link" onclick="scrollTo('posgrado')">Virtual Posgrado</button>
+    <button class="nav-link" onclick="scrollTo('pregrado')">Virtual Pregrado</button>
+    <button class="nav-link" onclick="scrollTo('open')">UPB Open</button>
+    <button class="nav-link" onclick="scrollTo('fortalezas')">Fortalezas</button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- OVERVIEW -->
+  <div class="camp-section" id="overview">
+    <div class="section-header">
+      <div class="section-dot" style="background: var(--yellow);"></div>
+      <span class="section-title">Estructura de campañas activas</span>
+      <span class="section-sub">Abril 6 – Mayo 5, 2026 · 18 conjuntos de anuncios</span>
+    </div>
+
+    <div class="overview-grid">
+      <div class="ov-card">
+        <div class="ov-unit">UPB Virtual</div>
+        <div class="ov-level">Posgrado</div>
+        <div class="ov-count" style="color: var(--purple);">11</div>
+        <div class="ov-desc">Especializaciones y maestrías dirigidas a profesionales con título universitario. Base de segmentación: College grad / Professional degree.</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-unit">UPB Virtual</div>
+        <div class="ov-level">Pregrado</div>
+        <div class="ov-count" style="color: var(--blue);">4</div>
+        <div class="ov-desc">Licenciaturas e ingenierías dirigidas a bachilleres y jóvenes adultos. Base de segmentación: High school grad / In college.</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-unit">UPB Open</div>
+        <div class="ov-level">Diplomados</div>
+        <div class="ov-count" style="color: var(--amber);">3</div>
+        <div class="ov-desc">Formación continua para profesionales en ejercicio. Audiencias abiertas por naturaleza del producto, sin restricción de título previo.</div>
+      </div>
+    </div>
+
+    <!-- INSIGHTS GENERALES -->
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-title">Ancla común en todo el portafolio</div>
+        <div class="insight-body">University aparece como interés base en prácticamente todas las campañas, asegurando que los anuncios lleguen a personas con una relación activa con la educación superior.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-title">Segmentación por nivel educativo activa</div>
+        <div class="insight-body">La mayoría de campañas complementan los intereses con filtros de nivel educativo explícitos (College grad, Professional degree, High school grad), lo que fortalece la precisión de cada audiencia.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-title">Datos adicionales como diferenciador</div>
+        <div class="insight-body">Las campañas más sólidas combinan intereses disciplinares + nivel educativo + un tercer dato (cargo, campo de estudio o industria), lo que reduce la competencia por la misma audiencia.</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-title">Cobertura temática amplia y coherente</div>
+        <div class="insight-body">El portafolio cubre humanidades, tecnología, ciencias sociales, negocios y educación con intereses disciplinares específicos para cada programa, sin generalismos.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POSGRADO -->
+  <div class="camp-section" id="posgrado">
+    <div class="section-header">
+      <div class="section-dot" style="background: var(--purple);"></div>
+      <span class="section-title">UPB Virtual — Posgrado</span>
+      <span class="section-sub">11 campañas · College grad / Professional degree</span>
+    </div>
+
+    <table class="camp-table">
+      <thead>
+        <tr>
+          <th style="width:22%">Campaña</th>
+          <th style="width:38%">Intereses clave</th>
+          <th style="width:20%">Nivel educativo</th>
+          <th style="width:20%">Datos adicionales</th>
+        </tr>
+      </thead>
+      <tbody id="post-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- PREGRADO -->
+  <div class="camp-section" id="pregrado">
+    <div class="section-header">
+      <div class="section-dot" style="background: var(--blue);"></div>
+      <span class="section-title">UPB Virtual — Pregrado</span>
+      <span class="section-sub">4 campañas · High school grad / In college</span>
+    </div>
+    <div class="pre-grid" id="pre-grid"></div>
+  </div>
+
+  <!-- OPEN -->
+  <div class="camp-section" id="open">
+    <div class="section-header">
+      <div class="section-dot" style="background: var(--amber);"></div>
+      <span class="section-title">UPB Open — Diplomados</span>
+      <span class="section-sub">3 campañas · Formación continua para profesionales</span>
+    </div>
+    <div id="open-content"></div>
+  </div>
+
+  <!-- FORTALEZAS -->
+  <div class="camp-section" id="fortalezas">
+    <div class="section-header">
+      <div class="section-dot" style="background: var(--green);"></div>
+      <span class="section-title">Campañas referentes del portafolio</span>
+      <span class="section-sub">Mejor construcción de audiencia: interés + nivel + dato adicional</span>
+    </div>
+    <div class="open-big" style="border-left: 4px solid var(--green);">
+      <div style="font-size:13px; font-weight:600; color:var(--black); margin-bottom:10px;">Estas campañas combinan los tres elementos clave de una audiencia precisa</div>
+      <div style="font-size:12px; color:var(--t4); font-weight:300; margin-bottom:16px; line-height:1.7;">Interés disciplinar específico + nivel educativo + datos adicionales (cargo, campo de estudio o industria). Esta combinación acota la audiencia de forma efectiva y reduce el desperdicio de inversión.</div>
+      <div class="ref-chips" id="ref-chips"></div>
+    </div>
+
+    <div style="height:16px;"></div>
+
+    <div class="open-grid">
+      <div class="open-sm" style="border-left: 4px solid var(--purple);">
+        <div style="font-size:12px; font-weight:600; color:var(--black); margin-bottom:8px;">1.9 Derecho de Familia</div>
+        <div style="font-size:11px; color:var(--t4); font-weight:300; line-height:1.7;">Triple ancla de posgrado: Graduate school + Postgraduate education + Master's degree, combinado con intereses disciplinares directos: Law, Lawyer, Legal education. Nivel: College grad / Professional degree.</div>
+      </div>
+      <div class="open-sm" style="border-left: 4px solid var(--purple);">
+        <div style="font-size:12px; font-weight:600; color:var(--black); margin-bottom:8px;">1.9.1 Gestión Humana</div>
+        <div style="font-size:11px; color:var(--t4); font-weight:300; line-height:1.7;">Intereses: Postgraduate education + Master's degree. Campo: RH - Recursos Humanos. Cargo: Jefe de RRHH. Rango de edad: 23–55. Construcción más completa del portafolio de posgrado.</div>
+      </div>
+      <div class="open-sm" style="border-left: 4px solid var(--purple);">
+        <div style="font-size:12px; font-weight:600; color:var(--black); margin-bottom:8px;">1.2 Administración & Gerencia</div>
+        <div style="font-size:11px; color:var(--t4); font-weight:300; line-height:1.7;">Intereses: MBA + Finance + Financial services. Campo: Finanzas corporativas. Cargo: Finanzas. Industria: Business & Finance. Nivel: College grad / Professional degree.</div>
+      </div>
+      <div class="open-sm" style="border-left: 4px solid var(--amber);">
+        <div style="font-size:12px; font-weight:600; color:var(--black); margin-bottom:8px;">2.3 Diplomado en UX</div>
+        <div style="font-size:11px; color:var(--t4); font-weight:300; line-height:1.7;">Audiencia muy enfocada: intereses directos (User experience design, Product design, Web design) + nivel College grad + cargo User Experience Designer. La más precisa de UPB Open.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function tagClass(i) {
+  i = i.toLowerCase();
+  if (['pedagogy','teacher education','higher education','university','private university','legal education',"master's degree",'college','graduate school','postgraduate education','higher ed','vocational'].some(k => i.includes(k))) return 'tag-edu';
+  if (['software engineering','computer science','it','computer security','data security','computer animation','software','programming','3d','animation','information technology','information security','business intelligence'].some(k => i.includes(k))) return 'tag-tech';
+  if (['finance','mba','project management','management','small business','user experience','graphic design','creativity','content marketing','digital marketing','product design','web design','entrepreneurship'].some(k => i.includes(k))) return 'tag-biz';
+  if (['law','human resources','journalism','philosophy','culture','history','literature','creative writing','reading','social science','media','communication','local government'].some(k => i.includes(k))) return 'tag-hum';
+  if (['engineering','natural environment','sustainability','environmental'].some(k => i.includes(k))) return 'tag-tech';
+  return 'tag-other';
+}
+
+function tags(arr) {
+  return arr.map(i => `<span class="tag-pill ${tagClass(i)}">${i}</span>`).join('');
+}
+
+function eduBadge(txt, green) {
+  return `<span class="edu-badge${green?' green':''}">${txt}</span>`;
+}
+
+const postCamps = [
+  { name: "1.1 Posgrados Proyectos", interests: ["Business education","University","Finance","Financial services","Project management","MBA","Postgraduate education","Master's degree"], edu: "College grad / Professional degree", extra: "Campo: Finanzas corporativas · Cargo: Finanzas · Edad: 23–50" },
+  { name: "1.2 Administración & Gerencia", interests: ["Business education","University","Finance","Financial services","MBA","Postgraduate education","Master's degree"], edu: "College grad / Professional degree", extra: "Campo: Finanzas corporativas · Cargo: Finanzas · Industria: Business & Finance" },
+  { name: "1.3 Comunicación Social", interests: ["Media","Content marketing","University","Graduate school","Postgraduate education","Master's degree","Journalism","Social media"], edu: "College grad / Professional degree", extra: "Campo: Comunicación organizacional · Industria: Arts & Media" },
+  { name: "1.4 Educación", interests: ["Teacher education","Pedagogy","Graduate school","Postgraduate education","Master's degree","Higher education","Literature"], edu: "College grad / Professional degree", extra: "Cargo: Pedagogo, Educador" },
+  { name: "1.5 Ingeniería Ambiental", interests: ["Engineering","Graduate school","Postgraduate education","Master's degree","Natural environment","High tech"], edu: "College grad / Professional degree", extra: "Campo: Environmental studies, Sustainability · Edad: 23–55" },
+  { name: "1.6 Filosofía & Literatura", interests: ["Philosophy","Culture","Postgraduate education","Literature","History","Social science","Master's degree"], edu: "College grad", extra: "—" },
+  { name: "1.7 Sistemas e Informática", interests: ["University","IT","Data security","Computer security","Graduate school","Postgraduate education","Master's degree"], edu: "College grad / Professional degree", extra: "—" },
+  { name: "1.8 Desarrollo Social & Territorio", interests: ["University","Graduate school","Postgraduate education","Master's degree","Local government","Higher education"], edu: "College grad / Professional degree", extra: "—" },
+  { name: "1.9 Derecho Familia", interests: ["Law","Lawyer","Legal education","Graduate school","Postgraduate education","Master's degree","University"], edu: "College grad / Professional degree", extra: "—" },
+  { name: "1.9.1 Gestión Humana", interests: ["Human resources","Postgraduate education","Master's degree","Higher education"], edu: "College grad / Professional degree", extra: "Campo: RH · Cargo: Jefe de RRHH · Edad: 23–55" },
+  { name: "1.9.2 Marketing & Diseño", interests: ["Graphic design","Creativity","Postgraduate education","Design","Master's degree","Higher education"], edu: "College grad / Professional degree", extra: "—" },
+];
+
+const tbody = document.getElementById('post-tbody');
+postCamps.forEach((c,i) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td style="font-weight:500;">${c.name}</td>
+    <td>${tags(c.interests)}</td>
+    <td>${eduBadge(c.edu)}</td>
+    <td><span class="extra-text">${c.extra}</span></td>`;
+  tbody.appendChild(tr);
+});
+
+const preCamps = [
+  { name: "1.9.3 Ingeniería de Software", interests: ["Programming language","Computer science","Software engineering","Software development","University","Business intelligence","Strategic planning"], edu: "In college · High school grad", extra: "Edad: 18–32" },
+  { name: "1.9.4 Tecnología Animación Digital", interests: ["Computer animation","Graphic design","3D computer graphics","University"], edu: "In high school · In college · High school grad", extra: "Campo: Character animation, 3D Animation, VFX · Edad: 18–50" },
+  { name: "3.1 Licenciatura Tecnología Educativa", interests: ["University","IT","Data security","Computer security","Information security","Strategic planning","Technology"], edu: "In college · High school grad", extra: "Intereses actualizados" },
+  { name: "3. Licenciatura Literatura", interests: ["Vocational education","Reading","Creative writing","Teacher education","Literature","Pedagogy","Educational resources"], edu: "In college", extra: "Cargo: Pedagogo, Educador" },
+];
+
+const preGrid = document.getElementById('pre-grid');
+preCamps.forEach(c => {
+  const div = document.createElement('div');
+  div.className = 'pre-card';
+  div.innerHTML = `
+    <div class="pre-name">${c.name}</div>
+    <div class="pre-row">
+      <div class="pre-label">Intereses clave</div>
+      <div>${tags(c.interests)}</div>
+    </div>
+    <div class="pre-row">
+      <div class="pre-label">Nivel educativo</div>
+      <div>${eduBadge(c.edu, true)}</div>
+    </div>
+    <div class="pre-row">
+      <div class="pre-label">Datos adicionales</div>
+      <div class="extra-text">${c.extra}</div>
+    </div>`;
+  preGrid.appendChild(div);
+});
+
+const openContent = document.getElementById('open-content');
+openContent.innerHTML = `
+  <div class="open-big">
+    <div style="font-size:13px; font-weight:600; color:var(--black); margin-bottom:4px;">2.1 Diplomado Gerencia de Proyectos</div>
+    <div style="font-size:11px; color:var(--t3); margin-bottom:14px; font-weight:300;">Audiencia más amplia del portafolio Open · Múltiples segmentos de profesional</div>
+    <div class="pre-row"><div class="pre-label">Intereses</div><div>${tags(["Small business","Vocational education","University","Project management","Higher education","Investment management","Startup company","Entrepreneurship","Master's degree","Management","Business administration"])}</div></div>
+    <div class="pre-row" style="margin-top:10px;"><div class="pre-label">Nivel educativo</div>${eduBadge("In college / College grad / Professional degree")}</div>
+    <div class="extra-text" style="margin-top:10px;">Empleadores: Empresario, Empresa · Cargo: Owner, Project management, Gerente general · Industria: Administrative Services, Business & Finance</div>
+  </div>
+  <div class="open-grid">
+    <div class="open-sm">
+      <div style="font-size:13px; font-weight:600; color:var(--black); margin-bottom:12px;">2.3 Diplomado en UX</div>
+      <div class="pre-row"><div class="pre-label">Intereses</div><div>${tags(["Course (education)","Digital marketing","Product design","User experience design","Web design","Private university"])}</div></div>
+      <div class="pre-row" style="margin-top:10px;"><div class="pre-label">Nivel educativo</div>${eduBadge("College grad", true)}</div>
+      <div class="extra-text" style="margin-top:10px;">Cargo: User Experience Designer</div>
+    </div>
+    <div class="open-sm">
+      <div style="font-size:13px; font-weight:600; color:var(--black); margin-bottom:12px;">2.4 Diplomado Docencia Universitaria</div>
+      <div class="pre-row"><div class="pre-label">Intereses</div><div>${tags(["Teacher education","Learning","Education","Pedagogy","Private university"])}</div></div>
+      <div class="pre-row" style="margin-top:10px;"><div class="pre-label">Nivel educativo</div>${eduBadge("In college / College grad / Professional degree")}</div>
+      <div class="extra-text" style="margin-top:10px;">Campo de estudio: Docencia · Única campaña Open con campo específico</div>
+    </div>
+  </div>`;
+
+const refs = ["1.6 Filosofía & Literatura","1.9 Derecho Familia","1.9.1 Gestión Humana","1.9.2 Marketing & Diseño","1.2 Administración & Gerencia","2.3 Diplomado UX","1.5 Ingeniería Ambiental"];
+document.getElementById('ref-chips').innerHTML = refs.map(r => `<span class="ref-chip">${r}</span>`).join('');
+
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

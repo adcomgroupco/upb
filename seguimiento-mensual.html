@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Seguimiento mensual 2027-1 · UPB</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="assets/css/adcom.css">
+<script defer src="assets/js/adcom.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --black:#050505;--white:#fcfcfa;--yellow:#ffd400;
+  --gray-50:var(--ground);--gray-100:var(--sunken);--gray-200:var(--rule);--gray-400:var(--fg-muted);--gray-600:var(--fg-secondary);
+  --r-md:12px;--c-pos:#15803d;--c-mid:#b45309;--c-neg:#b91c1c
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--gray-50);color:var(--black);min-height:100vh;overflow-x:hidden}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+
+/* TOPBAR */
+.topbar{background:var(--white);border-bottom:1px solid var(--gray-200);padding:10px 20px;position:sticky;top:0;z-index:50;display:flex;flex-direction:column;gap:8px}
+.tb-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.topbar-title{font-size:12px;font-weight:700;margin-right:4px;white-space:nowrap}
+.f-sep{width:1px;height:18px;background:var(--gray-200)}
+.fg{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.qbtn{font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;padding:4px 10px;border:1px solid var(--gray-200);background:var(--white);border-radius:999px;cursor:pointer;color:var(--gray-600)}
+.qbtn:hover{border-color:var(--black);color:var(--black)}
+.qbtn.on{background:var(--black);color:var(--white);border-color:var(--black)}
+.qbtn.fut{border-style:dashed}
+.last-upd{margin-left:auto;font-size:12px;color:var(--gray-400)}
+.goal-pill{font-size:12px;font-weight:700;background:var(--yellow);color:var(--accent-ink);padding:2px 10px;border-radius:999px;white-space:nowrap}
+.goal-pill.dark{background:var(--black);color:var(--white)}
+
+/* CONTENT */
+.content{padding:18px 20px;min-width:0}
+.sec-title{font-size:13px;font-weight:700;margin:4px 0 10px;display:flex;align-items:center;gap:7px;scroll-margin-top:110px;flex-wrap:wrap}
+.sec-title>span:first-child{display:inline-block;width:3px;height:13px;background:var(--yellow);flex-shrink:0}
+.sec-note{font-size:12px;color:var(--gray-400);font-weight:400;margin-left:6px}
+.card{background:var(--white);border-radius:var(--r-md);border:1px solid var(--gray-200)}
+
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+.kpi-grid.k3{grid-template-columns:repeat(3,1fr)}
+.kpi-card{padding:14px}
+.kpi-label{font-size:12px;color:var(--gray-600);font-weight:600;margin-bottom:3px}
+.kpi-value{font-size:20px;font-weight:700;line-height:1.15;font-variant-numeric:tabular-nums}
+.kpi-sub{font-size:12px;color:var(--gray-400);margin-top:3px}
+.kpi-bwrap{margin-top:8px}
+.kpi-brow{display:flex;justify-content:space-between;font-size:11px;color:var(--gray-600);margin-bottom:3px}
+.kpi-bar{height:4px;background:var(--gray-200);border-radius:999px;overflow:visible;position:relative}
+.kpi-bfill{height:100%;border-radius:999px;max-width:100%}
+.kpi-bar s{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--black);text-decoration:none}
+.bg-pos{background:var(--c-pos)} .bg-mid{background:var(--c-mid)} .bg-neg{background:var(--c-neg)}
+.t-pos{color:var(--c-pos);font-weight:600} .t-mid{color:var(--c-mid);font-weight:600} .t-neg{color:var(--c-neg);font-weight:600} .t-mute{color:var(--gray-400)}
+.kpi-card.hero{background:var(--black);border-color:var(--black)}
+.kpi-card.hero .kpi-label,.kpi-card.hero .kpi-sub,.kpi-card.hero .kpi-brow{color:#aaa9a4}
+.kpi-card.hero .kpi-value{color:var(--white);font-size:26px}
+.kpi-card.hero .kpi-bar{background:#2a2a28}
+.kpi-card.hero .kpi-bar s{background:var(--yellow)}
+.kpi-card.step{border:2px solid var(--black)}
+.obj{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:999px;margin-bottom:6px;background:var(--black);color:var(--white)}
+.kpi-card.hero .obj{background:var(--yellow);color:var(--accent-ink)}
+
+.chart-card{padding:14px;margin-bottom:20px}
+.chart-wrap{height:280px;position:relative}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--gray-600);margin-left:auto;font-weight:500}
+.legend i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin-right:5px}
+
+/* TABLAS */
+.tcard{margin-bottom:20px;overflow:hidden}
+.tbar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--gray-100);flex-wrap:wrap}
+.tbar .sp{flex:1}
+.tscroll{overflow-x:auto}
+.tscroll table{width:100%;border-collapse:collapse;font-size:12px}
+.tscroll thead tr{background:var(--gray-50);border-bottom:2px solid var(--gray-200)}
+.tscroll thead th{font-weight:700;padding:9px 10px;text-align:left;white-space:nowrap;color:var(--fg-muted);position:sticky;top:0;background:var(--gray-50)}
+.tscroll thead th.r{text-align:right}
+.tscroll thead th.grp,.tscroll tbody td.grp{border-left:1px solid var(--gray-200)}
+.tscroll tbody tr{border-bottom:1px solid var(--gray-100)}
+.tscroll tbody td{padding:7px 10px;color:var(--gray-600);white-space:nowrap;text-align:left;vertical-align:top}
+.tscroll tbody td.r{text-align:right;font-variant-numeric:tabular-nums}
+.tscroll tbody tr:hover td{background:var(--gray-50)}
+.tscroll .tr-total td{font-weight:700;color:var(--black);background:var(--gray-50) !important;border-top:2px solid var(--gray-200) !important}
+.tscroll .tr-sub td{font-weight:600;color:var(--black)}
+.tscroll .tr-grp td{background:var(--gray-100);color:var(--black);font-weight:700;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.tscroll tr.cur td{background:#FFFBEA}
+td.prog{white-space:normal;min-width:210px;max-width:280px}
+td.prog b{color:var(--black);font-weight:600;display:block}
+td.prog small,td.nomen small{display:block;font-size:11px;color:var(--gray-400)}
+td.nomen{white-space:normal;min-width:220px;max-width:330px;font-size:11px;line-height:1.35}
+td.nomen div+div{margin-top:3px}
+.off{color:var(--c-neg);font-weight:600}
+.st{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+.st-pos{background:#DCFCE7;color:#14532D} .st-mid{background:#FFF3B0;color:#7A5B00} .st-neg{background:#FEE2E2;color:#991B1B} .st-mute{background:var(--gray-100);color:var(--gray-600)}
+.mbar{display:inline-block;width:64px;height:5px;background:var(--gray-100);border-radius:999px;vertical-align:middle;margin-left:6px;position:relative}
+.mbar i{display:block;height:100%;border-radius:999px;max-width:100%}
+.mbar s{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--black)}
+.foot-note{font-size:11px;color:var(--gray-400);padding:8px 12px;border-top:1px solid var(--gray-100);line-height:1.5}
+.foot-note a{color:var(--gray-600)}
+.tab-row{display:flex;gap:6px;margin-left:10px}
+.alerts{list-style:none;padding:12px 16px;display:grid;gap:8px}
+.alerts li{display:grid;grid-template-columns:auto 1fr;gap:10px;font-size:12px;color:var(--gray-600);align-items:start}
+.alerts li b{color:var(--black)}
+.two-col{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+
+/* LOADING */
+#loading{position:fixed;inset:0;background:rgba(10,10,10,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px}
+.spinner{width:28px;height:28px;border:3px solid #222;border-top-color:var(--accent-fg);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#ld-msg{color:var(--fg-muted);font-size:12px}
+
+@media(max-width:1700px){.tscroll thead th,.tscroll tbody td{font-size:11px;padding:6px 8px}}
+@media(max-width:1300px){.kpi-grid{grid-template-columns:repeat(3,1fr)}.two-col{grid-template-columns:1fr}}
+@media(max-width:900px){.kpi-grid,.kpi-grid.k3{grid-template-columns:repeat(2,1fr)}.content{padding:14px 16px}}
+</style>
+</head>
+<body class="con-shell">
+<div id="loading">
+  <div class="spinner"></div>
+  <div id="ld-msg">Cargando datos...</div>
+</div>
+
+<nav class="app-sidebar">
+  <div class="app-sidebar-top">
+    <a class="app-sidebar-brand" href="index.html"><i></i>Adcom</a>
+    <div class="app-sidebar-client">
+      <span class="app-sidebar-client-label">Cliente · uso interno</span>
+      <strong class="app-sidebar-client-name">UPB Virtual y UPB Open</strong>
+      <span class="app-sidebar-client-period">Semestre 2027-1 · sep 2026 – feb 2027</span>
+    </div>
+  </div>
+  <div class="app-sidebar-nav">
+    <span class="app-sidebar-nav-title">Secciones</span>
+    <a href="#sec-kpi" class="active"><b></b>Resumen del mes</a>
+    <a href="#sec-metas"><b></b>Metas mensuales</a>
+    <a href="#sec-gen"><b></b>Metas generales</a>
+    <a href="#sec-linea"><b></b>Por línea y medio</a>
+    <a href="#sec-virtual"><b></b>Programas Virtual</a>
+    <a href="#sec-open"><b></b>Programas Open</a>
+    <a href="#sec-dia"><b></b>Inversión diaria</a>
+    <a href="#sec-alertas"><b></b>Alertas</a>
+  </div>
+  <div class="app-sidebar-foot">Datos cargados: <span id="last-upd-side">—</span><br><button class="qbtn" style="margin-top:6px" onclick="load()">↻ Actualizar datos</button></div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="tb-row">
+      <span class="topbar-title">Seguimiento mensual · UPB 2027-1</span>
+      <span class="goal-pill" id="pill-mes">Meta del mes</span>
+      <span class="goal-pill dark" id="pill-sem">Meta semestre</span>
+      <div class="f-sep"></div>
+      <div id="quick" class="fg"></div>
+      <span class="last-upd" id="last-upd"></span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="sec-title" id="sec-kpi"><span></span>Resumen del mes<span class="sec-note" id="rango-note"></span></div>
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <div class="sec-title" id="sec-metas"><span></span>Metas mensuales según el flow<span class="sec-note">inversión sin IVA · la fila resaltada es el mes elegido</span></div>
+    <div class="card tcard"><div class="tscroll"><table>
+      <thead><tr><th>Mes</th><th class="r">Google Virtual</th><th class="r">Meta Virtual</th><th class="r">UPB Open</th><th class="r grp">Meta del mes</th><th class="r">Consumo</th><th class="r">% cumplimiento</th><th class="r">% ideal</th><th>Estado</th><th class="r grp">Ppto diario ideal</th></tr></thead>
+      <tbody id="metas-body"></tbody></table></div>
+      <div class="foot-note">Distribución del flow: 10 % septiembre, 15 % octubre, 20 % noviembre, 15 % diciembre, 20 % enero y 20 % febrero. UPB Open solo tiene pauta asignada de septiembre a noviembre; en octubre (20 % de Google) y noviembre el flow trae el total sin repartir por programa.</div>
+    </div>
+
+    <div class="sec-title" id="sec-gen"><span></span>Metas generales del semestre<span class="sec-note" id="gen-note"></span></div>
+    <div class="kpi-grid k3" id="gen-grid"></div>
+
+    <div class="sec-title" id="sec-linea"><span></span>Por línea y medio<span class="sec-note" id="linea-note"></span></div>
+    <div class="card tcard"><div class="tscroll"><table>
+      <thead><tr><th>Línea · medio</th><th class="r">Meta del mes</th><th class="r">Consumo</th><th class="r">% consumo</th><th class="r">% ideal</th><th>Estado</th><th class="r grp">Ritmo actual / día</th><th class="r">Ppto diario ideal</th><th class="r grp">Resultados</th><th class="r">Costo / resultado</th></tr></thead>
+      <tbody id="linea-body"></tbody></table></div>
+    </div>
+
+    <div class="sec-title" id="sec-virtual"><span></span>Programas UPB Virtual<span class="sec-note">nomenclatura = campañas con consumo en el mes</span></div>
+    <div class="card tcard"><div class="tscroll"><table>
+      <thead id="prog-head-v"></thead><tbody id="virtual-body"></tbody></table></div></div>
+
+    <div class="sec-title" id="sec-open"><span></span>Programas UPB Open<span class="sec-note">las microcredenciales con cierre dentro del mes miden el ritmo hasta esa fecha</span></div>
+    <div class="card tcard"><div class="tscroll"><table>
+      <thead id="prog-head-o"></thead><tbody id="open-body"></tbody></table></div></div>
+
+    <div class="sec-title" id="sec-dia"><span></span>Inversión diaria del mes
+      <span class="legend"><span><i style="background:var(--yellow);height:8px"></i>Google</span><span><i style="background:var(--black);height:8px"></i>Meta</span><span><i style="background:var(--serie-1)"></i>Acumulado real</span><span><i style="background:var(--c-pos)"></i>Acumulado ideal (meta lineal)</span></span></div>
+    <div class="card chart-card"><div class="chart-wrap"><canvas id="chart-dia"></canvas></div></div>
+
+    <div class="two-col" id="sec-alertas">
+      <div class="card"><div class="tbar"><b style="font-size:12px">Alertas del mes</b><span class="sp"></span><span class="sec-note" style="margin:0">se calculan solas con los datos</span></div><ul class="alerts" id="alerts"></ul></div>
+      <div class="card"><div class="tbar"><b style="font-size:12px">Campañas fuera del flow</b><span class="sp"></span><span class="sec-note" style="margin:0">con consumo en el mes y sin programa asignado</span></div>
+        <div class="tscroll"><table><thead><tr><th>Campaña</th><th>Medio</th><th class="r">Consumo</th><th class="r">Resultados</th></tr></thead><tbody id="fuera-body"></tbody></table></div></div>
+    </div>
+
+    <div class="card"><div class="foot-note" style="border:0">
+      <b>Fuentes.</b> Consumo y resultados: pestaña RESUMEN GENERAL de <a href="https://docs.google.com/spreadsheets/d/1FotsmVZKnglJqYuM66jmOd9UaCpSPv3sgo5djiWJWWA/edit" target="_blank" rel="noopener">[UPB] Fuente de datos</a> (Meta y Google Ads, inversión sin IVA). Metas: <a href="https://docs.google.com/spreadsheets/d/1vLjfhwzd6AmKuyFCfr6eZw29KU_slL8c/edit" target="_blank" rel="noopener">Presupuestos VOOK_ADCOM_UPB_1 2027_OCTUBRE_01102026</a>. En Virtual el flow está sin IVA; en Open los valores del archivo incluyen IVA y aquí se muestran divididos por 1,19.
+      <b>Resultados</b>: Google = conversiones; Meta = conversiones del píxel + leads de formulario de Meta. <b>% ideal</b> = días transcurridos ÷ días del mes. <b>Ppto diario ideal</b> = meta pendiente ÷ días que faltan del mes. <b>Ritmo actual</b> = consumo del mes ÷ días transcurridos.
+    </div></div>
+  </div>
+</div>
+
+<script>
+const SHEET_ID = '1FotsmVZKnglJqYuM66jmOd9UaCpSPv3sgo5djiWJWWA';
+const SRC = { sheet: 'RESUMEN GENERAL', tq: "select A,B,E,H,K,M where A >= date '2026-09-01'" };  // Fecha | Campaña | Inversión | Conversiones | Medio | Leads Meta
+const MESES6 = ['2026-09','2026-10','2026-11','2026-12','2027-01','2027-02'];
+const MES_TXT = {'2026-09':'Septiembre','2026-10':'Octubre','2026-11':'Noviembre','2026-12':'Diciembre','2027-01':'Enero','2027-02':'Febrero'};
+const MESES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const IVA = 1.19;
+
+// ── Flow 2027-1 (Presupuestos VOOK_ADCOM_UPB_1 2027_OCTUBRE_01102026) · sep … feb ──
+const G1 = [202888,304332,405776,304332,405776,405776], G2 = G1.map(v => v*2);
+const C1 = [173904,260856,347808,260856,347808,347808], P3 = C1.map(v => v*1.5), H1 = C1.map(v => v/2);
+const AMB_CAR = [173904,0,0,0,0,0], AMB_IND = [0,130428,173904,130428,173904,173904], Z = [0,0,0,0,0,0];
+const OI = a => a.map(v => v / IVA);   // Open: el archivo trae valores con IVA
+const FLOW = [
+  // Virtual · Google Ads (70 %)
+  ['Virtual','Google','Institucional','Campaña general institucional',G1,['1. Campaña']],
+  ['Virtual','Google','Proyectos','Maestría Gestión de la Información y el Conocimiento',G1,['1.11 ']],
+  ['Virtual','Google','Proyectos','Esp. Gerencia de Proyectos',G1,['1.12 ']],
+  ['Virtual','Google','Administración','Esp. Gerencia',G1,['1.13 ']],
+  ['Virtual','Google','Administración','Maestría en Administración (MBA)',G1,['1.14 ']],
+  ['Virtual','Google','Administración','Esp. Finanzas',G1,['1.15 ']],
+  ['Virtual','Google','Comunicación','Esp. Comunicación y Periodismo Digital',G1,['1.151 ']],
+  ['Virtual','Google','Comunicación','Esp. Gestión Estratégica de la Comunicación',G1,['1.16 ']],
+  ['Virtual','Google','Comunicación','Maestría Comunicación Digital',G1,['1.17 ']],
+  ['Virtual','Google','Marketing y Diseño','Maestría Diseño',G1,['1.18 ']],
+  ['Virtual','Google','Marketing y Diseño','Maestría Marketing Digital',G1,['1.19 ']],
+  ['Virtual','Google','Educación','Maestría Ciencias Naturales y Matemática',G1,['1.21 ']],
+  ['Virtual','Google','Educación','Maestría Educación',G1,['1.22 ']],
+  ['Virtual','Google','Educación','Maestría Innovación Educativa',G1,['1.23 ']],
+  ['Virtual','Google','Filosofía y Literatura','Maestría Literatura',G1,['1.24 ']],
+  ['Virtual','Google','Filosofía y Literatura','Maestría Filosofía',G1,['1.25 ']],
+  ['Virtual','Google','Ambiental','Esp. Preservación y Conservación de Recursos Naturales',G1,['1.26 ']],
+  ['Virtual','Google','Ambiental','Esp. Gestión de la Sostenibilidad',G1,['1.27']],
+  ['Virtual','Google','Ambiental','Maestría Sostenibilidad',G1,['1.28 ']],
+  ['Virtual','Google','Ambiental','Maestría Energías Renovables para la Transición Energética',G1,['1.29 ']],
+  ['Virtual','Google','Informática','Esp. Gerencia de Tecnologías de Información',G1,['1.30 ']],
+  ['Virtual','Google','Informática','Esp. Seguridad Informática',G1,['1.31']],
+  ['Virtual','Google','Informática','Maestría Ciencia de Datos',G1,['1.32 ']],
+  ['Virtual','Google','Desarrollo Social','Maestría Innovación Social y Territorio',G1,['1.33 ']],
+  ['Virtual','Google','Desarrollo Social','Esp. Gobierno Territorial y Desarrollo',G1,['1.34 ']],
+  ['Virtual','Google','Derecho','Esp. Derecho Procesal',G1,['1.35 ']],
+  ['Virtual','Google','Derecho','Esp. Legislación Tributaria',G1,['1.36 ']],
+  ['Virtual','Google','Derecho','Esp. Derecho de Familia, Infancia y Adolescencia',G1,['1.37 ']],
+  ['Virtual','Google','Derecho','Maestría en Derecho',G2,[],'Nuevo · landing pendiente'],
+  ['Virtual','Google','Gestión Humana','Esp. Gestión Humana',G1,['1.38 ']],
+  ['Virtual','Google','Gestión Humana','Maestría Gestión Humana para Organizaciones Saludables',G1,['1.39 ']],
+  ['Virtual','Google','Salud','Esp. Educación para Profesionales de la Salud',G2,[],'Nuevo · landing pendiente'],
+  ['Virtual','Google','Pregrados Educación','Lic. Tecnología Educativa',G1,['1.44 ']],
+  ['Virtual','Google','Pregrados Educación','Lic. Literatura y Lengua Castellana',G1,['1.45 ']],
+  ['Virtual','Google','Pregrados Educación','Lic. Lenguas Extranjeras',G2,[],'Nuevo · landing pendiente'],
+  ['Virtual','Google','Pregrado','Ingeniería de Software',G1,['1.40 ']],
+  ['Virtual','Google','Pregrado','Administración de Empresas',G1,['1.42 ']],
+  ['Virtual','Google','Pregrados Diseño','Publicidad y Marketing Digital',G1,['1.43 ']],
+  ['Virtual','Google','Pregrados Diseño','Tecnología en Animación Digital',G1,['1.41 ']],
+  // Virtual · Meta (30 %)
+  ['Virtual','Meta','Proyectos','Posgrados en Proyectos · carrusel',C1,['1.1. ']],
+  ['Virtual','Meta','Administración','Posgrados en Administración y Gerencia · carrusel',C1,['1.2. ']],
+  ['Virtual','Meta','Comunicación','Posgrados en Comunicación · carrusel',C1,['1.3. ']],
+  ['Virtual','Meta','Educación','Posgrados en Educación · carrusel',C1,['1.4. ']],
+  ['Virtual','Meta','Ambiental','Posgrados en Ingeniería Ambiental · carrusel',AMB_CAR,['1.5. '],'Separar en anuncios individuales desde octubre'],
+  ['Virtual','Meta','Filosofía y Literatura','Posgrados en Filosofía y Literatura · carrusel',C1,['1.6 ']],
+  ['Virtual','Meta','Informática','Posgrados en Sistemas e Informática · carrusel',C1,['1.7 ']],
+  ['Virtual','Meta','Desarrollo Social','Posgrados en Desarrollo Social y Territorio · carrusel',C1,['1.8 ']],
+  ['Virtual','Meta','Derecho','Posgrados en Derecho · carrusel',C1,['1.9 ']],
+  ['Virtual','Meta','Gestión Humana','Posgrados en Gestión Humana · carrusel',C1,['1.9.1 ']],
+  ['Virtual','Meta','Marketing y Diseño','Posgrados en Marketing y Diseño · carrusel',C1,['1.9.2 ']],
+  ['Virtual','Meta','Pregrados Educación','Pregrados en Educación · carrusel',P3,['3. ','3.1 '],'Consolidación'],
+  ['Virtual','Meta','Pregrados Diseño','Pregrados en Diseño · carrusel',P3,['1.9.4 '],'Consolidación'],
+  ['Virtual','Meta','Pregrado','Ingeniería de Software',H1,['1.9.3 ']],
+  ['Virtual','Meta','Pregrado','Administración de Empresas',H1,['1.9.5 ']],
+  ['Virtual','Meta','Salud','Esp. Educación para Profesionales de la Salud',C1,[],'Nuevo · landing pendiente'],
+  ['Virtual','Meta','Ambiental','Esp. Preservación y Conservación de Recursos Naturales',AMB_IND,[],'Anuncio individual (sale del carrusel)'],
+  ['Virtual','Meta','Ambiental','Esp. Gestión de la Sostenibilidad',AMB_IND,[],'Anuncio individual (sale del carrusel)'],
+  ['Virtual','Meta','Ambiental','Maestría Sostenibilidad',AMB_IND,[],'Anuncio individual (sale del carrusel)'],
+  ['Virtual','Meta','Ambiental','Maestría Energías Renovables',AMB_IND,[],'Anuncio individual (sale del carrusel)'],
+  ['Virtual','Meta','Eventos','Eventos',Z,['UPB VIRTUAL - EVENTO'],'Sin presupuesto en el flow'],
+  // Open
+  ['Open','Google','Educación','Diplomado en Docencia Universitaria',OI([685076,0,0,0,0,0]),['2.3 '],'Apertura 5 de octubre'],
+  ['Open','Google','Marketing','Diplomado en UX: Diseño Centrado en el Usuario',Z,['2.2 '],'Inactivo en el flow'],
+  ['Open','Meta','Educación','Diplomado en Docencia Universitaria',OI([652453,0,0,0,0,0]),['2.4. '],'Apertura 5 de octubre'],
+  ['Open','Meta','Educación','Microcredencial Laboratorio de IA para la Educación',OI([521962,0,0,0,0,0]),['2.8 '],'Pauta hasta el 2 de octubre'],
+  ['Open','Meta','Educación','Microcredencial Innovación STEAM',OI([521962,0,0,0,0,0]),['2.12 '],'Pauta hasta el 2 de octubre'],
+  ['Open','Meta','Desarrollo Social','Microcredencial Territorio, Movilidad y Transporte',OI([260981,228359,0,0,0,0]),['2.9 '],'Pauta hasta el 2 de noviembre'],
+  ['Open','Meta','Ambiental','Microcredencial Transición en los Mercados de Energía',OI([260981,228359,0,0,0,0]),['2.10 '],'Pauta hasta el 13 de octubre',{'2026-10':13}],
+  ['Open','Meta','Proyectos','Microcredencial Estudios de Viabilidad de Proyectos',OI([260981,228359,0,0,0,0]),['2.11 '],'Pauta hasta el 18 de octubre',{'2026-10':18}],
+  ['Open','Meta','Administración','Microcredencial Inteligencia de Negocios',OI([260981,228359,0,0,0,0]),['2.13 '],'Pauta hasta el 19 de octubre',{'2026-10':19}],
+  ['Open','—','Por asignar','Presupuesto Open sin repartir por programa',OI([0,228356.55,18268680.74,0,0,0]),[],'Octubre: 20 % de Google · noviembre: total del mes'],
+].map(([l,m,n,p,b,px,nota,end]) => ({l, m, n, p, b, px, nota: nota || '', end: end || {}}));
+const GEN = {   // metas generales del semestre (archivo de presupuestos)
+  Virtual: {sin: FLOW.filter(r => r.l === 'Virtual').reduce((a,r) => a + r.b.reduce((x,y) => x+y, 0), 0), con: 136377328},
+  Open:    {sin: 22835850.92 / IVA, con: 22835850.92},
+};
+const SEM_INI = '2026-09-01', SEM_FIN = '2027-02-28';
+
+// ── Parsers y formato (los mismos del tablero de Corpas) ──
+function num(v){ if(typeof v === 'number') return isFinite(v) ? v : 0;
+  const s = String(v ?? '').replace(/[$\s%]/g,''); if(!s) return 0;
+  return parseFloat(s.indexOf(',') >= 0 ? s.replace(/\./g,'').replace(',','.') : (s.split('.').length > 2 ? s.replace(/\./g,'') : s)) || 0 }
+function iso(v){ const m = String(v||'').match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(m) return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+  const i = String(v||'').match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+  return i ? `${i[1]}-${i[2].padStart(2,'0')}-${i[3].padStart(2,'0')}` : '' }
+const fCOP = n => (n && isFinite(n)) ? '$' + Math.round(n).toLocaleString('es-CO') : '—';
+const fM = n => '$' + (n/1e6).toLocaleString('es-CO',{maximumFractionDigits:1}) + 'M';
+const fN = n => (n && isFinite(n)) ? Math.round(n).toLocaleString('es-CO') : '0';
+const fP = v => isFinite(v) ? Math.round(v*100).toLocaleString('es-CO') + ' %' : '—';
+const div = (a,b) => b ? a/b : NaN;
+const fDate = s => { const p = s.split('-'); return `${+p[2]} ${MESES[+p[1]]}` };
+const dim = m => new Date(+m.slice(0,4), +m.slice(5,7), 0).getDate();
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const daysBetween = (a,b) => Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1;
+const lineaDe = (camp) => /OPEN/i.test(camp) || /^2\./.test(camp) ? 'Open' : 'Virtual';
+
+// ── Carga (CSV en la web, JSONP abriendo el archivo local) ──
+let SEQ = 0;
+function gvizRows(res){
+  if(res?.status !== 'ok' || !res.table) throw new Error('Respuesta inválida de Google Sheets');
+  const cols = res.table.cols || [];
+  return (res.table.rows || []).map(row => cols.map((col, i) => { const c = row.c?.[i];
+    if(!c || c.v === null || c.v === undefined) return '';
+    if(col.type === 'date' || col.type === 'datetime'){ if(c.f) return c.f; const m = String(c.v).match(/^Date\((\d+),(\d+),(\d+)/); if(m) return `${m[3]}/${+m[2]+1}/${m[1]}` }
+    return c.v }));
+}
+function fetchTab(src){ return location.protocol.startsWith('http') ? fetchCSV(src) : fetchJSONP(src) }
+function fetchCSV({sheet, tq}){ return new Promise((ok, ko) => {
+  const u = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheet)}&tq=${encodeURIComponent(tq)}&headers=1&_=${Date.now()}`;
+  Papa.parse(u, {download:true, header:false, skipEmptyLines:true, complete: r => ok(r.data.slice(1)), error: ko }) }) }
+function fetchJSONP({sheet, tq}){ return new Promise((ok, ko) => {
+  const cb = `__upb_${Date.now()}_${++SEQ}`, s = document.createElement('script');
+  const t = setTimeout(() => { cleanup(); ko(new Error('timeout')) }, 30000);
+  const cleanup = () => { clearTimeout(t); s.remove(); delete window[cb] };
+  window[cb] = r => { cleanup(); try{ ok(gvizRows(r)) } catch(e){ ko(e) } };
+  const u = new URL(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq`);
+  u.searchParams.set('tqx', `out:json;responseHandler:${cb}`); u.searchParams.set('sheet', sheet); u.searchParams.set('tq', tq); u.searchParams.set('headers', '1'); u.searchParams.set('_', Date.now());
+  s.src = u.toString(); s.async = true; s.onerror = () => { cleanup(); ko(new Error('red')) }; document.head.appendChild(s) }) }
+
+let ROWS = [], LAST = '', MES = '', CHART = null;
+function load(){
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('ld-msg').textContent = 'Cargando datos...';
+  fetchTab(SRC).then(rg => {
+    build(rg);
+    const t = new Date().toLocaleString('es-CO', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+    document.getElementById('last-upd').textContent = `Datos hasta el ${fDate(LAST)} · cargados ${t}`;
+    document.getElementById('last-upd-side').textContent = t;
+    if(!MES) MES = MESES6.includes(LAST.slice(0,7)) ? LAST.slice(0,7) : MESES6[0];
+    prepare();
+    document.getElementById('loading').style.display = 'none';
+  }).catch(e => { console.error(e); document.getElementById('ld-msg').textContent = 'No se pudo leer la hoja [UPB] Fuente de datos' });
+}
+
+function build(rg){
+  const agg = {};
+  rg.forEach(x => { const d = iso(x[0]), camp = String(x[1]||'').trim(); if(!d || !camp || d > SEM_FIN) return;
+    const medio = /^face|^meta|^insta/i.test(String(x[4])) ? 'Meta' : /^google/i.test(String(x[4])) ? 'Google' : String(x[4]||'Otro');
+    const res = num(x[3]) + (medio === 'Meta' ? num(x[5]) : 0), k = d + '|' + medio + '|' + camp;
+    const a = agg[k] = agg[k] || {d, medio, camp, inv: 0, res: 0}; a.inv += num(x[2]); a.res += res });
+  ROWS = Object.values(agg);
+  LAST = ROWS.filter(r => r.inv > 0).map(r => r.d).sort().pop() || SEM_INI;
+}
+
+function prepare(){
+  document.getElementById('quick').innerHTML = MESES6.map(m =>
+    `<button class="qbtn ${m > LAST.slice(0,7) ? 'fut' : ''}" data-m="${m}" onclick="setMes('${m}')">${MES_TXT[m]}</button>`).join('');
+  setMes(MES) }
+function setMes(m){ MES = m; document.querySelectorAll('#quick .qbtn').forEach(b => b.classList.toggle('on', b.dataset.m === m)); render() }
+
+// estado del mes: días transcurridos según el último dato
+function tiempo(m){ const n = dim(m), lm = LAST.slice(0,7);
+  const el = lm > m ? n : lm === m ? +LAST.slice(8,10) : 0;
+  return {n, el, cerrado: lm > m, futuro: lm < m} }
+const idx = m => MESES6.indexOf(m);
+const match = (r, p) => p.m !== '—' && r.medio === p.m && p.px.some(x => r.camp.startsWith(x));
+function prog(p, m, T){
+  const b = p.b[idx(m)] || 0, rs = ROWS.filter(r => r.d.slice(0,7) === m && match(r, p));
+  const s = rs.reduce((a,r) => a + r.inv, 0), res = rs.reduce((a,r) => a + r.res, 0);
+  const end = p.end[m] || T.n, ideal = T.futuro ? 0 : Math.min(T.el / end, 1), rem = end - T.el;
+  const camps = [...new Set(rs.filter(r => r.inv > 0).map(r => r.camp))].sort();
+  const sem = camps.length ? [] : [...new Set(ROWS.filter(r => match(r, p) && r.inv > 0).map(r => r.camp))].sort();
+  return {...p, bm: b, s, res, ideal, end, rem, camps, sem, idl: rem > 0 && b ? Math.max(b - s, 0) / rem : NaN, ritmo: T.el ? s / T.el : NaN};
+}
+function estado(b, s, ideal, T, extra = {}){
+  if(T.futuro) return ['Por iniciar','st-mute'];
+  if(extra.repartir) return ['Por repartir','st-mute'];
+  if(!b) return s > 0 ? ['Consume sin meta','st-neg'] : ['Sin meta en el mes','st-mute'];
+  if(extra.sinCamp) return ['Sin campaña','st-neg'];
+  if(s >= b * 1.02) return [T.cerrado ? 'Sobre la meta' : 'Meta agotada','st-neg'];
+  if(extra.sinGasto && T.el >= 3) return ['Sin consumo','st-neg'];
+  const q = div(s / b, ideal);
+  if(T.cerrado) return q >= .95 ? ['Cumplida','st-pos'] : q >= .8 ? ['Cerca de la meta','st-mid'] : ['Bajo la meta','st-neg'];
+  return q > 1.15 ? ['Sobre el ritmo','st-mid'] : q >= .85 ? ['En ritmo','st-pos'] : ['Bajo el ritmo','st-neg'];
+}
+const st = e => `<span class="st ${e[1]}">${e[0]}</span>`;
+const cls = e => e[1] === 'st-pos' ? 'bg-pos' : e[1] === 'st-mid' ? 'bg-mid' : 'bg-neg';
+const mbar = (v, ideal, e) => isFinite(v) ? `<span class="mbar"><i class="${cls(e)}" style="width:${Math.min(v,1)*100}%"></i><s style="left:${Math.min(ideal,1)*100}%"></s></span>` : '';
+function kpi(label, value, sub, extra = '', c = ''){ return `<div class="card kpi-card ${c}"><div class="kpi-label">${label}</div><div class="kpi-value">${value}</div><div class="kpi-sub">${sub}</div>${extra}</div>` }
+function bar(v, ideal, e, izq, der){ return `<div class="kpi-bwrap"><div class="kpi-brow"><span>${izq}</span><span>${der}</span></div><div class="kpi-bar"><div class="kpi-bfill ${cls(e)}" style="width:${Math.min(v,1)*100}%"></div><s style="left:${Math.min(ideal,1)*100}%"></s></div></div>` }
+
+function render(){
+  const m = MES, T = tiempo(m), i = idx(m);
+  const P = FLOW.map(p => prog(p, m, T));
+  const mesRows = ROWS.filter(r => r.d.slice(0,7) === m);
+  const spend = mesRows.reduce((a,r) => a + r.inv, 0), res = mesRows.reduce((a,r) => a + r.res, 0);
+  const meta = P.reduce((a,p) => a + p.bm, 0), ideal = T.futuro ? 0 : T.el / T.n;
+  const metaSem = GEN.Virtual.sin + GEN.Open.sin;
+  const semSpend = ROWS.reduce((a,r) => a + r.inv, 0), semIdeal = Math.min(daysBetween(SEM_INI, LAST) / daysBetween(SEM_INI, SEM_FIN), 1);
+  document.getElementById('pill-mes').textContent = `Meta ${MES_TXT[m].toLowerCase()}: ${fCOP(meta)}`;
+  document.getElementById('pill-sem').textContent = `Meta semestre: ${fM(metaSem)}`;
+  document.getElementById('rango-note').textContent = T.futuro ? `${MES_TXT[m]} todavía no empieza` :
+    `${MES_TXT[m]} ${m.slice(0,4)} · ${T.cerrado ? 'mes cerrado' : `${T.el} de ${T.n} días (datos hasta el ${fDate(LAST)})`}`;
+
+  // KPIs
+  const e = estado(meta, spend, ideal, T), proy = T.el ? spend / T.el * T.n : 0;
+  const need = T.n - T.el > 0 ? Math.max(meta - spend, 0) / (T.n - T.el) : NaN, rit = T.el ? spend / T.el : NaN;
+  const eS = estado(metaSem, semSpend, semIdeal, {futuro:false, cerrado:false});
+  document.getElementById('kpi-grid').innerHTML = [
+    kpi(`<span class="obj">Meta del mes</span><br>Inversión ${MES_TXT[m].toLowerCase()}`, fCOP(spend), `de ${fCOP(meta)} · ${st(e)}`, bar(div(spend, meta), ideal, e, `${fP(div(spend, meta))} consumido`, `ideal ${fP(ideal)}`), 'hero'),
+    kpi('Proyección de cierre', T.cerrado ? fCOP(spend) : T.el ? fCOP(proy) : '—', T.cerrado ? 'mes cerrado' : T.el ? `${fP(div(proy, meta))} de la meta · ${proy < meta ? 'faltarían ' + fCOP(meta - proy) : 'se pasaría ' + fCOP(proy - meta)}` : 'sin días con datos'),
+    kpi('Ppto diario necesario', isFinite(need) ? fCOP(need) : '—', T.futuro ? 'presupuesto diario base: el mes no ha empezado' : isFinite(need) ? `ritmo actual ${fCOP(rit)} / día · ${rit < need ? '<span class="t-neg">hay que subir ' + fP(need / rit - 1) + '</span>' : '<span class="t-pos">alcanza</span>'}` : 'mes cerrado', '', 'step'),
+    kpi('Resultados del mes', fN(res), `costo por resultado ${fCOP(div(spend, res))} · Google ${fN(mesRows.filter(r => r.medio === 'Google').reduce((a,r) => a + r.res, 0))} · Meta ${fN(mesRows.filter(r => r.medio === 'Meta').reduce((a,r) => a + r.res, 0))}`),
+    kpi('<span class="obj">Meta general</span><br>Semestre 2027-1', fM(semSpend), `de ${fM(metaSem)} · ${st(eS)}`, bar(div(semSpend, metaSem), semIdeal, eS, `${fP(div(semSpend, metaSem))} consumido`, `tiempo ${fP(semIdeal)}`)),
+  ].join('');
+
+  // Metas mensuales
+  let tot = {g:0, mv:0, o:0, meta:0, s:0};
+  document.getElementById('metas-body').innerHTML = MESES6.map(mm => {
+    const k = idx(mm), TT = tiempo(mm);
+    const g = FLOW.filter(p => p.l === 'Virtual' && p.m === 'Google').reduce((a,p) => a + p.b[k], 0);
+    const mv = FLOW.filter(p => p.l === 'Virtual' && p.m === 'Meta').reduce((a,p) => a + p.b[k], 0);
+    const o = FLOW.filter(p => p.l === 'Open').reduce((a,p) => a + p.b[k], 0), mt = g + mv + o;
+    const s = ROWS.filter(r => r.d.slice(0,7) === mm).reduce((a,r) => a + r.inv, 0), id = TT.futuro ? 0 : TT.el / TT.n;
+    const ee = estado(mt, s, id, TT), nd = !TT.cerrado && !TT.futuro && TT.n - TT.el > 0 ? Math.max(mt - s, 0) / (TT.n - TT.el) : (TT.futuro ? mt / TT.n : NaN);
+    tot = {g: tot.g + g, mv: tot.mv + mv, o: tot.o + o, meta: tot.meta + mt, s: tot.s + s};
+    return `<tr class="${mm === m ? 'cur' : ''}"><td><b style="color:var(--black)">${MES_TXT[mm]}</b> ${mm.slice(0,4)}</td><td class="r">${fCOP(g)}</td><td class="r">${fCOP(mv)}</td><td class="r">${fCOP(o)}</td><td class="r grp"><b>${fCOP(mt)}</b></td><td class="r">${TT.futuro ? '—' : fCOP(s)}</td><td class="r">${TT.futuro ? '—' : fP(div(s, mt))}${mbar(div(s, mt), id, ee)}</td><td class="r">${TT.futuro ? '—' : fP(id)}</td><td>${st(ee)}</td><td class="r grp">${fCOP(nd)}${TT.futuro ? ' <small class="t-mute">base</small>' : ''}</td></tr>` }).join('')
+    + `<tr class="tr-total"><td>Semestre</td><td class="r">${fCOP(tot.g)}</td><td class="r">${fCOP(tot.mv)}</td><td class="r">${fCOP(tot.o)}</td><td class="r grp">${fCOP(tot.meta)}</td><td class="r">${fCOP(tot.s)}</td><td class="r">${fP(div(tot.s, tot.meta))}</td><td class="r">${fP(semIdeal)}</td><td>${st(eS)}</td><td class="r grp"></td></tr>`;
+
+  // Metas generales
+  const sl = l => ROWS.filter(r => lineaDe(r.camp) === l).reduce((a,r) => a + r.inv, 0);
+  document.getElementById('gen-note').textContent = `${daysBetween(SEM_INI, LAST)} de ${daysBetween(SEM_INI, SEM_FIN)} días del semestre (${fP(semIdeal)})`;
+  const genCard = (t, sin, con, s, nota) => { const ee = estado(sin, s, semIdeal, {futuro:false, cerrado:false});
+    return kpi(t, fM(s), `de ${fCOP(sin)} sin IVA (${fCOP(con)} con IVA) · ${st(ee)}<br>${nota}`, bar(div(s, sin), semIdeal, ee, `${fP(div(s, sin))} consumido`, `tiempo ${fP(semIdeal)}`)) };
+  document.getElementById('gen-grid').innerHTML =
+    genCard('UPB Virtual', GEN.Virtual.sin, GEN.Virtual.con, sl('Virtual'), 'Google 70 % · Meta 30 %') +
+    genCard('UPB Open', GEN.Open.sin, GEN.Open.con, sl('Open'), 'sep 15 % · oct 5 % · nov 80 %') +
+    genCard('Total UPB', metaSem, GEN.Virtual.con + GEN.Open.con, semSpend, `faltan ${fCOP(metaSem - semSpend)} por invertir`);
+
+  // Línea y medio
+  document.getElementById('linea-note').textContent = MES_TXT[m];
+  const grupos = [['Virtual','Google','UPB Virtual · Google Ads'], ['Virtual','Meta','UPB Virtual · Meta'], ['Open','Google','UPB Open · Google Ads'], ['Open','Meta','UPB Open · Meta'], ['Open','—','UPB Open · por asignar']];
+  const lrow = (t, b, s, rr, c = '') => { const ee = estado(b, s, ideal, T, {repartir: /por asignar/.test(t)});
+    return `<tr class="${c}"><td>${t}</td><td class="r">${fCOP(b)}</td><td class="r">${fCOP(s)}</td><td class="r">${fP(div(s, b))}${mbar(div(s, b), ideal, ee)}</td><td class="r">${fP(ideal)}</td><td>${st(ee)}</td><td class="r grp">${fCOP(T.el ? s / T.el : NaN)}</td><td class="r">${T.n - T.el > 0 && b ? fCOP(Math.max(b - s, 0) / (T.n - T.el)) : '—'}</td><td class="r grp">${fN(rr)}</td><td class="r">${fCOP(div(s, rr))}</td></tr>` };
+  const asig = new Set(); P.forEach(p => ROWS.forEach(r => { if(r.d.slice(0,7) === m && match(r, p)) asig.add(r) }));
+  const fuera = mesRows.filter(r => !asig.has(r));
+  document.getElementById('linea-body').innerHTML = grupos.map(([l, md, t]) => {
+    const ps = P.filter(p => p.l === l && p.m === md), b = ps.reduce((a,p) => a + p.bm, 0);
+    const fx = fuera.filter(r => r.medio === md && lineaDe(r.camp) === l);
+    const s = ps.reduce((a,p) => a + p.s, 0) + fx.reduce((a,r) => a + r.inv, 0), rr = ps.reduce((a,p) => a + p.res, 0) + fx.reduce((a,r) => a + r.res, 0);
+    return b || s ? lrow(t, b, s, rr) : '' }).join('') + lrow('Total UPB', meta, spend, res, 'tr-total');
+
+  // Programas
+  const head = `<tr><th>Programa</th><th>Nomenclatura</th><th class="r">Ppto ${MES_TXT[m].toLowerCase()}</th><th class="r">Consumo</th><th class="r">% consumo</th><th class="r">% ideal al día</th><th>Estado</th><th class="r grp">Ppto diario ideal</th><th class="r">Ritmo actual / día</th><th class="r grp">Resultados</th><th class="r">Costo / result.</th></tr>`;
+  document.getElementById('prog-head-v').innerHTML = head; document.getElementById('prog-head-o').innerHTML = head;
+  const nomen = p => p.camps.length ? p.camps.map(c => `<div>${c}</div>`).join('')
+    : p.sem.length ? p.sem.map(c => `<div>${c} <span class="off">(sin consumo en el mes)</span></div>`).join('')
+    : p.m === '—' ? '<small>sin campaña: presupuesto por repartir</small>' : '<span class="off">Sin campaña creada</span>';
+  const prow = p => { const ee = estado(p.bm, p.s, p.ideal, T, {repartir: p.m === '—', sinCamp: p.bm > 0 && !p.camps.length && !p.sem.length && p.m !== '—', sinGasto: p.bm > 0 && !p.s});
+    return `<tr><td class="prog"><b>${p.p}</b><small>${p.n}${p.nota ? ' · ' + p.nota : ''}</small></td><td class="nomen">${nomen(p)}</td><td class="r">${fCOP(p.bm)}</td><td class="r">${fCOP(p.s)}</td><td class="r">${p.bm ? fP(p.s / p.bm) : '—'}${p.bm ? mbar(p.s / p.bm, p.ideal, ee) : ''}</td><td class="r">${fP(p.ideal)}${p.end !== T.n ? `<small class="t-mute">cierra el ${p.end}</small>` : ''}</td><td>${st(ee)}</td><td class="r grp"><b>${p.bm ? fCOP(p.idl) : '—'}</b></td><td class="r">${fCOP(p.ritmo)}</td><td class="r grp">${fN(p.res)}</td><td class="r">${fCOP(div(p.s, p.res))}</td></tr>` };
+  const tabla = l => ['Google','Meta','—'].map(md => { const ps = P.filter(p => p.l === l && p.m === md); if(!ps.length) return '';
+    const b = ps.reduce((a,p) => a + p.bm, 0), s = ps.reduce((a,p) => a + p.s, 0), rr = ps.reduce((a,p) => a + p.res, 0);
+    return `<tr class="tr-grp"><td colspan="11">${md === 'Google' ? 'Google Ads' : md === 'Meta' ? 'Meta' : 'Por asignar'}</td></tr>` + ps.map(prow).join('')
+      + `<tr class="tr-sub"><td>Subtotal ${md === '—' ? 'por asignar' : md}</td><td></td><td class="r">${fCOP(b)}</td><td class="r">${fCOP(s)}</td><td class="r">${fP(div(s, b))}</td><td class="r">${fP(ideal)}</td><td></td><td class="r grp">${T.n - T.el > 0 && b ? fCOP(Math.max(b - s, 0) / (T.n - T.el)) : '—'}</td><td class="r">${fCOP(T.el ? s / T.el : NaN)}</td><td class="r grp">${fN(rr)}</td><td class="r">${fCOP(div(s, rr))}</td></tr>` }).join('');
+  document.getElementById('virtual-body').innerHTML = tabla('Virtual');
+  document.getElementById('open-body').innerHTML = tabla('Open');
+
+  // Fuera del flow
+  const fa = {}; fuera.forEach(r => { const k = r.medio + '|' + r.camp; const a = fa[k] = fa[k] || {camp: r.camp, medio: r.medio, inv: 0, res: 0}; a.inv += r.inv; a.res += r.res });
+  const fl = Object.values(fa).filter(x => x.inv > 0).sort((a,b) => b.inv - a.inv);
+  document.getElementById('fuera-body').innerHTML = fl.length ? fl.map(x => `<tr><td style="white-space:normal">${x.camp}</td><td>${x.medio}</td><td class="r">${fCOP(x.inv)}</td><td class="r">${fN(x.res)}</td></tr>`).join('')
+    : '<tr><td colspan="4" class="t-mute">Todas las campañas con consumo están asignadas a un programa del flow.</td></tr>';
+
+  // Alertas
+  const A = [];
+  if(!T.futuro){
+    if(!T.cerrado && isFinite(need) && rit < need * .9) A.push(['st-neg','Ritmo', `El mes va en <b>${fCOP(rit)}</b> diarios y necesita <b>${fCOP(need)}</b> para llegar a ${fCOP(meta)}.`]);
+    const ago = P.filter(p => p.bm && p.s >= p.bm * 1.02); if(ago.length) A.push(['st-neg','Meta agotada', ago.map(p => `<b>${p.p}</b> (${p.m}, ${fP(p.s / p.bm)})`).join(', ')]);
+    const sinC = P.filter(p => p.bm && !p.camps.length && !p.sem.length && p.m !== '—'); if(sinC.length) A.push(['st-neg','Sin campaña', sinC.map(p => `<b>${p.p}</b> (${p.m}, ${fCOP(p.bm)})`).join(', ')]);
+    const sinG = P.filter(p => p.bm && !p.s && (p.camps.length || p.sem.length) && T.el >= 3); if(sinG.length) A.push(['st-neg','Pausadas con meta', sinG.map(p => `<b>${p.p}</b> (${p.m}, ${fCOP(p.bm)})`).join(', ')]);
+    const sinM = P.filter(p => !p.bm && p.s > 0); if(sinM.length || fl.length) A.push(['st-mid','Consumo sin meta', [...sinM.map(p => `<b>${p.p}</b> (${p.m}, ${fCOP(p.s)})`), ...fl.map(x => `<b>${x.camp}</b> (${x.medio}, ${fCOP(x.inv)})`)].join(', ')]);
+    const bajo = P.filter(p => p.bm && p.s && div(p.s / p.bm, p.ideal) < .6 && !T.cerrado).sort((a,b) => a.s / a.bm - b.s / b.bm);
+    if(bajo.length) A.push(['st-mid','Muy bajo el ritmo', `${bajo.length} programas por debajo del 60 % de su ritmo ideal. Los más rezagados: ` + bajo.slice(0,8).map(p => `<b>${p.p}</b> (${p.m}, ${fP(p.s / p.bm)} vs ${fP(p.ideal)})`).join(', ') + (bajo.length > 8 ? ` y ${bajo.length - 8} más` : '')]);
+  }
+  document.getElementById('alerts').innerHTML = A.length ? A.map(a => `<li><span class="st ${a[0]}">${a[1]}</span><span>${a[2]}</span></li>`).join('') : '<li><span class="st st-mute">—</span><span>Sin alertas para este mes.</span></li>';
+
+  chart(m, T, meta);
+}
+
+function chart(m, T, meta){
+  if(CHART) CHART.destroy();
+  Chart.defaults.font.family = 'Poppins, sans-serif'; Chart.defaults.font.size = 11; Chart.defaults.color = css('--fg-muted');
+  const days = Array.from({length: T.n}, (_, i) => `${m}-${String(i+1).padStart(2,'0')}`);
+  const g = days.map(d => ROWS.filter(r => r.d === d && r.medio === 'Google').reduce((a,r) => a + r.inv, 0));
+  const mt = days.map(d => ROWS.filter(r => r.d === d && r.medio === 'Meta').reduce((a,r) => a + r.inv, 0));
+  let acc = 0; const cum = days.map((d, i) => d <= LAST ? (acc += g[i] + mt[i]) : null);
+  const yK = v => '$' + (v >= 1e6 ? (v/1e6).toLocaleString('es-CO',{maximumFractionDigits:1}) + 'M' : Math.round(v/1000) + 'k');
+  CHART = new Chart(document.getElementById('chart-dia'), {
+    data: {labels: days.map(fDate), datasets: [
+      {type: 'bar', label: 'Google', data: g, backgroundColor: css('--yellow') || '#ffd400', stack: 'inv', yAxisID: 'y', order: 3},
+      {type: 'bar', label: 'Meta', data: mt, backgroundColor: css('--black') || '#050505', stack: 'inv', yAxisID: 'y', order: 3},
+      {type: 'line', label: 'Acumulado real', data: cum, borderColor: css('--serie-1'), backgroundColor: css('--serie-1'), borderWidth: 3, pointRadius: 0, yAxisID: 'y1', order: 1},
+      {type: 'line', label: 'Acumulado ideal', data: days.map((_, i) => meta / T.n * (i + 1)), borderColor: css('--c-pos'), borderDash: [5,3], borderWidth: 2, pointRadius: 0, yAxisID: 'y1', order: 2}]},
+    options: {responsive: true, maintainAspectRatio: false, animation: false, interaction: {mode: 'index', intersect: false},
+      plugins: {legend: {display: false}, tooltip: {callbacks: {label: c => `${c.dataset.label}: ${fCOP(c.raw)}`}}},
+      scales: {x: {stacked: true, grid: {display: false}, ticks: {maxRotation: 0, autoSkip: true, maxTicksLimit: 16}},
+        y: {stacked: true, min: 0, grid: {color: css('--rule')}, ticks: {callback: yK}, title: {display: true, text: 'Inversión diaria'}},
+        y1: {min: 0, position: 'right', grid: {display: false}, ticks: {callback: yK}, title: {display: true, text: 'Acumulado del mes'}}}}
+  });
+}
+
+load();
+</script>
+</body>
+</html>
