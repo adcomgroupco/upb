@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Segmentaciones de las campañas de microcredenciales de UPB Open en Meta: configuración, audiencia estimada y quién respondió. ADCOM.">
+<title>UPB · Segmentaciones microcredenciales · ADCOM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+/* Plantilla ADCOM para documentos de cliente (igual que los de Corpas): cabecera negra redondeada, acento amarillo, fondo blanco. Solo claro. */
+:root {
+  --bg:#FFFFFF; --ink:#141414; --muted:#63635E; --line:#E6E6E1; --panel:#F7F7F5;
+  --accent:#FFC000; --accent-soft:#FFF5D1; --head:#141414; --head-ink:#FFFFFF; --link:#1A0DAB; --img:#EDEBE4; --fb:#1877F2;
+  --f:"Poppins","Segoe UI",Helvetica,Arial,sans-serif; color-scheme:light;
+}
+* { box-sizing:border-box; }
+html,body { background:var(--bg); margin:0; }
+body { color:var(--ink); font-family:var(--f); font-size:15px; line-height:1.6; }
+.wrap { max-width:1080px; margin:0 auto; padding-inline:16px; padding-block:20px 64px; display:grid; gap:44px; }
+h1,h2,h3 { margin:0; line-height:1.2; text-wrap:balance; }
+p,ul,dl { margin:0; }
+a { color:var(--link); overflow-wrap:anywhere; }
+code { font-size:12px; background:var(--panel); border-radius:6px; padding:1px 6px; overflow-wrap:anywhere; }
+.lbl { font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.top { background:var(--head); color:var(--head-ink); border-radius:20px; padding:clamp(24px,4vw,44px); display:grid; gap:14px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.16em; font-size:13px; }
+.brand i { width:12px; height:12px; border-radius:3px; background:var(--accent); }
+.top h1 { font-size:clamp(28px,4.6vw,42px); font-weight:700; }
+.top h1 span { color:var(--accent); }
+.top p { max-width:64ch; color:#D6D6D2; font-size:16px; }
+.back { color:#D6D6D2; font-size:13px; text-decoration:none; justify-self:start; }
+.back:hover { color:var(--accent); }
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+.stat { border:1px solid var(--line); border-radius:16px; padding:16px 18px; display:grid; gap:2px; }
+.stat b { font-size:30px; line-height:1.1; font-variant-numeric:tabular-nums; }
+.stat b::after { content:""; display:block; width:32px; height:4px; border-radius:2px; background:var(--accent); margin-top:8px; }
+.stat span { font-size:13px; color:var(--muted); }
+.sec { display:grid; gap:16px; }
+.sec-head { display:grid; gap:4px; padding-bottom:12px; border-bottom:3px solid var(--accent); }
+.sec-head h2 { font-size:clamp(21px,3vw,26px); }
+.flags { display:grid; gap:10px; }
+.flags li { list-style:none; background:var(--accent-soft); border:1px solid var(--accent); border-radius:12px; padding:12px 16px; font-size:14px; }
+.flags { padding:0; }
+.tbl { overflow-x:auto; border:1px solid var(--line); border-radius:16px; }
+table { border-collapse:collapse; width:100%; font-size:13px; min-width:640px; }
+th,td { padding:9px 12px; text-align:left; vertical-align:top; }
+thead th { font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:2px solid var(--line); }
+tbody tr + tr td { border-top:1px solid var(--line); }
+
+.mcs { display:grid; gap:22px; }
+.mc { border:1px solid var(--line); border-bottom:4px solid var(--accent); border-radius:16px; padding:clamp(16px,3vw,24px); display:grid; gap:18px; scroll-margin-top:20px; }
+.mc-head { display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; }
+.mc-head h3 { font-size:20px; margin:2px 0 4px; }
+.nums { display:flex; flex-wrap:wrap; gap:18px; }
+.nums div { display:grid; } .nums b { font-size:20px; font-variant-numeric:tabular-nums; } .nums span { font-size:12px; color:var(--muted); }
+.cols { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:28px; }
+@media (max-width:820px) { .cols { grid-template-columns:1fr; } }
+h4 { margin:0 0 10px; font-size:14px; } h4 small { font-weight:400; color:var(--muted); }
+.row { display:grid; grid-template-columns:140px 1fr; gap:10px; padding:7px 0; border-top:1px solid var(--line); font-size:13px; }
+.row .k { color:var(--muted); font-weight:600; font-size:12px; }
+.chips { display:flex; flex-wrap:wrap; gap:5px; }
+.chip { font-size:12px; background:var(--panel); border-radius:99px; padding:2px 10px; }
+.chip.b { background:var(--accent-soft); } .chip.c { background:#E3ECF7; }
+.bars { display:grid; gap:6px; }
+.bar { display:grid; grid-template-columns:130px 1fr 74px; gap:8px; align-items:center; font-size:12px; }
+.bar i { height:8px; background:var(--panel); border-radius:99px; overflow:hidden; } .bar i b { display:block; height:100%; background:var(--head); border-radius:99px; }
+.bar em { font-style:normal; text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; }
+.split { display:flex; margin-top:12px; height:26px; border-radius:8px; overflow:hidden; font-size:12px; font-weight:600; }
+.split span { display:flex; align-items:center; padding:0 10px; white-space:nowrap; flex:1; background:var(--panel); }
+.split span:first-child { flex:0 0 var(--w); background:var(--accent); }
+.muted { color:var(--muted); } .small { font-size:12px; margin-top:10px; }
+.findings { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+.finding { border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:12px; padding:16px 18px; display:grid; gap:6px; font-size:14px; }
+.finding h3 { font-size:15px; } .finding.bad { border-left-color:#d03b3b; } .finding.good { border-left-color:#0ca30c; }
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+  <a class="back" href="index.html">← Documentos UPB</a>
+  <div class="brand"><i></i>ADCOM <span style="color:#8A8A85;font-weight:400;letter-spacing:0">/</span> UPB OPEN</div>
+  <h1>Segmentaciones de las <span>microcredenciales</span></h1>
+  <p>Cómo se configuró la audiencia de las seis microcredenciales de UPB Open en Meta (septiembre–octubre 2026), qué tan grande era y quién terminó respondiendo.</p>
+</header>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Lectura</span><h2>Hallazgos</h2></div>
+  <div class="findings"><div class="finding bad"><h3>Energía se segmentó con los intereses de Transporte</h3><p>La 2.10 Transición en los Mercados de Energía tiene exactamente la misma segmentación que la 2.9 Territorio, Movilidad y Transporte: transporte sostenible, transporte público, ingeniería civil, urbanismo, cargos de urbanista e ingeniero de infraestructura. No incluye intereses de energía, mercados energéticos ni renovables. Se le habló a la audiencia de otra microcredencial.</p></div><div class="finding bad"><h3>Inteligencia de Negocios terminó en mayores de 55</h3><p>La edad sugerida era 28–55, pero como funciona solo como sugerencia, Meta llevó la pauta a públicos mayores: el 68% de los leads tiene 55 años o más y el 32% tiene 65 o más. Además, el 86% de los leads salió de Facebook Reels. Conviene revisar la calidad de esos leads con el CRM.</p></div><div class="finding "><h3>Audiencias muy amplias</h3><p>Las audiencias estimadas van de 12,1 M a 33,7 M de personas, porque todos los criterios de cada conjunto suman entre sí (intereses O formación O cargo). En STEAM, «Graduado universitario» está en el mismo grupo que los intereses: cualquier graduado entra, haya mostrado o no interés en educación o tecnología (28,7 M–33,7 M).</p></div><div class="finding "><h3>Viabilidad de Proyectos atrajo a los más jóvenes</h3><p>El 35% de los leads de Estudios de Viabilidad tiene entre 18 y 24 años, aunque la edad sugerida empezaba en 28. Probablemente son estudiantes y no el perfil profesional del programa.</p></div><div class="finding "><h3>Transporte y Energía llegaron sobre todo a hombres</h3><p>El 79% de los leads de Territorio y el 83% de los de Energía son hombres. Es coherente con los intereses de ingeniería y transporte, pero en Energía ese no era el público buscado.</p></div><div class="finding "><h3>Errores menores de configuración</h3><p>En 2.9 y 2.10, «Urbanisme» aparece también como empleador, cuando solo aplica como formación. Las seis campañas usan un solo conjunto y un solo anuncio, así que no hay forma de comparar segmentaciones dentro de cada microcredencial.</p></div><div class="finding good"><h3>Para la próxima ronda</h3><p>Fijar la edad como límite real (no sugerencia) cuando el programa lo exija. Separar intereses y formación/nivel educativo en grupos que se crucen (Y en lugar de O) para acotar la audiencia. Probar al menos dos conjuntos por microcredencial (intereses vs. cargos). Revisar en el CRM la calidad de leads por edad antes de escalar.</p></div></div>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Resumen</span><h2>Las seis microcredenciales</h2></div>
+  <div class="tbl"><table><thead><tr><th>Microcredencial</th><th>Edad sugerida</th><th>Criterios</th><th>Audiencia estimada</th><th>Leads</th></tr></thead><tbody><tr><td><a href="#mc-120253446680690332">Microcredencial en Laboratorio de IA para la Educación</a></td><td>25–55</td><td>4 intereses, 5 cargos</td><td>21,5 M–25,3 M</td><td>72</td></tr><tr><td><a href="#mc-120253450731990332">Microcredencial en Innovación STEAM</a></td><td>25–55</td><td>9 intereses, formación, nivel educativo</td><td>28,7 M–33,7 M</td><td>32</td></tr><tr><td><a href="#mc-120253449723480332">Microcredencial en Territorio, Movilidad y Transporte</a></td><td>28–55</td><td>5 intereses, 2 cargos, formación</td><td>12,1 M–14,3 M</td><td>80</td></tr><tr><td><a href="#mc-120253449952990332">Microcredencial en Transición en los Mercados de Energía</a></td><td>28–55</td><td>5 intereses, 2 cargos, formación</td><td>12,1 M–14,3 M</td><td>35</td></tr><tr><td><a href="#mc-120253450357790332">Microcredencial en Estudios de Viabilidad de Proyectos</a></td><td>28–55</td><td>8 intereses</td><td>23,8 M–27,9 M</td><td>43</td></tr><tr><td><a href="#mc-120253450858840332">Microcredencial en Inteligencia de Negocios para la Toma de Decisiones</a></td><td>28–55</td><td>7 intereses</td><td>15,2 M–17,9 M</td><td>117</td></tr></tbody></table></div>
+  <p class="note">Todas: Colombia, Advantage+ audiencia apagado con edad y género como sugerencia, ubicaciones automáticas, generación de leads con formulario instantáneo. Hoy las seis campañas están pausadas.</p>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Detalle</span><h2>Segmentación por microcredencial</h2></div>
+  <div class="mcs"><article class="mc" id="mc-120253446680690332">
+  <header class="mc-head"><div><span class="lbl">2.8 · UPB Open</span><h3>Microcredencial en Laboratorio de IA para la Educación</h3><code>2.8 MICROCREDENCIAL EN LABORATORIO DE IA PARA LA EDUCACIÓN_Meta_UPB OPEN</code></div>
+    <div class="nums"><div><b>21,5 M–25,3 M</b><span>audiencia estimada</span></div><div><b>35,298</b><span>alcance</span></div><div><b>1,6</b><span>frecuencia</span></div><div><b>72</b><span>leads</span></div></div></header>
+  <div class="cols">
+    <section><h4>Segmentación configurada</h4>
+      <div class="row"><span class="k">Ubicación</span><div>Colombia · personas que viven o estuvieron recientemente</div></div>
+      <div class="row"><span class="k">Edad</span><div>25–55 años sugerido · Meta puede ampliar entre 18 y 65</div></div>
+      <div class="row"><span class="k">Género</span><div>Todos (Meta puede ajustar)</div></div>
+      <div class="row"><span class="k">Advantage+ audiencia</span><div>Apagado: edad y género funcionan como sugerencia</div></div>
+      <div class="row"><span class="k">Interés</span><div class="chips"><span class="chip ">Inteligencia artificial (computación)</span><span class="chip ">Educación (concepto social)</span><span class="chip ">Innovación (negocios y finanzas)</span><span class="chip ">Pedagogía (educación)</span></div></div><div class="row"><span class="k">Cargo</span><div class="chips"><span class="chip c">Professor</span><span class="chip c">Docent</span><span class="chip c">Teacher</span><span class="chip c">Pedagogo</span><span class="chip c">Educador</span></div></div>
+      <div class="row"><span class="k">Ubicaciones</span><div>Automáticas (Advantage+)</div></div>
+      <div class="row"><span class="k">Objetivo</span><div>Generación de leads con formulario instantáneo · formulario <code>1407581564163583</code></div></div>
+      <div class="row"><span class="k">Inicio</span><div>2026-09-23 · un conjunto y un anuncio por campaña</div></div>
+    </section>
+    <section><h4>Quién respondió <small>(leads del 1-sep al 14-oct)</small></h4>
+      <div class="bars"><div class="bar"><span>18-24</span><i><b style="width:2.8%"></b></i><em>2 · 3%</em></div><div class="bar"><span>25-34</span><i><b style="width:19.4%"></b></i><em>14 · 19%</em></div><div class="bar"><span>35-44</span><i><b style="width:31.9%"></b></i><em>23 · 32%</em></div><div class="bar"><span>45-54</span><i><b style="width:26.4%"></b></i><em>19 · 26%</em></div><div class="bar"><span>55-64</span><i><b style="width:11.1%"></b></i><em>8 · 11%</em></div><div class="bar"><span>65+</span><i><b style="width:8.3%"></b></i><em>6 · 8%</em></div></div>
+      <div class="split"><span style="--w:44%">Mujeres 44%</span><span>Hombres 49%</span></div>
+      <h4 style="margin-top:14px">Dónde respondió</h4>
+      <div class="bars"><div class="bar"><span>Instagram Stories</span><i><b style="width:50.0%"></b></i><em>36 · 50%</em></div><div class="bar"><span>Facebook Reels</span><i><b style="width:19.4%"></b></i><em>14 · 19%</em></div><div class="bar"><span>Instagram Reels</span><i><b style="width:19.4%"></b></i><em>14 · 19%</em></div><div class="bar"><span>Facebook Stories</span><i><b style="width:5.6%"></b></i><em>4 · 6%</em></div></div>
+      <p class="muted small">Mayor alcance en Antioquia (34%), Distrito Especial (10%), Valle del Cauca (9%).</p>
+    </section>
+  </div>
+</article><article class="mc" id="mc-120253450731990332">
+  <header class="mc-head"><div><span class="lbl">2.12 · UPB Open</span><h3>Microcredencial en Innovación STEAM</h3><code>2.12 MICROCREDENCIAL EN INNOVACIÓN STEAM_Meta_UPB OPEN</code></div>
+    <div class="nums"><div><b>28,7 M–33,7 M</b><span>audiencia estimada</span></div><div><b>13,866</b><span>alcance</span></div><div><b>2,4</b><span>frecuencia</span></div><div><b>32</b><span>leads</span></div></div></header>
+  <div class="cols">
+    <section><h4>Segmentación configurada</h4>
+      <div class="row"><span class="k">Ubicación</span><div>Colombia · personas que viven o estuvieron recientemente</div></div>
+      <div class="row"><span class="k">Edad</span><div>25–55 años sugerido · Meta puede ampliar entre 18 y 65</div></div>
+      <div class="row"><span class="k">Género</span><div>Todos (Meta puede ajustar)</div></div>
+      <div class="row"><span class="k">Advantage+ audiencia</span><div>Apagado: edad y género funcionan como sugerencia</div></div>
+      <div class="row"><span class="k">Interés</span><div class="chips"><span class="chip ">Inteligencia artificial (computación)</span><span class="chip ">Capacitación docente (capacitación vocacional)</span><span class="chip ">STEM</span><span class="chip ">Aprendizaje (educación)</span><span class="chip ">Tecnología educativa (educación)</span><span class="chip ">Educación (concepto social)</span><span class="chip ">Teaching Resources</span><span class="chip ">Innovación (negocios y finanzas)</span><span class="chip ">Programación informática (computadoras y aparatos electrónicos)</span></div></div><div class="row"><span class="k">Formación</span><div class="chips"><span class="chip b">Robotics</span></div></div><div class="row"><span class="k">Nivel educativo</span><div class="chips"><span class="chip b">Graduado universitario</span></div></div>
+      <div class="row"><span class="k">Ubicaciones</span><div>Automáticas (Advantage+)</div></div>
+      <div class="row"><span class="k">Objetivo</span><div>Generación de leads con formulario instantáneo · formulario <code>1616384983497334</code></div></div>
+      <div class="row"><span class="k">Inicio</span><div>2026-09-23 · un conjunto y un anuncio por campaña</div></div>
+    </section>
+    <section><h4>Quién respondió <small>(leads del 1-sep al 14-oct)</small></h4>
+      <div class="bars"><div class="bar"><span>18-24</span><i><b style="width:9.4%"></b></i><em>3 · 9%</em></div><div class="bar"><span>25-34</span><i><b style="width:28.1%"></b></i><em>9 · 28%</em></div><div class="bar"><span>35-44</span><i><b style="width:31.2%"></b></i><em>10 · 31%</em></div><div class="bar"><span>45-54</span><i><b style="width:28.1%"></b></i><em>9 · 28%</em></div><div class="bar"><span>55-64</span><i><b style="width:3.1%"></b></i><em>1 · 3%</em></div><div class="bar"><span>65+</span><i><b style="width:0.0%"></b></i><em>0 · 0%</em></div></div>
+      <div class="split"><span style="--w:66%">Mujeres 66%</span><span>Hombres 34%</span></div>
+      <h4 style="margin-top:14px">Dónde respondió</h4>
+      <div class="bars"><div class="bar"><span>Facebook feed</span><i><b style="width:37.5%"></b></i><em>12 · 38%</em></div><div class="bar"><span>Instagram feed</span><i><b style="width:37.5%"></b></i><em>12 · 38%</em></div><div class="bar"><span>Instagram · formulario multienvío</span><i><b style="width:21.9%"></b></i><em>7 · 22%</em></div><div class="bar"><span>Marketplace</span><i><b style="width:3.1%"></b></i><em>1 · 3%</em></div></div>
+      <p class="muted small">Mayor alcance en Antioquia (26%), Distrito Especial (14%), Santander (8%).</p>
+    </section>
+  </div>
+</article><article class="mc" id="mc-120253449723480332">
+  <header class="mc-head"><div><span class="lbl">2.9 · UPB Open</span><h3>Microcredencial en Territorio, Movilidad y Transporte</h3><code>2.9 MICROCREDENCIAL EN TERRITORIO, MOVILIDAD Y TRANSPORTA_Meta_UPB OPEN</code></div>
+    <div class="nums"><div><b>12,1 M–14,3 M</b><span>audiencia estimada</span></div><div><b>50,339</b><span>alcance</span></div><div><b>1,7</b><span>frecuencia</span></div><div><b>80</b><span>leads</span></div></div></header>
+  <div class="cols">
+    <section><h4>Segmentación configurada</h4>
+      <div class="row"><span class="k">Ubicación</span><div>Colombia · personas que viven o estuvieron recientemente</div></div>
+      <div class="row"><span class="k">Edad</span><div>28–55 años sugerido · Meta puede ampliar entre 18 y 65</div></div>
+      <div class="row"><span class="k">Género</span><div>Todos (Meta puede ajustar)</div></div>
+      <div class="row"><span class="k">Advantage+ audiencia</span><div>Apagado: edad y género funcionan como sugerencia</div></div>
+      <div class="row"><span class="k">Interés</span><div class="chips"><span class="chip ">Transporte sustentable (transporte)</span><span class="chip ">Transporte (transporte)</span><span class="chip ">Transporte público (transporte)</span><span class="chip ">Ingeniería civil (ingeniería)</span><span class="chip ">Asuntos civiles (derecho y gobierno)</span></div></div><div class="row"><span class="k">Formación</span><div class="chips"><span class="chip b">Sustainable development</span><span class="chip b">Sustainability</span><span class="chip b">Urbanisme</span></div></div><div class="row"><span class="k">Cargo</span><div class="chips"><span class="chip c">Urban planner</span><span class="chip c">Infrastructure Engineer</span></div></div><div class="row"><span class="k">Industria</span><div class="chips"><span class="chip c">Transportation and Moving</span></div></div><div class="row"><span class="k">Empleador</span><div class="chips"><span class="chip c">Urbanisme</span></div></div>
+      <div class="row"><span class="k">Ubicaciones</span><div>Automáticas (Advantage+)</div></div>
+      <div class="row"><span class="k">Objetivo</span><div>Generación de leads con formulario instantáneo · formulario <code>1119440990603483</code></div></div>
+      <div class="row"><span class="k">Inicio</span><div>2026-09-23 · un conjunto y un anuncio por campaña</div></div>
+    </section>
+    <section><h4>Quién respondió <small>(leads del 1-sep al 14-oct)</small></h4>
+      <div class="bars"><div class="bar"><span>18-24</span><i><b style="width:6.2%"></b></i><em>5 · 6%</em></div><div class="bar"><span>25-34</span><i><b style="width:20.0%"></b></i><em>16 · 20%</em></div><div class="bar"><span>35-44</span><i><b style="width:35.0%"></b></i><em>28 · 35%</em></div><div class="bar"><span>45-54</span><i><b style="width:22.5%"></b></i><em>18 · 22%</em></div><div class="bar"><span>55-64</span><i><b style="width:15.0%"></b></i><em>12 · 15%</em></div><div class="bar"><span>65+</span><i><b style="width:1.2%"></b></i><em>1 · 1%</em></div></div>
+      <div class="split"><span style="--w:20%">Mujeres 20%</span><span>Hombres 79%</span></div>
+      <h4 style="margin-top:14px">Dónde respondió</h4>
+      <div class="bars"><div class="bar"><span>Instagram Stories</span><i><b style="width:40.0%"></b></i><em>32 · 40%</em></div><div class="bar"><span>Facebook Reels</span><i><b style="width:33.8%"></b></i><em>27 · 34%</em></div><div class="bar"><span>Instagram Reels</span><i><b style="width:11.2%"></b></i><em>9 · 11%</em></div><div class="bar"><span>Facebook Reels (overlay)</span><i><b style="width:10.0%"></b></i><em>8 · 10%</em></div></div>
+      <p class="muted small">Mayor alcance en Antioquia (21%), Distrito Especial (17%), Valle del Cauca (10%).</p>
+    </section>
+  </div>
+</article><article class="mc" id="mc-120253449952990332">
+  <header class="mc-head"><div><span class="lbl">2.10 · UPB Open</span><h3>Microcredencial en Transición en los Mercados de Energía</h3><code>2.10 MICROCREDENCIAL EN TRANSICIÓN EN LOS MERCADOS DE ENERGÍA_Meta_UPB OPEN</code></div>
+    <div class="nums"><div><b>12,1 M–14,3 M</b><span>audiencia estimada</span></div><div><b>20,777</b><span>alcance</span></div><div><b>2,6</b><span>frecuencia</span></div><div><b>35</b><span>leads</span></div></div></header>
+  <div class="cols">
+    <section><h4>Segmentación configurada</h4>
+      <div class="row"><span class="k">Ubicación</span><div>Colombia · personas que viven o estuvieron recientemente</div></div>
+      <div class="row"><span class="k">Edad</span><div>28–55 años sugerido · Meta puede ampliar entre 18 y 65</div></div>
+      <div class="row"><span class="k">Género</span><div>Todos (Meta puede ajustar)</div></div>
+      <div class="row"><span class="k">Advantage+ audiencia</span><div>Apagado: edad y género funcionan como sugerencia</div></div>
+      <div class="row"><span class="k">Interés</span><div class="chips"><span class="chip ">Transporte sustentable (transporte)</span><span class="chip ">Transporte (transporte)</span><span class="chip ">Transporte público (transporte)</span><span class="chip ">Ingeniería civil (ingeniería)</span><span class="chip ">Asuntos civiles (derecho y gobierno)</span></div></div><div class="row"><span class="k">Formación</span><div class="chips"><span class="chip b">Sustainable development</span><span class="chip b">Sustainability</span><span class="chip b">Urbanisme</span></div></div><div class="row"><span class="k">Cargo</span><div class="chips"><span class="chip c">Urban planner</span><span class="chip c">Infrastructure Engineer</span></div></div><div class="row"><span class="k">Industria</span><div class="chips"><span class="chip c">Transportation and Moving</span></div></div><div class="row"><span class="k">Empleador</span><div class="chips"><span class="chip c">Urbanisme</span></div></div>
+      <div class="row"><span class="k">Ubicaciones</span><div>Automáticas (Advantage+)</div></div>
+      <div class="row"><span class="k">Objetivo</span><div>Generación de leads con formulario instantáneo · formulario <code>1146307148061374</code></div></div>
+      <div class="row"><span class="k">Inicio</span><div>2026-09-23 · un conjunto y un anuncio por campaña</div></div>
+    </section>
+    <section><h4>Quién respondió <small>(leads del 1-sep al 14-oct)</small></h4>
+      <div class="bars"><div class="bar"><span>18-24</span><i><b style="width:8.6%"></b></i><em>3 · 9%</em></div><div class="bar"><span>25-34</span><i><b style="width:17.1%"></b></i><em>6 · 17%</em></div><div class="bar"><span>35-44</span><i><b style="width:31.4%"></b></i><em>11 · 31%</em></div><div class="bar"><span>45-54</span><i><b style="width:22.9%"></b></i><em>8 · 23%</em></div><div class="bar"><span>55-64</span><i><b style="width:17.1%"></b></i><em>6 · 17%</em></div><div class="bar"><span>65+</span><i><b style="width:2.9%"></b></i><em>1 · 3%</em></div></div>
+      <div class="split"><span style="--w:17%">Mujeres 17%</span><span>Hombres 83%</span></div>
+      <h4 style="margin-top:14px">Dónde respondió</h4>
+      <div class="bars"><div class="bar"><span>Instagram feed</span><i><b style="width:65.7%"></b></i><em>23 · 66%</em></div><div class="bar"><span>Facebook feed</span><i><b style="width:25.7%"></b></i><em>9 · 26%</em></div><div class="bar"><span>Instagram · formulario multienvío</span><i><b style="width:8.6%"></b></i><em>3 · 9%</em></div></div>
+      <p class="muted small">Mayor alcance en Antioquia (23%), Santander (17%), Distrito Especial (13%).</p>
+    </section>
+  </div>
+</article><article class="mc" id="mc-120253450357790332">
+  <header class="mc-head"><div><span class="lbl">2.11 · UPB Open</span><h3>Microcredencial en Estudios de Viabilidad de Proyectos</h3><code>2.11 MICROCREDENCIAL EN ESTUDIOS DE VIABILIDAD DE PROYECTOS_Meta_UPB OPEN</code></div>
+    <div class="nums"><div><b>23,8 M–27,9 M</b><span>audiencia estimada</span></div><div><b>24,215</b><span>alcance</span></div><div><b>1,7</b><span>frecuencia</span></div><div><b>43</b><span>leads</span></div></div></header>
+  <div class="cols">
+    <section><h4>Segmentación configurada</h4>
+      <div class="row"><span class="k">Ubicación</span><div>Colombia · personas que viven o estuvieron recientemente</div></div>
+      <div class="row"><span class="k">Edad</span><div>28–55 años sugerido · Meta puede ampliar entre 18 y 65</div></div>
+      <div class="row"><span class="k">Género</span><div>Todos (Meta puede ajustar)</div></div>
+      <div class="row"><span class="k">Advantage+ audiencia</span><div>Apagado: edad y género funcionan como sugerencia</div></div>
+      <div class="row"><span class="k">Interés</span><div class="chips"><span class="chip ">Finanzas (negocios y finanzas)</span><span class="chip ">Gestión de proyectos (negocios y finanzas)</span><span class="chip ">Espíritu empresarial (negocios y finanzas)</span><span class="chip ">Planificación estratégica</span><span class="chip ">Inversiones (negocios y finanzas)</span><span class="chip ">Negocios (negocios y finanzas)</span><span class="chip ">Administración de empresas (negocios y finanzas)</span><span class="chip ">Consultoría (negocios y finanzas)</span></div></div>
+      <div class="row"><span class="k">Ubicaciones</span><div>Automáticas (Advantage+)</div></div>
+      <div class="row"><span class="k">Objetivo</span><div>Generación de leads con formulario instantáneo · formulario <code>1797240061322644</code></div></div>
+      <div class="row"><span class="k">Inicio</span><div>2026-09-23 · un conjunto y un anuncio por campaña</div></div>
+    </section>
+    <section><h4>Quién respondió <small>(leads del 1-sep al 14-oct)</small></h4>
+      <div class="bars"><div class="bar"><span>18-24</span><i><b style="width:34.9%"></b></i><em>15 · 35%</em></div><div class="bar"><span>25-34</span><i><b style="width:23.3%"></b></i><em>10 · 23%</em></div><div class="bar"><span>35-44</span><i><b style="width:14.0%"></b></i><em>6 · 14%</em></div><div class="bar"><span>45-54</span><i><b style="width:18.6%"></b></i><em>8 · 19%</em></div><div class="bar"><span>55-64</span><i><b style="width:7.0%"></b></i><em>3 · 7%</em></div><div class="bar"><span>65+</span><i><b style="width:2.3%"></b></i><em>1 · 2%</em></div></div>
+      <div class="split"><span style="--w:56%">Mujeres 56%</span><span>Hombres 44%</span></div>
+      <h4 style="margin-top:14px">Dónde respondió</h4>
+      <div class="bars"><div class="bar"><span>Instagram · formulario multienvío</span><i><b style="width:60.5%"></b></i><em>26 · 60%</em></div><div class="bar"><span>Facebook feed</span><i><b style="width:18.6%"></b></i><em>8 · 19%</em></div><div class="bar"><span>Instagram feed</span><i><b style="width:18.6%"></b></i><em>8 · 19%</em></div><div class="bar"><span>Facebook · notificaciones</span><i><b style="width:2.3%"></b></i><em>1 · 2%</em></div></div>
+      <p class="muted small">Mayor alcance en Antioquia (35%), Distrito Especial (9%), Cordoba (7%).</p>
+    </section>
+  </div>
+</article><article class="mc" id="mc-120253450858840332">
+  <header class="mc-head"><div><span class="lbl">2.13 · UPB Open</span><h3>Microcredencial en Inteligencia de Negocios para la Toma de Decisiones</h3><code>2.13 MICROCREDENCIAL EN INTELIGENCIA DE NEGOCIOS PARA LA TOMA DE DECISIONES_Meta_UPB OPEN</code></div>
+    <div class="nums"><div><b>15,2 M–17,9 M</b><span>audiencia estimada</span></div><div><b>46,978</b><span>alcance</span></div><div><b>1,5</b><span>frecuencia</span></div><div><b>117</b><span>leads</span></div></div></header>
+  <div class="cols">
+    <section><h4>Segmentación configurada</h4>
+      <div class="row"><span class="k">Ubicación</span><div>Colombia · personas que viven o estuvieron recientemente</div></div>
+      <div class="row"><span class="k">Edad</span><div>28–55 años sugerido · Meta puede ampliar entre 18 y 65</div></div>
+      <div class="row"><span class="k">Género</span><div>Todos (Meta puede ajustar)</div></div>
+      <div class="row"><span class="k">Advantage+ audiencia</span><div>Apagado: edad y género funcionan como sugerencia</div></div>
+      <div class="row"><span class="k">Interés</span><div class="chips"><span class="chip ">análisis de datos (sectores empresarial y financiero)</span><span class="chip ">inteligencia empresarial (sectores empresarial y financiero)</span><span class="chip ">Gestión estratégica (negocios y finanzas)</span><span class="chip ">Digital transformation</span><span class="chip ">Innovación (negocios y finanzas)</span><span class="chip ">Administración (negocios y finanzas)</span><span class="chip ">Administración de empresas (negocios y finanzas)</span></div></div>
+      <div class="row"><span class="k">Ubicaciones</span><div>Automáticas (Advantage+)</div></div>
+      <div class="row"><span class="k">Objetivo</span><div>Generación de leads con formulario instantáneo · formulario <code>950764690828094</code></div></div>
+      <div class="row"><span class="k">Inicio</span><div>2026-09-23 · un conjunto y un anuncio por campaña</div></div>
+    </section>
+    <section><h4>Quién respondió <small>(leads del 1-sep al 14-oct)</small></h4>
+      <div class="bars"><div class="bar"><span>18-24</span><i><b style="width:4.3%"></b></i><em>5 · 4%</em></div><div class="bar"><span>25-34</span><i><b style="width:6.0%"></b></i><em>7 · 6%</em></div><div class="bar"><span>35-44</span><i><b style="width:4.3%"></b></i><em>5 · 4%</em></div><div class="bar"><span>45-54</span><i><b style="width:17.9%"></b></i><em>21 · 18%</em></div><div class="bar"><span>55-64</span><i><b style="width:35.9%"></b></i><em>42 · 36%</em></div><div class="bar"><span>65+</span><i><b style="width:31.6%"></b></i><em>37 · 32%</em></div></div>
+      <div class="split"><span style="--w:28%">Mujeres 28%</span><span>Hombres 72%</span></div>
+      <h4 style="margin-top:14px">Dónde respondió</h4>
+      <div class="bars"><div class="bar"><span>Facebook Reels</span><i><b style="width:86.3%"></b></i><em>101 · 86%</em></div><div class="bar"><span>Instagram Stories</span><i><b style="width:8.5%"></b></i><em>10 · 9%</em></div><div class="bar"><span>Instagram Reels</span><i><b style="width:4.3%"></b></i><em>5 · 4%</em></div><div class="bar"><span>Facebook feed</span><i><b style="width:0.9%"></b></i><em>1 · 1%</em></div></div>
+      <p class="muted small">Mayor alcance en Antioquia (22%), Valle del Cauca (10%), Distrito Especial (9%).</p>
+    </section>
+  </div>
+</article></div>
+  <p class="note"><b>Audiencia estimada</b>: personas activas al mes que cumplen la segmentación configurada, según Meta. <b>Leads</b>: formularios instantáneos enviados. Los criterios dentro de un mismo grupo se suman (O): basta con cumplir uno.</p>
+</section>
+
+<footer>Fuente: Meta Marketing API, cuenta ADCOM 2023 - UPB VIRTUAL / VOOK (402450040363124), conjuntos de las campañas 2.8 a 2.13. Resultados del 1 de septiembre al 14 de octubre de 2026. Consulta del 15 de octubre de 2026. ADCOM.</footer>
+</main>
+</body>
+</html>

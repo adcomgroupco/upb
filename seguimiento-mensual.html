@@ -263,22 +263,22 @@ const FLOW = [
   ['Virtual','Meta','Administración','Posgrados en Administración y Gerencia · carrusel',C1,['1.2. ']],
   ['Virtual','Meta','Comunicación','Posgrados en Comunicación · carrusel',C1,['1.3. ']],
   ['Virtual','Meta','Educación','Posgrados en Educación · carrusel',C1,['1.4. ']],
-  ['Virtual','Meta','Ambiental','Posgrados en Ingeniería Ambiental · carrusel',AMB_CAR,['1.5. '],'Separar en anuncios individuales desde octubre'],
+  ['Virtual','Meta','Ambiental','Posgrados en Ingeniería Ambiental · carrusel',AMB_CAR,[['1.5. ','2026-09-01','2026-09-30']],'Separar en anuncios individuales desde octubre'],
   ['Virtual','Meta','Filosofía y Literatura','Posgrados en Filosofía y Literatura · carrusel',C1,['1.6 ']],
   ['Virtual','Meta','Informática','Posgrados en Sistemas e Informática · carrusel',C1,['1.7 ']],
   ['Virtual','Meta','Desarrollo Social','Posgrados en Desarrollo Social y Territorio · carrusel',C1,['1.8 ']],
   ['Virtual','Meta','Derecho','Posgrados en Derecho · carrusel',C1,['1.9 ']],
   ['Virtual','Meta','Gestión Humana','Posgrados en Gestión Humana · carrusel',C1,['1.9.1 ']],
   ['Virtual','Meta','Marketing y Diseño','Posgrados en Marketing y Diseño · carrusel',C1,['1.9.2 ']],
-  ['Virtual','Meta','Pregrados Educación','Pregrados en Educación · carrusel',P3,['3. ','3.1 '],'Consolidación'],
+  ['Virtual','Meta','Pregrados Educación','Pregrados en Educación · carrusel',P3,['3. ','3.1 ','2.1 Pregrado'],'Consolidación · desde el 8-oct en 2.1 Pregrado_Educación'],
   ['Virtual','Meta','Pregrados Diseño','Pregrados en Diseño · carrusel',P3,['1.9.4 '],'Consolidación'],
   ['Virtual','Meta','Pregrado','Ingeniería de Software',H1,['1.9.3 ']],
   ['Virtual','Meta','Pregrado','Administración de Empresas',H1,['1.9.5 ']],
   ['Virtual','Meta','Salud','Esp. Educación para Profesionales de la Salud',C1,[],'Nuevo · landing pendiente'],
-  ['Virtual','Meta','Ambiental','Esp. Preservación y Conservación de Recursos Naturales',AMB_IND,[],'Anuncio individual (sale del carrusel)'],
-  ['Virtual','Meta','Ambiental','Esp. Gestión de la Sostenibilidad',AMB_IND,[],'Anuncio individual (sale del carrusel)'],
-  ['Virtual','Meta','Ambiental','Maestría Sostenibilidad',AMB_IND,[],'Anuncio individual (sale del carrusel)'],
-  ['Virtual','Meta','Ambiental','Maestría Energías Renovables',AMB_IND,[],'Anuncio individual (sale del carrusel)'],
+  ['Virtual','Meta','Ambiental','Esp. Preservación y Conservación de Recursos Naturales',AMB_IND,[['1.5. ','2026-10-01','2027-02-28']],'Anuncio individual · desde octubre en la campaña 1.5'],
+  ['Virtual','Meta','Ambiental','Esp. Gestión de la Sostenibilidad',AMB_IND,['1.9.6 '],'Anuncio individual (sale del carrusel)'],
+  ['Virtual','Meta','Ambiental','Maestría Sostenibilidad',AMB_IND,['1.9.7 '],'Anuncio individual (sale del carrusel)'],
+  ['Virtual','Meta','Ambiental','Maestría Energías Renovables',AMB_IND,['1.9.8 '],'Anuncio individual (sale del carrusel)'],
   ['Virtual','Meta','Eventos','Eventos',Z,['UPB VIRTUAL - EVENTO'],'Sin presupuesto en el flow'],
   // Open
   ['Open','Google','Educación','Diplomado en Docencia Universitaria',OI([685076,0,0,0,0,0]),['2.3 '],'Apertura 5 de octubre'],
@@ -315,7 +315,7 @@ const fDate = s => { const p = s.split('-'); return `${+p[2]} ${MESES[+p[1]]}` }
 const dim = m => new Date(+m.slice(0,4), +m.slice(5,7), 0).getDate();
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const daysBetween = (a,b) => Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1;
-const lineaDe = (camp) => /OPEN/i.test(camp) || /^2\./.test(camp) ? 'Open' : 'Virtual';
+const lineaDe = (camp) => /OPEN/i.test(camp) ? 'Open' : 'Virtual';   // las campañas de Open llevan «OPEN» en el nombre (2.1 es Virtual)
 
 // ── Carga (CSV en la web, JSONP abriendo el archivo local) ──
 let SEQ = 0;
@@ -376,7 +376,8 @@ function tiempo(m){ const n = dim(m), lm = LAST.slice(0,7);
   const el = lm > m ? n : lm === m ? +LAST.slice(8,10) : 0;
   return {n, el, cerrado: lm > m, futuro: lm < m} }
 const idx = m => MESES6.indexOf(m);
-const match = (r, p) => p.m !== '—' && r.medio === p.m && p.px.some(x => r.camp.startsWith(x));
+// un prefijo puede ser texto o [prefijo, desde, hasta] cuando una campaña cambia de programa entre meses
+const match = (r, p) => p.m !== '—' && r.medio === p.m && p.px.some(x => typeof x === 'string' ? r.camp.startsWith(x) : r.camp.startsWith(x[0]) && r.d >= x[1] && r.d <= x[2]);
 function prog(p, m, T){
   const b = p.b[idx(m)] || 0, rs = ROWS.filter(r => r.d.slice(0,7) === m && match(r, p));
   const s = rs.reduce((a,r) => a + r.inv, 0), res = rs.reduce((a,r) => a + r.res, 0);
