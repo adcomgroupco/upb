@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Estructura de Google Search para tres programas de UPB Virtual 2027-1: Licenciatura en Lenguas Extranjeras, Maestría en Diseño y Especialización en Educación para Profesionales de la Salud. ADCOM.">
+<title>UPB · Estructura Search 2027-1 · ADCOM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: ADCOM client template on white. Black rounded header, yellow accent; a 2x2 map (Search / Demand Gen x pregrado / posgrado) leads into one section per campaign. Light only, as requested. */
+:root {
+  --bg: #FFFFFF; --ink: #141414; --muted: #63635E; --line: #E6E6E1; --panel: #F7F7F5;
+  --accent: #FFC000; --accent-soft: #FFF5D1; --head: #141414; --head-ink: #FFFFFF; --link: #1A0DAB; --img: #EDEBE4;
+  --f: "Poppins", "Segoe UI", Helvetica, Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { color: var(--ink); font-family: var(--f); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 64px; display: grid; gap: 48px; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.2; text-wrap: balance; }
+p, ul, ol { margin: 0; }
+a { color: var(--link); overflow-wrap: anywhere; }
+.muted { color: var(--muted); }
+.lbl, .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+.top { background: var(--head); color: var(--head-ink); border-radius: 20px; padding: clamp(24px, 4vw, 44px); display: grid; gap: 14px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .16em; font-size: 13px; }
+.brand i { width: 12px; height: 12px; border-radius: 3px; background: var(--accent); }
+.top h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 700; }
+.top h1 span { color: var(--accent); }
+.top p { max-width: 64ch; color: #D6D6D2; font-size: 16px; }
+
+.intro { display: grid; gap: 18px; }
+.intro h2, .camp-head h2, .block h2 { font-size: clamp(22px, 3vw, 28px); }
+.intro > p { max-width: 68ch; }
+.map { display: grid; grid-template-columns: auto 1fr 1fr; gap: 10px; }
+.ax { font-size: 12px; font-weight: 600; color: var(--muted); display: flex; align-items: center; }
+.ax.r { flex-direction: column; align-items: flex-start; justify-content: center; line-height: 1.3; }
+.ax.r small { font-weight: 400; }
+.tile { display: grid; gap: 4px; padding: 18px; border-radius: 14px; text-decoration: none; color: var(--ink); border: 1px solid var(--line); border-bottom: 4px solid var(--accent); }
+.tile:hover, .tile:focus-visible { background: var(--accent-soft); outline: none; }
+.tile-name { font-weight: 600; font-size: 18px; }
+.tile-stats { color: var(--muted); font-size: 13px; }
+.medline { grid-column: 2 / span 2; border: 2px dashed var(--line); border-radius: 14px; padding: 12px 16px; font-size: 14px; color: var(--muted); }
+.medline b { color: var(--ink); }
+@media (max-width: 600px) { .map { grid-template-columns: 1fr 1fr; } .ax.r, .ax.c0 { display: none; } .medline { grid-column: 1 / -1; } }
+
+.camp { display: grid; gap: 16px; scroll-margin-top: 16px; }
+.camp-head { display: grid; gap: 6px; padding-bottom: 14px; border-bottom: 3px solid var(--accent); }
+.lead { max-width: 70ch; font-size: 16px; }
+.legend { display: flex; gap: 8px; margin-top: 4px; }
+.group { border: 1px solid var(--line); border-radius: 16px; padding: clamp(16px, 3vw, 24px); display: grid; gap: 16px; }
+.group-head { display: grid; gap: 2px; }
+.group-head h3 { font-size: 19px; }
+.group-head p { font-size: 13px; }
+.group-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 780px) { .group-grid { grid-template-columns: 1fr; } }
+.col { display: grid; gap: 10px; min-width: 0; }
+.kwblock { display: grid; gap: 6px; }
+.kwblock h4 { font-size: 13px; font-weight: 600; }
+.chips { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.chips li, .chip { background: var(--panel); border: 1px solid var(--panel); border-radius: 99px; padding: 2px 11px; font-size: 13px; }
+.chips li.b, .chip.b { background: var(--accent-soft); border-color: var(--accent); }
+.chip { font-size: 12px; }
+ul.sig { padding-left: 18px; font-size: 13px; display: grid; gap: 3px; }
+
+.serp { border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 4px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 1px 6px rgba(20,20,20,.06); }
+.serp-top { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--muted); }
+.serp-top b { color: var(--ink); }
+.serp-h { color: var(--link); font-size: 19px; line-height: 1.3; }
+.serp-d { font-size: 14px; color: #4D5156; }
+
+.dg { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(20,20,20,.06); font-family: Arial, Helvetica, sans-serif; }
+.dg-img { aspect-ratio: 1.91 / 1; max-width: 100%; background: repeating-linear-gradient(135deg, var(--img) 0 14px, #E4E1D8 14px 28px);
+  display: flex; align-items: flex-end; padding: 12px; }
+.dg-img span { background: rgba(255,255,255,.92); border-radius: 8px; padding: 4px 10px; font-size: 12px; color: var(--ink); }
+.dg-body { padding: 14px 16px 16px; display: grid; gap: 4px; }
+.dg-brand { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; }
+.dg-brand i { width: 18px; height: 18px; border-radius: 50%; background: var(--head); display: inline-block; }
+.dg-brand span { font-weight: 400; color: var(--muted); }
+.dg-h { font-size: 17px; font-weight: 700; line-height: 1.3; }
+.dg-d { font-size: 14px; color: #4D5156; }
+.dg-cta { justify-self: start; margin-top: 6px; background: var(--head); color: #fff; border-radius: 99px; padding: 6px 14px; font-size: 13px; font-weight: 600; }
+
+details summary { cursor: pointer; font-size: 13px; font-weight: 600; }
+details summary:focus-visible { outline: 2px solid var(--accent); border-radius: 4px; }
+.copy { display: grid; gap: 12px; margin-top: 10px; }
+.copy ol { padding-left: 22px; font-size: 13px; display: grid; gap: 2px; }
+
+.block { display: grid; gap: 14px; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border-radius: 14px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.card h3 { font-size: 16px; }
+.card p, .card li { font-size: 14px; }
+.card ul { padding-left: 18px; display: grid; gap: 4px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+td { padding: 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+td + td { padding-left: 12px; color: var(--muted); white-space: nowrap; }
+.angle { background: var(--panel); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; }
+.angle-head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; font-size: 13px; }
+.vert { background: var(--head); color: #fff; border-radius: 99px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+.frase { font-size: 18px; font-weight: 600; line-height: 1.35; }
+.tblwrap { overflow-x: auto; }
+table.pieces { font-size: 13px; min-width: 520px; }
+table.pieces th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; padding: 4px 8px 4px 0; border-bottom: 1px solid var(--line); }
+table.pieces td { padding: 6px 8px 6px 0; white-space: normal; }
+table.pieces td + td { padding-left: 0; }
+.pt { display: inline-block; border-radius: 99px; padding: 1px 9px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.pt-0 { background: var(--accent); }
+.pt-1 { background: #E3ECF7; }
+.pt-2 { background: #EDEBE4; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.stats div { border: 1px solid var(--line); border-bottom: 4px solid var(--accent); border-radius: 14px; padding: 14px 16px; display: grid; }
+.stats b { font-size: 30px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stats span { font-size: 13px; color: var(--muted); }
+.small { font-size: 12px; }
+td.idx { font-size: 20px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+footer { font-size: 12px; color: var(--muted); }
+
+.cmp { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+.cmp > div { border:1px solid var(--line); border-radius:16px; padding:18px 20px; display:grid; gap:8px; align-content:start; }
+.cmp h3 { font-size:16px; } .cmp ul { margin:0; padding-left:18px; display:grid; gap:6px; font-size:14px; }
+.cmp .keep { border-top:4px solid var(--ink); } .cmp .new { border-top:4px solid var(--accent); }
+.cfg { width:100%; border-collapse:collapse; font-size:13px; min-width:620px; table-layout:fixed; }
+.cfg th, .cfg td { text-align:left; padding:9px 12px; vertical-align:top; border-bottom:1px solid var(--line); }
+.cfg thead th { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:2px solid var(--line); }
+.cfg td small { display:block; color:var(--muted); font-size:12px; margin-top:2px; white-space:normal; }
+.cfg td, .cfg th { white-space:normal !important; }
+.ficha { font-size:13px; color:var(--muted); }
+.chips li.x { background:var(--ink); color:#fff; }
+.ext { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-top:6px; }
+.ext > div { border:1px solid var(--line); border-radius:14px; padding:14px 16px; font-size:13px; display:grid; gap:6px; align-content:start; }
+.ext ul { margin:0; padding-left:16px; display:grid; gap:4px; }
+.neg { background:var(--panel); border-radius:14px; padding:14px 16px; font-size:13px; display:grid; gap:8px; }
+.neg .chips li { background:#fff; }
+.evid { width:100%; border-collapse:collapse; font-size:13px; }
+.evid td, .evid th { padding:8px 12px; border-bottom:1px solid var(--line); text-align:right; }
+.evid td:first-child, .evid th:first-child { text-align:left; }
+.evid thead th { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.vol { font-weight:600; color:var(--ink); }
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+  <a href="index.html" style="color:#D6D6D2;font-size:13px;text-decoration:none">← Documentos UPB</a>
+  <div class="brand"><i></i>ADCOM <span style="color:#8A8A85;font-weight:400;letter-spacing:0">/</span> UPB VIRTUAL</div>
+  <h1>Google Search · <span>3 programas</span></h1>
+  <p>Estructura de búsqueda para la Licenciatura en Lenguas Extranjeras, la Especialización en Educación para Profesionales de la Salud y la Maestría en Diseño, armada con el mismo método de la cuenta de UPB Virtual.</p>
+</header>
+
+<section class="intro">
+  <h2>La estructura en una mirada</h2>
+  <p>Una campaña por programa, como el resto de la cuenta. Las dos nuevas toman los números que siguen (1.46 y 1.47) y la Maestría en Diseño conserva la 1.18, pero se rehace por dentro. Cada campaña separa sus grupos de anuncios según lo que busca la gente, y cada grupo tiene su propio anuncio.</p>
+  <div class="cmp" style="margin-top:6px"><a class="tile" style="display:grid;gap:4px;border:1px solid var(--line);border-radius:16px;padding:16px 18px;text-decoration:none;color:inherit;border-bottom:4px solid var(--accent)" href="#c1-46"><span class="tile-name">1.46 Licenciatura en Lenguas Extranjeras</span><span class="tile-stats">Nueva · 2 grupos · 31 palabras clave · ≈ 5.540 búsquedas/mes</span></a><a class="tile" style="display:grid;gap:4px;border:1px solid var(--line);border-radius:16px;padding:16px 18px;text-decoration:none;color:inherit;border-bottom:4px solid var(--accent)" href="#c1-47"><span class="tile-name">1.47 Especialización en Educación para Profesionales de la Salud</span><span class="tile-stats">Nueva · 3 grupos · 30 palabras clave · ≈ 1.260 búsquedas/mes</span></a><a class="tile" style="display:grid;gap:4px;border:1px solid var(--line);border-radius:16px;padding:16px 18px;text-decoration:none;color:inherit;border-bottom:4px solid var(--accent)" href="#c1-18"><span class="tile-name">1.18 Maestría Diseño</span><span class="tile-stats">Se reestructura · 3 grupos · 34 palabras clave · ≈ 670 búsquedas/mes</span></a></div>
+</section>
+
+<section class="intro">
+  <h2>El mismo método de la cuenta</h2>
+  <div class="cmp">
+    <div class="keep"><h3>Se mantiene</h3><ul>
+      <li>Nombre <b>«1.XX Programa»</b> y una campaña por programa.</li>
+      <li>Search con <b>Maximizar conversiones</b>, sin CPA objetivo al arrancar.</li>
+      <li>Anuncios responsive con el nombre del programa, «UPB Virtual», «100% Virtual» e «Inscripciones Abiertas».</li>
+      <li>URL final con <code>utm_source=Pauta&amp;utm_medium=GoogleAds</code>.</li>
+      <li>Idioma español, Colombia y negativas a nivel de campaña.</li>
+      <li>Sitelinks y textos destacados de la cuenta (Becas, Posgrados, Pregrados, Contáctanos).</li>
+    </ul></div>
+    <div class="new"><h3>Se ajusta para estos programas</h3><ul>
+      <li><b>Grupos por intención</b> en lugar de un solo grupo: el anuncio responde exactamente a lo que se buscó.</li>
+      <li><b>Concordancia de frase y exacta</b> en lugar de amplia, que es por donde entra el tráfico de SENA.</li>
+      <li><b>Lista compartida de negativas</b> con SENA, Sofía Plus, Betowa, gratis y búsquedas de empleo.</li>
+      <li><b>Ubicación por presencia</b>: personas que están en Colombia, no solo interesadas en Colombia.</li>
+      <li><b>Sin socios de búsqueda ni Display</b> al arrancar, para medir limpio.</li>
+      <li>Textos con datos reales de cada landing: SNIES, semestres, cursos y diferenciales.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Configuración</h2>
+  <div class="tblwrap" style="overflow-x:auto"><table class="cfg"><thead><tr><th style="width:28%">Campaña</th><th style="width:20%">Puja</th><th>Presupuesto</th><th style="width:18%">Ubicación</th></tr></thead><tbody><tr><td><b>1.46 Licenciatura en Lenguas Extranjeras</b><small>Nueva</small></td><td>Maximizar conversiones<small>Search · solo red de Búsqueda</small></td><td><b>$27.000 al día</b><small>Meta del flow en noviembre: $811.552 (Google). En octubre quedan $608.664 sin usar: no hace falta gastarlos de golpe.</small></td><td>Colombia, solo presencia<small>Español</small></td></tr><tr><td><b>1.47 Especialización en Educación para Profesionales de la Salud</b><small>Nueva</small></td><td>Maximizar conversiones<small>Search · solo red de Búsqueda</small></td><td><b>$27.000 al día</b><small>Meta del flow en noviembre: $811.552 (Google). En octubre quedan $608.664 sin usar: no hace falta gastarlos de golpe.</small></td><td>Colombia, solo presencia<small>Español</small></td></tr><tr><td><b>1.18 Maestría Diseño</b><small>Se reestructura</small></td><td>Maximizar conversiones<small>Search · solo red de Búsqueda</small></td><td><b>$13.500 al día</b><small>Hoy corre a $6.300 al día. Meta del flow: $304.332 en octubre y $405.776 en noviembre (Google).</small></td><td>Colombia, solo presencia<small>Español</small></td></tr></tbody></table></div>
+  <p class="muted small">Presupuestos según el flow 2027-1 (Google, sin IVA). Si Google reporta cuota perdida por presupuesto con un costo por lead sano, se sube. Después de 30 conversiones en una campaña se puede pasar a CPA objetivo.</p>
+</section>
+
+<section class="camp" id="c1-46">
+  <div class="camp-head"><p class="eyebrow">Search · Pregrado · Nueva</p><h2>1.46 Licenciatura en Lenguas Extranjeras</h2><p class="lead">Aparece cuando alguien busca en Google la licenciatura o cómo ser profesor de inglés: «licenciatura en lenguas extranjeras», «licenciatura en inglés virtual», «estudiar para ser profesor de inglés».</p>
+    <p class="ficha">SNIES 118997 · 8 semestres · Virtual · Res. 05181 de 2026 · 2 grupos de anuncios · 31 palabras clave · $27.000 al día</p>
+    <p class="legend"><span class="chip" style="background:var(--ink);color:#fff">[exacta]</span><span class="chip">"frase"</span></p></div>
+  <article class="group">
+  <header class="group-head"><h3>Licenciatura en Lenguas Extranjeras</h3><p class="muted">18 palabras clave · <span class="vol">≈ 4.670 búsquedas al mes</span> en Colombia · Página de destino: <a href="https://www.upb.edu.co/es/licenciatura-lenguas-extranjeras-enfasis-ingles-frances-virtual">upb.edu.co/es/licenciatura-lenguas-extranjeras-enfasis-ingles-frances-virtual</a></p></header>
+  <div class="group-grid">
+    <div class="col"><p class="lbl">Palabras clave</p><div class="kwblock"><ul class="chips"><li class="x" title="Concordancia exacta">[licenciatura en lenguas extranjeras]</li><li class="x" title="Concordancia exacta">[lic en lenguas extranjeras]</li><li class="x" title="Concordancia exacta">[licenciatura en lenguas extranjeras virtual]</li><li class="x" title="Concordancia exacta">[licenciatura en lenguas extranjeras con énfasis en inglés]</li><li class="x" title="Concordancia exacta">[licenciatura en lenguas extranjeras con enfasis en ingles]</li><li title="Concordancia de frase">"licenciatura en lenguas extranjeras"</li><li title="Concordancia de frase">"carrera lenguas extranjeras"</li><li title="Concordancia de frase">"carrera de lenguas extranjeras"</li><li title="Concordancia de frase">"profesional en lenguas extranjeras"</li><li title="Concordancia de frase">"pregrado en lenguas extranjeras"</li><li title="Concordancia de frase">"licenciatura en lenguas"</li><li title="Concordancia de frase">"licenciatura en lenguas modernas"</li><li title="Concordancia de frase">"carrera lenguas modernas"</li><li title="Concordancia de frase">"licenciatura en idiomas"</li><li title="Concordancia de frase">"lic en idiomas"</li><li title="Concordancia de frase">"licenciatura en idiomas virtual"</li><li title="Concordancia de frase">"licenciatura en ingles y frances"</li><li title="Concordancia de frase">"estudiar lenguas extranjeras virtual"</li></ul></div></div>
+    <div class="col">
+      <p class="lbl">Así se verá el anuncio en Google</p>
+      <div class="serp">
+        <div class="serp-top"><b>Patrocinado</b><span>upb.edu.co › Licenciatura › Ingles-Frances</span></div>
+        <div class="serp-h">Lic. en Lenguas Extranjeras | Inglés y Francés 100% Virtual | Sé Docente Bilingüe</div>
+        <div class="serp-d">Licenciatura en Lenguas Extranjeras con énfasis en Inglés y Francés, 100% virtual. Fórmate como docente bilingüe con pedagogía, didáctica y tecnologías emergentes.</div>
+      </div>
+      <details><summary>Ver los 15 títulos y 4 descripciones</summary>
+        <div class="copy"><div><p class="lbl">Títulos</p><ol><li>Lic. en Lenguas Extranjeras</li><li>Inglés y Francés 100% Virtual</li><li>UPB Virtual</li><li>Inscripciones Abiertas 2027</li><li>Pregrado de 8 Semestres</li><li>Sé Docente Bilingüe</li><li>Acreditación Alta Calidad</li><li>Registro SNIES 118997</li><li>Estudia a Tu Ritmo</li><li>IA Aplicada a los Idiomas</li><li>Doble Programa en Educación</li><li>Ciudadanía Global</li><li>Licenciatura Bilingüe UPB</li><li>Enseña Inglés y Francés</li><li>Solicita Información Aquí</li></ol></div><div><p class="lbl">Descripciones</p><ol><li>Licenciatura en Lenguas Extranjeras con énfasis en Inglés y Francés, 100% virtual.</li><li>Fórmate como docente bilingüe con pedagogía, didáctica y tecnologías emergentes.</li><li>8 semestres virtuales, SNIES 118997. Universidad con Acreditación en Alta Calidad.</li><li>Estudia a tu ritmo desde cualquier lugar de Colombia. ¡Solicita información hoy!</li></ol></div></div>
+        <p class="muted small">URL final: <code>https://www.upb.edu.co/es/licenciatura-lenguas-extranjeras-enfasis-ingles-frances-virtual?utm_source=Pauta&amp;utm_medium=GoogleAds</code> · Ruta visible: upb.edu.co/Licenciatura/Ingles-Frances</p>
+      </details>
+    </div>
+  </div>
+</article><article class="group">
+  <header class="group-head"><h3>Licenciatura en Inglés</h3><p class="muted">13 palabras clave · <span class="vol">≈ 870 búsquedas al mes</span> en Colombia · Página de destino: <a href="https://www.upb.edu.co/es/licenciatura-lenguas-extranjeras-enfasis-ingles-frances-virtual">upb.edu.co/es/licenciatura-lenguas-extranjeras-enfasis-ingles-frances-virtual</a></p></header>
+  <div class="group-grid">
+    <div class="col"><p class="lbl">Palabras clave</p><div class="kwblock"><ul class="chips"><li class="x" title="Concordancia exacta">[licenciatura en ingles]</li><li class="x" title="Concordancia exacta">[licenciatura en inglés virtual]</li><li class="x" title="Concordancia exacta">[licenciatura en ingles virtual]</li><li title="Concordancia de frase">"licenciatura en ingles"</li><li title="Concordancia de frase">"licenciatura en inglés a distancia"</li><li title="Concordancia de frase">"licenciatura en frances"</li><li title="Concordancia de frase">"licenciatura bilingue"</li><li title="Concordancia de frase">"estudiar para ser profesor de ingles"</li><li title="Concordancia de frase">"carrera para ser profesor de ingles"</li><li title="Concordancia de frase">"como ser profesor de ingles"</li><li title="Concordancia de frase">"carrera de docente de ingles"</li><li title="Concordancia de frase">"pregrado en ingles virtual"</li><li title="Concordancia de frase">"estudiar ingles y frances en la universidad"</li></ul></div></div>
+    <div class="col">
+      <p class="lbl">Así se verá el anuncio en Google</p>
+      <div class="serp">
+        <div class="serp-top"><b>Patrocinado</b><span>upb.edu.co › Licenciatura › Ingles-Frances</span></div>
+        <div class="serp-h">Licenciatura en Inglés Virtual | Sé Profesor de Inglés | Inscripciones Abiertas 2027</div>
+        <div class="serp-d">¿Quieres ser profesor de inglés? Licenciatura en Lenguas Extranjeras 100% virtual. Aprende a enseñar inglés y francés con pedagogía, didáctica y recursos digitales.</div>
+      </div>
+      <details><summary>Ver los 15 títulos y 4 descripciones</summary>
+        <div class="copy"><div><p class="lbl">Títulos</p><ol><li>Licenciatura en Inglés Virtual</li><li>Sé Profesor de Inglés</li><li>Inglés y Francés en la UPB</li><li>UPB Virtual</li><li>100% Virtual</li><li>Inscripciones Abiertas 2027</li><li>Título de Licenciado</li><li>Pregrado de 8 Semestres</li><li>Acreditación Alta Calidad</li><li>Estudia a Tu Ritmo</li><li>Enseña en Dos Idiomas</li><li>IA Aplicada a los Idiomas</li><li>Lingüística Inglés-Francés</li><li>Doble Programa en Educación</li><li>Solicita Información Aquí</li></ol></div><div><p class="lbl">Descripciones</p><ol><li>¿Quieres ser profesor de inglés? Licenciatura en Lenguas Extranjeras 100% virtual.</li><li>Aprende a enseñar inglés y francés con pedagogía, didáctica y recursos digitales.</li><li>Pregrado de 8 semestres con registro SNIES 118997 y Acreditación en Alta Calidad.</li><li>Estudia desde cualquier lugar de Colombia y a tu ritmo. ¡Inscríbete hoy en la UPB!</li></ol></div></div>
+        <p class="muted small">URL final: <code>https://www.upb.edu.co/es/licenciatura-lenguas-extranjeras-enfasis-ingles-frances-virtual?utm_source=Pauta&amp;utm_medium=GoogleAds</code> · Ruta visible: upb.edu.co/Licenciatura/Ingles-Frances</p>
+      </details>
+    </div>
+  </div>
+</article>
+  <article class="group">
+    <header class="group-head"><h3>Recursos de la campaña</h3><p class="muted">Se suman a los sitelinks y textos destacados que ya tiene la cuenta.</p></header>
+    <div class="ext">
+      <div><p class="lbl">Sitelinks</p><ul><li><b>Plan de Estudios</b> · 8 semestres 100% virtuales · Inglés, francés y pedagogía</li><li><b>Doble Programa</b> · 66,9% en común con otras · licenciaturas de la UPB</li><li><b>Inscripciones</b> · Inicia tu proceso de admisión · Cupos 2027-1</li><li><b>Modalidad Virtual</b> · Estudia a tu ritmo · Desde cualquier lugar</li></ul><p class="muted small">Todos apuntan a la landing del programa con el UTM de la cuenta.</p></div>
+      <div><p class="lbl">Textos destacados</p><ul class="chips"><li>100% Virtual</li><li>8 Semestres</li><li>SNIES 118997</li><li>Acreditación Alta Calidad</li><li>Inglés y Francés</li><li>Doble Programa</li></ul>
+           <p class="lbl" style="margin-top:8px">Fragmento estructurado · Cursos</p><ul class="chips"><li>English Linguistics</li><li>Langues Françaises</li><li>IA en Educación</li><li>Learning Design</li></ul></div>
+      <div class="neg"><p class="lbl">Negativas propias de la campaña</p><ul class="chips"><li>curso</li><li>cursos</li><li>clases</li><li>aprender ingles</li><li>aprender inglés</li><li>app</li><li>duolingo</li><li>traductor</li><li>traducir</li><li>british council</li><li>colombo americano</li><li>berlitz</li><li>smart</li><li>nivel b1</li><li>nivel b2</li><li>toefl</li><li>ielts</li><li>examen</li><li>niños</li><li>colegio</li><li>icfes</li></ul><p class="muted small">Concordancia amplia, a nivel de campaña. Además lleva la lista compartida de la cuenta.</p></div>
+    </div>
+  </article>
+</section><section class="camp" id="c1-47">
+  <div class="camp-head"><p class="eyebrow">Search · Especialización · Nueva</p><h2>1.47 Especialización en Educación para Profesionales de la Salud</h2><p class="lead">El nombre del programa casi no se busca (menos de 10 búsquedas al mes). Por eso la campaña sale a buscar a quien quiere enseñar en salud: «especialización en educación médica», «especialización en docencia universitaria», «posgrados para enfermeras virtuales».</p>
+    <p class="ficha">SNIES en proceso · 2 semestres · Virtual · Res. 16516 de 2026 · 3 grupos de anuncios · 30 palabras clave · $27.000 al día</p>
+    <p class="legend"><span class="chip" style="background:var(--ink);color:#fff">[exacta]</span><span class="chip">"frase"</span></p></div>
+  <article class="group">
+  <header class="group-head"><h3>Educación para Profesionales de la Salud</h3><p class="muted">12 palabras clave · <span class="vol">≈ 10 búsquedas al mes</span> en Colombia · Página de destino: <a href="https://www.upb.edu.co/es/especializacion-educacion-profesionales-salud-virtual">upb.edu.co/es/especializacion-educacion-profesionales-salud-virtual</a></p></header>
+  <div class="group-grid">
+    <div class="col"><p class="lbl">Palabras clave</p><div class="kwblock"><ul class="chips"><li class="x" title="Concordancia exacta">[especializacion en educacion para profesionales de la salud]</li><li class="x" title="Concordancia exacta">[especialización en educación para profesionales de la salud]</li><li title="Concordancia de frase">"especializacion en educacion en salud"</li><li title="Concordancia de frase">"especializacion en educacion medica"</li><li title="Concordancia de frase">"posgrado en educacion medica"</li><li title="Concordancia de frase">"posgrado en educacion para la salud"</li><li title="Concordancia de frase">"especializacion en pedagogia en salud"</li><li title="Concordancia de frase">"docencia en ciencias de la salud"</li><li title="Concordancia de frase">"especializacion en docencia en salud"</li><li title="Concordancia de frase">"educacion en ciencias de la salud"</li><li title="Concordancia de frase">"especializacion en simulacion clinica"</li><li title="Concordancia de frase">"formacion docente en salud"</li></ul></div></div>
+    <div class="col">
+      <p class="lbl">Así se verá el anuncio en Google</p>
+      <div class="serp">
+        <div class="serp-top"><b>Patrocinado</b><span>upb.edu.co › Especializacion › Salud</span></div>
+        <div class="serp-h">Esp. Educación en Salud | Para Profesionales de la Salud | Inscripciones Abiertas 2027</div>
+        <div class="serp-d">Especialización en Educación para Profesionales de la Salud, 100% virtual en la UPB. Lidera procesos educativos en salud: simulación clínica, tecnología y evaluación.</div>
+      </div>
+      <details><summary>Ver los 15 títulos y 4 descripciones</summary>
+        <div class="copy"><div><p class="lbl">Títulos</p><ol><li>Esp. Educación en Salud</li><li>Para Profesionales de la Salud</li><li>Especialización 100% Virtual</li><li>UPB Virtual</li><li>2 Semestres Virtuales</li><li>Inscripciones Abiertas 2027</li><li>Sé Mentor en Salud</li><li>Simulación Clínica</li><li>Evaluación por Competencias</li><li>Lidera la Educación en Salud</li><li>Acreditación Alta Calidad</li><li>Docencia para la Salud</li><li>Estudia a Tu Ritmo</li><li>10% Dcto. Egresados UPB</li><li>Solicita Información Aquí</li></ol></div><div><p class="lbl">Descripciones</p><ol><li>Especialización en Educación para Profesionales de la Salud, 100% virtual en la UPB.</li><li>Lidera procesos educativos en salud: simulación clínica, tecnología y evaluación.</li><li>2 semestres virtuales. Fórmate como educador en servicios de salud y educación superior.</li><li>Universidad con Acreditación en Alta Calidad. 10% de descuento para egresados UPB.</li></ol></div></div>
+        <p class="muted small">URL final: <code>https://www.upb.edu.co/es/especializacion-educacion-profesionales-salud-virtual?utm_source=Pauta&amp;utm_medium=GoogleAds</code> · Ruta visible: upb.edu.co/Especializacion/Salud</p>
+      </details>
+    </div>
+  </div>
+</article><article class="group">
+  <header class="group-head"><h3>Docencia universitaria en salud</h3><p class="muted">9 palabras clave · <span class="vol">≈ 1.140 búsquedas al mes</span> en Colombia · Página de destino: <a href="https://www.upb.edu.co/es/especializacion-educacion-profesionales-salud-virtual">upb.edu.co/es/especializacion-educacion-profesionales-salud-virtual</a></p></header>
+  <div class="group-grid">
+    <div class="col"><p class="lbl">Palabras clave</p><div class="kwblock"><ul class="chips"><li class="x" title="Concordancia exacta">[especializacion en docencia universitaria]</li><li class="x" title="Concordancia exacta">[especialización en docencia universitaria virtual]</li><li title="Concordancia de frase">"especializacion en docencia universitaria"</li><li title="Concordancia de frase">"especializacion en docencia"</li><li title="Concordancia de frase">"especializacion en pedagogia y docencia universitaria"</li><li title="Concordancia de frase">"especializacion en docencia y pedagogia"</li><li title="Concordancia de frase">"especialización en docencia virtual"</li><li title="Concordancia de frase">"especialización en docencia superior"</li><li title="Concordancia de frase">"posgrado en docencia universitaria virtual"</li></ul></div></div>
+    <div class="col">
+      <p class="lbl">Así se verá el anuncio en Google</p>
+      <div class="serp">
+        <div class="serp-top"><b>Patrocinado</b><span>upb.edu.co › Especializacion › Salud</span></div>
+        <div class="serp-h">Docencia Universitaria Salud | Especialización en Docencia | 2 Semestres Virtuales</div>
+        <div class="serp-d">Especialización en docencia pensada para profesionales de la salud. 100% virtual UPB. Pedagogía, didáctica y simulación clínica para enseñar en salud y educación superior.</div>
+      </div>
+      <details><summary>Ver los 15 títulos y 4 descripciones</summary>
+        <div class="copy"><div><p class="lbl">Títulos</p><ol><li>Docencia Universitaria Salud</li><li>Especialización en Docencia</li><li>Enseña en Ciencias de la Salud</li><li>UPB Virtual</li><li>100% Virtual</li><li>2 Semestres Virtuales</li><li>Inscripciones Abiertas 2027</li><li>Pedagogía y Didáctica</li><li>Simulación Clínica</li><li>Evaluación por Competencias</li><li>Acreditación Alta Calidad</li><li>Docencia para la Salud</li><li>Estudia a Tu Ritmo</li><li>10% Dcto. Egresados UPB</li><li>Solicita Información Aquí</li></ol></div><div><p class="lbl">Descripciones</p><ol><li>Especialización en docencia pensada para profesionales de la salud. 100% virtual UPB.</li><li>Pedagogía, didáctica y simulación clínica para enseñar en salud y educación superior.</li><li>2 semestres virtuales con Acreditación en Alta Calidad. ¡Inscríbete ahora!</li><li>Si eres profesional de la salud y quieres enseñar, esta especialización es para ti.</li></ol></div></div>
+        <p class="muted small">URL final: <code>https://www.upb.edu.co/es/especializacion-educacion-profesionales-salud-virtual?utm_source=Pauta&amp;utm_medium=GoogleAds</code> · Ruta visible: upb.edu.co/Especializacion/Salud</p>
+      </details>
+    </div>
+  </div>
+</article><article class="group">
+  <header class="group-head"><h3>Posgrados para profesionales de la salud</h3><p class="muted">9 palabras clave · <span class="vol">≈ 110 búsquedas al mes</span> en Colombia · Página de destino: <a href="https://www.upb.edu.co/es/especializacion-educacion-profesionales-salud-virtual">upb.edu.co/es/especializacion-educacion-profesionales-salud-virtual</a></p></header>
+  <div class="group-grid">
+    <div class="col"><p class="lbl">Palabras clave</p><div class="kwblock"><ul class="chips"><li title="Concordancia de frase">"posgrados para enfermeras virtuales"</li><li title="Concordancia de frase">"posgrado para enfermeros virtual"</li><li title="Concordancia de frase">"especializaciones para enfermeras virtuales"</li><li title="Concordancia de frase">"especializacion para medicos virtual"</li><li title="Concordancia de frase">"posgrados virtuales para medicos"</li><li title="Concordancia de frase">"especializaciones virtuales para fisioterapeutas"</li><li title="Concordancia de frase">"especializacion para odontologos virtual"</li><li title="Concordancia de frase">"posgrados para profesionales de la salud virtual"</li><li title="Concordancia de frase">"docencia en enfermeria"</li></ul></div></div>
+    <div class="col">
+      <p class="lbl">Así se verá el anuncio en Google</p>
+      <div class="serp">
+        <div class="serp-top"><b>Patrocinado</b><span>upb.edu.co › Especializacion › Salud</span></div>
+        <div class="serp-h">Posgrado para Prof. de Salud | Médicos, Enfermeras y Más | 2 Semestres Virtuales</div>
+        <div class="serp-d">Para médicos, enfermeros, fisioterapeutas y demás profesionales de la salud. 100% virtual. Conviértete en el mentor que la salud del futuro necesita. Especialización UPB Virtual.</div>
+      </div>
+      <details><summary>Ver los 15 títulos y 4 descripciones</summary>
+        <div class="copy"><div><p class="lbl">Títulos</p><ol><li>Posgrado para Prof. de Salud</li><li>Médicos, Enfermeras y Más</li><li>Especialización 100% Virtual</li><li>Enseña lo Que Sabes de Salud</li><li>UPB Virtual</li><li>2 Semestres Virtuales</li><li>Inscripciones Abiertas 2027</li><li>Sé Docente en Salud</li><li>Simulación Clínica</li><li>Acreditación Alta Calidad</li><li>Estudia a Tu Ritmo</li><li>Compatible con Tu Trabajo</li><li>10% Dcto. Egresados UPB</li><li>Educación para la Salud UPB</li><li>Solicita Información Aquí</li></ol></div><div><p class="lbl">Descripciones</p><ol><li>Para médicos, enfermeros, fisioterapeutas y demás profesionales de la salud. 100% virtual.</li><li>Conviértete en el mentor que la salud del futuro necesita. Especialización UPB Virtual.</li><li>2 semestres virtuales a tu ritmo, compatibles con tu trabajo clínico. ¡Inscríbete hoy!</li><li>Universidad con Acreditación en Alta Calidad. 10% de descuento para egresados UPB.</li></ol></div></div>
+        <p class="muted small">URL final: <code>https://www.upb.edu.co/es/especializacion-educacion-profesionales-salud-virtual?utm_source=Pauta&amp;utm_medium=GoogleAds</code> · Ruta visible: upb.edu.co/Especializacion/Salud</p>
+      </details>
+    </div>
+  </div>
+</article>
+  <article class="group">
+    <header class="group-head"><h3>Recursos de la campaña</h3><p class="muted">Se suman a los sitelinks y textos destacados que ya tiene la cuenta.</p></header>
+    <div class="ext">
+      <div><p class="lbl">Sitelinks</p><ul><li><b>Plan de Estudios</b> · 2 semestres 100% virtuales · Educación basada en competencias</li><li><b>Perfil del Egresado</b> · Educador en salud clínica · y educación superior</li><li><b>Inscripciones</b> · Inicia tu proceso de admisión · Cupos 2027-1</li><li><b>Becas y Descuentos</b> · 10% para egresados UPB · Consulta otros beneficios</li></ul><p class="muted small">Todos apuntan a la landing del programa con el UTM de la cuenta.</p></div>
+      <div><p class="lbl">Textos destacados</p><ul class="chips"><li>100% Virtual</li><li>2 Semestres</li><li>Simulación Clínica</li><li>Acreditación Alta Calidad</li><li>10% Dcto. Egresados</li><li>Profesionales de la Salud</li></ul>
+           <p class="lbl" style="margin-top:8px">Fragmento estructurado · Cursos</p><ul class="chips"><li>Educación Competencias</li><li>Enseñanza-Aprendizaje</li><li>Simulación Clínica</li><li>Liderazgo Educativo</li></ul></div>
+      <div class="neg"><p class="lbl">Negativas propias de la campaña</p><ul class="chips"><li>curso</li><li>cursos</li><li>diplomado</li><li>educacion fisica</li><li>educación física</li><li>salud mental</li><li>salud oral</li><li>eps</li><li>minsalud</li><li>cafam</li><li>oms</li><li>educacion del paciente</li><li>colegio</li><li>primaria</li><li>preescolar</li><li>mapa conceptual</li><li>ensayo</li></ul><p class="muted small">Concordancia amplia, a nivel de campaña. Además lleva la lista compartida de la cuenta.</p></div>
+    </div>
+  </article>
+</section><section class="camp" id="c1-18">
+  <div class="camp-head"><p class="eyebrow">Search · Maestría · Se reestructura</p><h2>1.18 Maestría Diseño</h2><p class="lead">La campaña ya existe y se mantiene con su número. Se rehace por dentro: hoy tiene un solo grupo con 36 palabras clave en concordancia amplia y la mitad de sus conversiones vienen de búsquedas como «sena sofia plus» o «cursos de diseño gráfico gratis».</p>
+    <p class="ficha">SNIES 117255 · 3 semestres · Virtual · Res. 014368 de 2024 · 3 grupos de anuncios · 34 palabras clave · $13.500 al día</p>
+    <p class="legend"><span class="chip" style="background:var(--ink);color:#fff">[exacta]</span><span class="chip">"frase"</span></p></div>
+  <article class="group">
+  <header class="group-head"><h3>Maestría en Diseño</h3><p class="muted">14 palabras clave · <span class="vol">≈ 340 búsquedas al mes</span> en Colombia · Página de destino: <a href="https://www.upb.edu.co/es/maestria-diseno-virtual">upb.edu.co/es/maestria-diseno-virtual</a></p></header>
+  <div class="group-grid">
+    <div class="col"><p class="lbl">Palabras clave</p><div class="kwblock"><ul class="chips"><li class="x" title="Concordancia exacta">[maestria en diseño]</li><li class="x" title="Concordancia exacta">[maestría en diseño]</li><li class="x" title="Concordancia exacta">[maestria en diseño virtual]</li><li title="Concordancia de frase">"maestria en diseño"</li><li title="Concordancia de frase">"maestria en diseño virtual"</li><li title="Concordancia de frase">"maestria en diseño online"</li><li title="Concordancia de frase">"maestrias en diseño"</li><li title="Concordancia de frase">"posgrado en diseño"</li><li title="Concordancia de frase">"postgrado en diseño"</li><li title="Concordancia de frase">"master en diseño"</li><li title="Concordancia de frase">"master diseño online"</li><li title="Concordancia de frase">"especializacion en diseño"</li><li title="Concordancia de frase">"maestria en diseño colombia"</li><li title="Concordancia de frase">"maestria en diseño upb"</li></ul></div></div>
+    <div class="col">
+      <p class="lbl">Así se verá el anuncio en Google</p>
+      <div class="serp">
+        <div class="serp-top"><b>Patrocinado</b><span>upb.edu.co › Maestria › Diseno</span></div>
+        <div class="serp-h">Maestría en Diseño Virtual | Maestría en Diseño UPB | Inscripciones Abiertas 2027</div>
+        <div class="serp-d">Maestría en Diseño 100% virtual de la UPB: investigación y prácticas creativas actuales. 3 semestres, 42% de créditos flexibles y opción de doble titulación internacional.</div>
+      </div>
+      <details><summary>Ver los 15 títulos y 4 descripciones</summary>
+        <div class="copy"><div><p class="lbl">Títulos</p><ol><li>Maestría en Diseño Virtual</li><li>Maestría en Diseño UPB</li><li>UPB Virtual</li><li>100% Virtual</li><li>3 Semestres Virtuales</li><li>Inscripciones Abiertas 2027</li><li>Investigación + Creación</li><li>Doble Titulación Internacional</li><li>Ruta al Doctorado en Diseño</li><li>42% de Créditos Flexibles</li><li>Acreditación Alta Calidad</li><li>Diseño con Impacto Social</li><li>Estudia a Tu Ritmo</li><li>10% Dcto. Egresados UPB</li><li>Solicita Información Aquí</li></ol></div><div><p class="lbl">Descripciones</p><ol><li>Maestría en Diseño 100% virtual de la UPB: investigación y prácticas creativas actuales.</li><li>3 semestres, 42% de créditos flexibles y opción de doble titulación internacional.</li><li>Diseña soluciones innovadoras para el cambio social, cultural y tecnológico. ¡Inscríbete!</li><li>Articula tu maestría con el Doctorado en Estudios de Diseño. Acreditación Alta Calidad.</li></ol></div></div>
+        <p class="muted small">URL final: <code>https://www.upb.edu.co/es/maestria-diseno-virtual?utm_source=Pauta&amp;utm_medium=GoogleAds</code> · Ruta visible: upb.edu.co/Maestria/Diseno</p>
+      </details>
+    </div>
+  </div>
+</article><article class="group">
+  <header class="group-head"><h3>Diseño gráfico y comunicación visual</h3><p class="muted">11 palabras clave · <span class="vol">≈ 210 búsquedas al mes</span> en Colombia · Página de destino: <a href="https://www.upb.edu.co/es/maestria-diseno-virtual">upb.edu.co/es/maestria-diseno-virtual</a></p></header>
+  <div class="group-grid">
+    <div class="col"><p class="lbl">Palabras clave</p><div class="kwblock"><ul class="chips"><li class="x" title="Concordancia exacta">[master oficial diseño grafico]</li><li title="Concordancia de frase">"maestria en diseño grafico"</li><li title="Concordancia de frase">"diseño grafico maestria"</li><li title="Concordancia de frase">"maestria en diseño grafico virtual"</li><li title="Concordancia de frase">"posgrado diseño grafico"</li><li title="Concordancia de frase">"master diseño grafico"</li><li title="Concordancia de frase">"master oficial diseño grafico"</li><li title="Concordancia de frase">"maestria en diseño y comunicacion visual"</li><li title="Concordancia de frase">"maestria en diseño editorial"</li><li title="Concordancia de frase">"maestrias para diseñadores graficos"</li><li title="Concordancia de frase">"maestria en ilustracion digital"</li></ul></div></div>
+    <div class="col">
+      <p class="lbl">Así se verá el anuncio en Google</p>
+      <div class="serp">
+        <div class="serp-top"><b>Patrocinado</b><span>upb.edu.co › Maestria › Diseno</span></div>
+        <div class="serp-h">Maestría para Diseñadores | Diseño Gráfico: Maestría | 100% Virtual</div>
+        <div class="serp-d">¿Eres diseñador gráfico? Da el siguiente paso con la Maestría en Diseño virtual UPB. Teoría, crítica y metodología del proyecto de diseño para diseñadores profesionales.</div>
+      </div>
+      <details><summary>Ver los 15 títulos y 4 descripciones</summary>
+        <div class="copy"><div><p class="lbl">Títulos</p><ol><li>Maestría para Diseñadores</li><li>Diseño Gráfico: Maestría</li><li>Posgrado para Diseñadores</li><li>Maestría en Diseño Virtual</li><li>UPB Virtual</li><li>100% Virtual</li><li>3 Semestres Virtuales</li><li>Inscripciones Abiertas 2027</li><li>Lleva tu Diseño a Otro Nivel</li><li>Investigación + Creación</li><li>Doble Titulación Internacional</li><li>42% de Créditos Flexibles</li><li>Acreditación Alta Calidad</li><li>Estudia a Tu Ritmo</li><li>Solicita Información Aquí</li></ol></div><div><p class="lbl">Descripciones</p><ol><li>¿Eres diseñador gráfico? Da el siguiente paso con la Maestría en Diseño virtual UPB.</li><li>Teoría, crítica y metodología del proyecto de diseño para diseñadores profesionales.</li><li>3 semestres 100% virtuales, 42% de créditos flexibles y doble titulación internacional.</li><li>Universidad con Acreditación en Alta Calidad. 10% de descuento para egresados UPB.</li></ol></div></div>
+        <p class="muted small">URL final: <code>https://www.upb.edu.co/es/maestria-diseno-virtual?utm_source=Pauta&amp;utm_medium=GoogleAds</code> · Ruta visible: upb.edu.co/Maestria/Diseno</p>
+      </details>
+    </div>
+  </div>
+</article><article class="group">
+  <header class="group-head"><h3>Investigación e innovación en diseño</h3><p class="muted">9 palabras clave · <span class="vol">≈ 120 búsquedas al mes</span> en Colombia · Página de destino: <a href="https://www.upb.edu.co/es/maestria-diseno-virtual">upb.edu.co/es/maestria-diseno-virtual</a></p></header>
+  <div class="group-grid">
+    <div class="col"><p class="lbl">Palabras clave</p><div class="kwblock"><ul class="chips"><li title="Concordancia de frase">"maestria en gestion del diseño"</li><li title="Concordancia de frase">"maestria en diseño e innovacion"</li><li title="Concordancia de frase">"maestria en diseño de experiencia de usuario"</li><li title="Concordancia de frase">"maestria en diseño ux"</li><li title="Concordancia de frase">"maestria en diseño sostenible"</li><li title="Concordancia de frase">"maestria en estudios de diseño"</li><li title="Concordancia de frase">"maestria en diseño de producto"</li><li title="Concordancia de frase">"maestria en diseño industrial"</li><li title="Concordancia de frase">"investigacion en diseño posgrado"</li></ul></div></div>
+    <div class="col">
+      <p class="lbl">Así se verá el anuncio en Google</p>
+      <div class="serp">
+        <div class="serp-top"><b>Patrocinado</b><span>upb.edu.co › Maestria › Diseno</span></div>
+        <div class="serp-h">Maestría en Diseño Virtual | Investigación en Diseño | 100% Virtual</div>
+        <div class="serp-d">Investiga los problemas contemporáneos del diseño: enfoque social y tecnológico. Crea y gestiona proyectos de investigación-creación con saberes interdisciplinarios.</div>
+      </div>
+      <details><summary>Ver los 15 títulos y 4 descripciones</summary>
+        <div class="copy"><div><p class="lbl">Títulos</p><ol><li>Maestría en Diseño Virtual</li><li>Investigación en Diseño</li><li>Diseño e Innovación Social</li><li>Proyectos con Impacto</li><li>UPB Virtual</li><li>100% Virtual</li><li>3 Semestres Virtuales</li><li>Inscripciones Abiertas 2027</li><li>Diseño, Tecnología y Sociedad</li><li>Investigación + Creación</li><li>Ruta al Doctorado en Diseño</li><li>Doble Titulación Internacional</li><li>Acreditación Alta Calidad</li><li>Estudia a Tu Ritmo</li><li>Solicita Información Aquí</li></ol></div><div><p class="lbl">Descripciones</p><ol><li>Investiga los problemas contemporáneos del diseño: enfoque social y tecnológico.</li><li>Crea y gestiona proyectos de investigación-creación con saberes interdisciplinarios.</li><li>Maestría en Diseño 100% virtual, 3 semestres. Opción de doble titulación internacional.</li><li>Articula tu maestría con el Doctorado en Estudios de Diseño de la UPB. ¡Inscríbete!</li></ol></div></div>
+        <p class="muted small">URL final: <code>https://www.upb.edu.co/es/maestria-diseno-virtual?utm_source=Pauta&amp;utm_medium=GoogleAds</code> · Ruta visible: upb.edu.co/Maestria/Diseno</p>
+      </details>
+    </div>
+  </div>
+</article>
+  <article class="group">
+    <header class="group-head"><h3>Recursos de la campaña</h3><p class="muted">Se suman a los sitelinks y textos destacados que ya tiene la cuenta.</p></header>
+    <div class="ext">
+      <div><p class="lbl">Sitelinks</p><ul><li><b>Plan de Estudios</b> · 3 semestres 100% virtuales · 42% de créditos flexibles</li><li><b>Doble Titulación</b> · Convenios con universidades · internacionales</li><li><b>Doctorado en Diseño</b> · Articula tu maestría con el · Doctorado en Estudios de Diseño</li><li><b>Becas y Descuentos</b> · 10% para egresados UPB · Consulta otros beneficios</li></ul><p class="muted small">Todos apuntan a la landing del programa con el UTM de la cuenta.</p></div>
+      <div><p class="lbl">Textos destacados</p><ul class="chips"><li>100% Virtual</li><li>3 Semestres</li><li>SNIES 117255</li><li>Acreditación Alta Calidad</li><li>Doble Titulación</li><li>Créditos Flexibles</li></ul>
+           <p class="lbl" style="margin-top:8px">Fragmento estructurado · Cursos</p><ul class="chips"><li>Metodología del Proyecto</li><li>Teoría y Crítica</li><li>Enfoque Social</li><li>Enfoque Tecnológico</li></ul></div>
+      <div class="neg"><p class="lbl">Negativas propias de la campaña</p><ul class="chips"><li>curso</li><li>cursos</li><li>tecnico</li><li>técnico</li><li>tecnologo</li><li>tecnólogo</li><li>pregrado</li><li>carrera</li><li>interiores</li><li>moda</li><li>modas</li><li>software</li><li>mecanico</li><li>urbano</li><li>urbanismo</li><li>arquitectura</li><li>game</li><li>videojuegos</li></ul><p class="muted small">Concordancia amplia, a nivel de campaña. Además lleva la lista compartida de la cuenta.</p></div>
+    </div>
+  </article>
+</section>
+
+<section class="block" id="negativas">
+  <h2>Búsquedas que excluimos</h2>
+  <p>En las campañas actuales, la concordancia amplia deja entrar búsquedas de gente que quiere estudiar gratis en el SENA. Google las cuenta como conversiones porque llenan el formulario, pero no son aspirantes a un programa pago de la UPB. Así se ve en los últimos 90 días:</p>
+  <div class="tblwrap" style="overflow-x:auto"><table class="evid"><thead><tr><th>Campaña actual</th><th>Conversiones de búsquedas SENA, Sofía Plus, Betowa o «gratis»</th><th>Inversión en esas búsquedas</th></tr></thead><tbody><tr><td>1.44 Licenciatura en Tecnología Educativa</td><td>96 %</td><td>90 %</td></tr><tr><td>1.13 Especialización en Gerencia</td><td>97 %</td><td>91 %</td></tr><tr><td>1.18 Maestría Diseño</td><td>53 %</td><td>37 %</td></tr><tr><td>1.43 Pregrado Publicidad y Marketing digital</td><td>46 %</td><td>45 %</td></tr><tr><td>1.45 Licenciatura en Literatura y Lengua Castellana</td><td>34 %</td><td>36 %</td></tr></tbody></table></div>
+  <div class="neg" style="margin-top:14px"><p class="lbl">Lista compartida «Negativas UPB Virtual 2027-1» · se aplica a las tres campañas</p><ul class="chips"><li>sena</li><li>sofia plus</li><li>sofía plus</li><li>betowa</li><li>gratis</li><li>gratuito</li><li>gratuita</li><li>trabajo</li><li>empleo</li><li>vacante</li><li>vacantes</li><li>convocatoria</li><li>hoja de vida</li><li>curriculum</li><li>que es</li><li>definicion</li><li>significado</li><li>pdf</li><li>ejemplos</li><li>tesis</li><li>upb bucaramanga</li><li>upb monteria</li><li>upb palmira</li></ul>
+  <p class="muted small">Concordancia amplia. Conviene aplicar esta misma lista al resto de campañas de la cuenta: 1.44 y 1.13 son las más afectadas.</p></div>
+</section>
+
+<footer class="muted small">Fuentes: cuenta de Google Ads ADCOM 2023 - UPB VIRTUAL / VOOK (281-583-9788), configuración y términos de búsqueda del 19 de julio al 18 de octubre de 2026 · Planificador de palabras clave de Google, Colombia, español · Landings de cada programa en upb.edu.co · Flow Presupuestos VOOK_ADCOM_UPB_1 2027. ADCOM, octubre de 2026.</footer>
+</main>
+</body>
+</html>
