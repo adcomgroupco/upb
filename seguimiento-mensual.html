@@ -279,7 +279,7 @@ const FLOW = [
   ['Virtual','Meta','Ambiental','Esp. Gestión de la Sostenibilidad',AMB_IND,['1.9.6 '],'Anuncio individual (sale del carrusel)'],
   ['Virtual','Meta','Ambiental','Maestría Sostenibilidad',AMB_IND,['1.9.7 '],'Anuncio individual (sale del carrusel)'],
   ['Virtual','Meta','Ambiental','Maestría Energías Renovables',AMB_IND,['1.9.8 '],'Anuncio individual (sale del carrusel)'],
-  ['Virtual','Meta','Eventos','Eventos',Z,['UPB VIRTUAL - EVENTO'],'Sin presupuesto en el flow'],
+  ['Virtual','Meta','Eventos','Eventos',[0,800000,0,0,0,0],['UPB VIRTUAL - EVENTO'],'Octubre: 2 eventos adicionales al flow · MBA 21-oct ($500.000) y Maestría en Diseño 22-oct ($300.000)'],
   // Open
   ['Open','Google','Educación','Diplomado en Docencia Universitaria',OI([685076,0,0,0,0,0]),['2.3 '],'Apertura 5 de octubre'],
   ['Open','Google','Marketing','Diplomado en UX: Diseño Centrado en el Usuario',Z,['2.2 '],'Inactivo en el flow'],
@@ -287,9 +287,9 @@ const FLOW = [
   ['Open','Meta','Educación','Microcredencial Laboratorio de IA para la Educación',OI([521962,0,0,0,0,0]),['2.8 '],'Pauta hasta el 2 de octubre'],
   ['Open','Meta','Educación','Microcredencial Innovación STEAM',OI([521962,0,0,0,0,0]),['2.12 '],'Pauta hasta el 2 de octubre'],
   ['Open','Meta','Desarrollo Social','Microcredencial Territorio, Movilidad y Transporte',OI([260981,228359,0,0,0,0]),['2.9 '],'Pauta hasta el 2 de noviembre'],
-  ['Open','Meta','Ambiental','Microcredencial Transición en los Mercados de Energía',OI([260981,228359,0,0,0,0]),['2.10 '],'Pauta hasta el 13 de octubre',{'2026-10':13}],
-  ['Open','Meta','Proyectos','Microcredencial Estudios de Viabilidad de Proyectos',OI([260981,228359,0,0,0,0]),['2.11 '],'Pauta hasta el 18 de octubre',{'2026-10':18}],
-  ['Open','Meta','Administración','Microcredencial Inteligencia de Negocios',OI([260981,228359,0,0,0,0]),['2.13 '],'Pauta hasta el 19 de octubre',{'2026-10':19}],
+  ['Open','Meta','Ambiental','Microcredencial Transición en los Mercados de Energía',OI([260981,228359,0,0,0,0]),['2.10 '],'Pauta hasta el 13 de octubre · desde el 20-oct al mínimo ($3.250/día) por decisión de UPB',{'2026-10':13}],
+  ['Open','Meta','Proyectos','Microcredencial Estudios de Viabilidad de Proyectos',OI([260981,228359,0,0,0,0]),['2.11 '],'Pauta hasta el 18 de octubre · desde el 20-oct al mínimo ($3.250/día) por decisión de UPB',{'2026-10':18}],
+  ['Open','Meta','Administración','Microcredencial Inteligencia de Negocios',OI([260981,228359,0,0,0,0]),['2.13 '],'Pauta hasta el 19 de octubre · desde el 20-oct al mínimo ($3.250/día) por decisión de UPB',{'2026-10':19}],
   ['Open','—','Por asignar','Presupuesto Open sin repartir por programa',OI([0,228356.55,18268680.74,0,0,0]),[],'Octubre: 20 % de Google · noviembre: total del mes'],
 ].map(([l,m,n,p,b,px,nota,end]) => ({l, m, n, p, b, px, nota: nota || '', end: end || {}}));
 const GEN = {   // metas generales del semestre (archivo de presupuestos)
