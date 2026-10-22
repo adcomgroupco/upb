@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Guía para lanzar ChatGPT Ads con UPB: creación de cuenta, formatos, objetivos, inversión mínima, medición, políticas y datos de educación. ADCOM.">
+<title>UPB · ChatGPT Ads · ADCOM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+/* Plantilla ADCOM para documentos de cliente (igual que los de Corpas): cabecera negra redondeada, acento amarillo, fondo blanco. Solo claro. */
+:root {
+  --bg:#FFFFFF; --ink:#141414; --muted:#63635E; --line:#E6E6E1; --panel:#F7F7F5;
+  --accent:#FFC000; --accent-soft:#FFF5D1; --head:#141414; --head-ink:#FFFFFF; --link:#1A0DAB; --img:#EDEBE4; --fb:#1877F2;
+  --f:"Poppins","Segoe UI",Helvetica,Arial,sans-serif; color-scheme:light;
+}
+* { box-sizing:border-box; }
+html,body { background:var(--bg); margin:0; }
+body { color:var(--ink); font-family:var(--f); font-size:15px; line-height:1.6; }
+.wrap { max-width:1080px; margin:0 auto; padding-inline:16px; padding-block:20px 64px; display:grid; gap:44px; }
+h1,h2,h3 { margin:0; line-height:1.2; text-wrap:balance; }
+p,ul,dl { margin:0; }
+a { color:var(--link); overflow-wrap:anywhere; }
+code { font-size:12px; background:var(--panel); border-radius:6px; padding:1px 6px; overflow-wrap:anywhere; }
+.lbl { font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.top { background:var(--head); color:var(--head-ink); border-radius:20px; padding:clamp(24px,4vw,44px); display:grid; gap:14px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.16em; font-size:13px; }
+.brand i { width:12px; height:12px; border-radius:3px; background:var(--accent); }
+.top h1 { font-size:clamp(28px,4.6vw,42px); font-weight:700; }
+.top h1 span { color:var(--accent); }
+.top p { max-width:64ch; color:#D6D6D2; font-size:16px; }
+.back { color:#D6D6D2; font-size:13px; text-decoration:none; justify-self:start; }
+.back:hover { color:var(--accent); }
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+.stat { border:1px solid var(--line); border-radius:16px; padding:16px 18px; display:grid; gap:2px; }
+.stat b { font-size:30px; line-height:1.1; font-variant-numeric:tabular-nums; }
+.stat b::after { content:""; display:block; width:32px; height:4px; border-radius:2px; background:var(--accent); margin-top:8px; }
+.stat span { font-size:13px; color:var(--muted); }
+.sec { display:grid; gap:16px; }
+.sec-head { display:grid; gap:4px; padding-bottom:12px; border-bottom:3px solid var(--accent); }
+.sec-head h2 { font-size:clamp(21px,3vw,26px); }
+.flags { display:grid; gap:10px; }
+.flags li { list-style:none; background:var(--accent-soft); border:1px solid var(--accent); border-radius:12px; padding:12px 16px; font-size:14px; }
+.flags { padding:0; }
+.tbl { overflow-x:auto; border:1px solid var(--line); border-radius:16px; }
+table { border-collapse:collapse; width:100%; font-size:13px; min-width:640px; }
+th,td { padding:9px 12px; text-align:left; vertical-align:top; }
+thead th { font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:2px solid var(--line); }
+tbody tr + tr td { border-top:1px solid var(--line); }
+.filters { display:flex; flex-wrap:wrap; gap:6px; position:sticky; top:0; z-index:5; background:var(--bg); padding-block:10px; border-bottom:1px solid var(--line); }
+.chip { font:inherit; font-size:13px; font-weight:500; border:1px solid var(--line); background:var(--bg); color:var(--ink); border-radius:99px; padding:6px 14px; cursor:pointer; }
+.chip:hover { background:var(--accent-soft); }
+.chip[aria-pressed="true"] { background:var(--head); color:var(--head-ink); border-color:var(--head); font-weight:600; }
+.chip:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.ads { display:grid; gap:20px; }
+.ad { border:1px solid var(--line); border-bottom:4px solid var(--accent); border-radius:16px; padding:clamp(16px,3vw,24px); display:grid; gap:14px; scroll-margin-top:70px; }
+.ad[hidden] { display:none; }
+.ad-head { display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:flex-start; }
+.ad-head h3 { font-size:19px; }
+.tags { display:flex; gap:6px; flex-wrap:wrap; }
+.tag { font-size:11px; font-weight:600; letter-spacing:.04em; border-radius:99px; padding:3px 10px; background:var(--panel); }
+.tag.on { background:#DCFCE7; color:#14532D; } .tag.off { background:#FEE2E2; color:#991B1B; }
+.flag { background:var(--accent-soft); border-radius:10px; padding:8px 12px; font-size:13px; }
+.ad-grid { display:grid; grid-template-columns:minmax(0,420px) minmax(0,1fr); gap:24px; align-items:start; }
+@media (max-width:820px) { .ad-grid { grid-template-columns:1fr; } }
+.mock { border:1px solid var(--line); border-radius:12px; background:#fff; overflow:hidden; box-shadow:0 1px 3px rgba(20,20,20,.06); }
+.mock-top { display:flex; gap:10px; align-items:center; padding:12px 14px 6px; }
+.mock-top b { display:block; font-size:14px; line-height:1.2; }
+.mock-top small { color:var(--muted); font-size:12px; }
+.av { width:36px; height:36px; border-radius:50%; background:var(--head); color:var(--accent); display:grid; place-items:center; font-size:11px; font-weight:700; flex:0 0 auto; }
+.mock-body { padding:4px 14px 12px; font-size:13px; line-height:1.45; max-height:9.2em; overflow:auto; }
+.strip { display:flex; gap:8px; overflow-x:auto; padding:0 14px 14px; scroll-snap-type:x mandatory; }
+.strip figure { flex:0 0 72%; scroll-snap-align:start; }
+.single figure { margin:0; }
+figure { margin:0; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--img); }
+figure img { display:block; width:100%; aspect-ratio:1/1; object-fit:cover; }
+figcaption { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 10px; background:var(--panel); font-size:12px; }
+figcaption span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+figcaption b { font-size:11px; background:#E4E6EB; border-radius:6px; padding:4px 8px; white-space:nowrap; }
+.meta { display:grid; grid-template-columns:110px 1fr; gap:8px 12px; font-size:13px; }
+.meta dt { color:var(--muted); font-weight:600; font-size:12px; }
+.meta dd { margin:0; }
+.meta ul { padding-left:16px; }
+.note { font-size:13px; color:var(--muted); max-width:72ch; }
+footer { font-size:12px; color:var(--muted); }
+
+.cards3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+.box { border:1px solid var(--line); border-radius:14px; padding:16px 18px; display:grid; gap:8px; align-content:start; font-size:14px; }
+.box h3, .h3 { font-size:15px; margin:0; }
+.h3 { margin-top:10px; }
+.box ul, .list { margin:0; padding-left:18px; display:grid; gap:6px; font-size:14px; }
+.box.ok { border-top:4px solid #0ca30c; } .box.no { border-top:4px solid #d03b3b; }
+.steps { list-style:none; padding:0; margin:0; display:grid; gap:12px; }
+.step { display:grid; grid-template-columns:96px 1fr; gap:16px; border:1px solid var(--line); border-radius:14px; padding:16px 18px; font-size:14px; }
+.step h3 { font-size:16px; margin:0 0 6px; }
+.step ul { margin:0; padding-left:18px; display:grid; gap:5px; }
+.who { align-self:start; text-align:center; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; border-radius:99px; padding:4px 8px; }
+.who-upb .who { background:var(--head); color:var(--accent); }
+.who-web .who { background:#E3ECF7; color:#1A3A6B; }
+.who-adcom .who { background:var(--accent); color:var(--ink); }
+.warn { margin-top:8px; background:var(--accent-soft); border-radius:10px; padding:8px 12px; font-size:13px; }
+.split2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; align-items:start; }
+tr.hl td { background:var(--accent-soft); }
+.mock { border:1px solid var(--line); border-radius:16px; padding:16px; background:var(--panel); display:grid; gap:10px; }
+.chat { display:grid; gap:10px; }
+.bubble { border-radius:14px; padding:10px 12px; font-size:13px; max-width:90%; }
+.bubble.user { justify-self:end; background:#E9E9E6; }
+.bubble.bot { background:#fff; border:1px solid var(--line); }
+.dots { color:var(--muted); }
+.card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; display:grid; gap:8px; }
+.card-top { display:flex; align-items:center; gap:8px; font-size:13px; }
+.card-top .ico { width:26px; height:26px; border-radius:50%; background:var(--head); color:var(--accent); font-size:9px; font-weight:700; display:grid; place-items:center; }
+.card-top .spon { margin-left:auto; font-size:11px; color:var(--muted); }
+.card-body { display:grid; grid-template-columns:72px 1fr; gap:10px; font-size:13px; }
+.card-body .img { width:72px; height:72px; border-radius:10px; background:linear-gradient(135deg,var(--accent),#F4A100); }
+.card-body p { margin:2px 0 0; color:var(--muted); }
+.checklist { border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:12px; padding:14px 18px; font-size:14px; }
+.checklist ul { margin:6px 0 0; padding-left:18px; display:grid; gap:5px; }
+.chips { list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:6px; }
+.chips li { background:var(--panel); border-radius:99px; padding:4px 12px; font-size:12px; }
+.adlist { display:grid; gap:10px; }
+.mini { border:1px solid var(--line); border-radius:12px; padding:10px 14px; font-size:13px; }
+.mini p { margin:2px 0; color:var(--muted); } .mini small { color:var(--muted); font-size:11px; }
+.sources { margin:0; padding-left:18px; display:grid; gap:8px; font-size:13px; }
+
+.split2 table, .sec .tbl table { min-width:0; }
+.sec td, .sec th { white-space:normal; }
+@media (max-width:600px) { .step { grid-template-columns:1fr; } .who { justify-self:start; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<header class="top">
+  <a class="back" href="index.html">← Documentos UPB</a>
+  <div class="brand"><i></i>ADCOM <span style="color:#8A8A85;font-weight:400;letter-spacing:0">/</span> UPB VIRTUAL</div>
+  <h1>ChatGPT Ads: <span>guía de lanzamiento</span></h1>
+  <p>Qué es, cómo funciona, qué necesita UPB para crear la cuenta, formatos, objetivos, inversión mínima, medición y políticas. Con datos de cuánto pesa la educación dentro de ChatGPT.</p>
+</header>
+
+<section class="stats" aria-label="En una mirada">
+  <div class="stat"><b>89</b><span>países con ChatGPT Ads. Colombia entró el 21 de octubre de 2026</span></div>
+  <div class="stat"><b>900 M</b><span>usuarios semanales de ChatGPT (febrero de 2026)</span></div>
+  <div class="stat"><b>~10%</b><span>de los mensajes en ChatGPT piden enseñanza o tutoría</span></div>
+  <div class="stat"><b>USD 25</b><span>inversión mínima diaria por campaña (cuentas en dólares)</span></div>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Contexto</span><h2>Cómo funcionan los anuncios en ChatGPT</h2></div>
+  <div class="cards3">
+    <div class="box"><h3>Dónde aparecen</h3><ul>
+      <li>Debajo de la respuesta de ChatGPT, marcados como <b>Patrocinado</b>.</li>
+      <li>Solo para usuarios de los planes <b>Free y Go</b>. Plus, Pro, Business, Enterprise y Edu no ven anuncios.</li>
+      <li>En la app de iOS, la de Android y la web (escritorio y móvil). Se puede elegir cada una.</li>
+      <li>El anuncio no cambia la respuesta de ChatGPT: va aparte.</li>
+    </ul></div>
+    <div class="box"><h3>A quién se le muestran</h3><ul>
+      <li>No hay palabras clave: ChatGPT relaciona el anuncio con el <b>tema de la conversación</b>.</li>
+      <li>El anunciante describe su oferta con <b>«context hints»</b> (hasta 2.000 por grupo de anuncios).</li>
+      <li>Se puede limitar por <b>país, región o mercado</b>, por plataforma y por <b>audiencias propias</b> (listas de clientes o del CRM).</li>
+      <li>No hay segmentación por edad, género o intereses.</li>
+    </ul></div>
+    <div class="box"><h3>Lo que no se puede</h3><ul>
+      <li>No se muestran a <b>menores de 18 años</b> (declarados o estimados por OpenAI). Para UPB, el foco natural son los <b>posgrados y pregrados virtuales para adultos</b>.</li>
+      <li>No aparecen en conversaciones sensibles: salud mental o personal, política, dependencia emocional.</li>
+      <li>No hay video, GIF ni carrusel: una imagen estática por anuncio.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Paso a paso</span><h2>Cómo lanzar la cuenta</h2></div>
+  <p class="note">La creación de la cuenta la tiene que hacer UPB, porque la verificación es de la entidad legal y del medio de pago. ADCOM entra después como usuario invitado.</p>
+
+  <ol class="steps">
+    <li class="step who-upb"><div class="who">UPB</div><div>
+      <h3>1. Reunir los datos y documentos antes de empezar</h3>
+      <ul>
+        <li>Razón social exacta como figura en el registro y <b>NIT</b>.</li>
+        <li>Dirección registrada de la universidad.</li>
+        <li>Sitio web (<code>upb.edu.co</code>) y logo cuadrado de al menos <b>256 × 256 px</b> (JPEG, PNG o WebP). Ese logo es el ícono que acompaña cada anuncio.</li>
+        <li>Documento de identidad de la persona que hará la verificación: debe poder representar o autorizar a la universidad.</li>
+        <li><b>Tarjeta corporativa a nombre de UPB, emitida en Colombia.</b> Una tarjeta personal o extranjera suele demorar o bloquear la aprobación.</li>
+        <li>Un correo institucional para crear la cuenta de OpenAI (recomendado: uno de área, no personal).</li>
+      </ul>
+    </div></li>
+
+    <li class="step who-upb"><div class="who">UPB</div><div>
+      <h3>2. Crear la cuenta en Ads Manager</h3>
+      <ul>
+        <li>Entrar a <a href="https://ads.openai.com" target="_blank" rel="noopener">ads.openai.com</a> e iniciar sesión con el correo institucional, o crear la cuenta de OpenAI ahí mismo.</li>
+        <li>Llenar razón social, nombre de la cuenta, nombre público de la marca («UPB Virtual»), sitio web, logo e industria (educación).</li>
+        <li>Elegir <b>país Colombia, moneda y zona horaria America/Bogotá</b>.</li>
+      </ul>
+      <p class="warn"><b>País, moneda y zona horaria no se pueden cambiar después.</b> Si se eligen mal, toca crear otra cuenta. Confirmar con ADCOM antes de enviar.</p>
+    </div></li>
+
+    <li class="step who-upb"><div class="who">UPB</div><div>
+      <h3>3. Verificar la identidad y la empresa</h3>
+      <ul>
+        <li>La verificación se hace con <b>Persona</b>: documento de la persona y datos de la universidad.</li>
+        <li>Luego OpenAI revisa la cuenta contra sus políticas de anuncios. Puede tardar <b>hasta 7 días hábiles</b> y no se puede acelerar.</li>
+        <li>Mientras tanto, ADCOM puede dejar listas las campañas en pausa.</li>
+      </ul>
+    </div></li>
+
+    <li class="step who-upb"><div class="who">UPB</div><div>
+      <h3>4. Agregar el medio de pago e invitar a ADCOM</h3>
+      <ul>
+        <li>Registrar la tarjeta corporativa en la facturación. Sin medio de pago las campañas no salen.</li>
+        <li>Invitar a los usuarios de ADCOM con permisos para crear campañas y ver reportes.</li>
+        <li>Revisar en Configuración que el <b>nombre de la cuenta y el logo</b> estén exactamente como deben verse en el anuncio. Si falta este paso, los anuncios no se entregan.</li>
+      </ul>
+    </div></li>
+
+    <li class="step who-web"><div class="who">Web UPB</div><div>
+      <h3>5. Instalar la medición en las landings</h3>
+      <ul>
+        <li>ADCOM crea el <b>Pixel ID</b> en la pestaña Conversiones de Ads Manager.</li>
+        <li>El equipo web de UPB instala el código en el <code>&lt;head&gt;</code> de las landings de los programas.</li>
+        <li>El formulario dispara el evento <code>lead_created</code> al enviarse.</li>
+        <li>Si la web usa política de seguridad de contenido (CSP), hay que autorizar los dominios de OpenAI. El detalle está más abajo, en Medición.</li>
+        <li>Conectar el pixel al <b>banner de consentimiento de cookies</b> (Ley 1581 de habeas data).</li>
+      </ul>
+    </div></li>
+
+    <li class="step who-adcom"><div class="who">ADCOM</div><div>
+      <h3>6. Montar, probar y lanzar</h3>
+      <ul>
+        <li>Crear las campañas en pausa, con los UTM acordados para el CRM: <code>utm_source=Pauta&amp;utm_medium=ChatGPTAds</code>.</li>
+        <li>Revisar la vista previa de cada anuncio y confirmar que el pixel recibe eventos. Ads Manager muestra los eventos de los últimos 15 minutos.</li>
+        <li>Activar cuando la cuenta y los anuncios estén aprobados. Cada cambio de texto o imagen pasa otra vez por revisión.</li>
+      </ul>
+    </div></li>
+  </ol>
+  <p class="note">Tiempo estimado: entre 1 y 2 semanas desde que UPB inicia el registro, sobre todo por la verificación. La documentación pública no dice si todas las funciones ya están habilitadas para cuentas registradas en Colombia; se confirma al crear la cuenta.</p>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Formatos</span><h2>Formatos y requerimientos</h2></div>
+  <div class="split2">
+    <div>
+      <div class="tbl"><table>
+        <thead><tr><th>Elemento del anuncio (chat card)</th><th>Requisito</th></tr></thead>
+        <tbody>
+          <tr><td>Nombre del anunciante e ícono</td><td>Vienen de la cuenta. Ícono de 256 × 256 px como mínimo.</td></tr>
+          <tr><td>Título</td><td>De 3 a 50 caracteres. Se recomiendan 16 a 24.</td></tr>
+          <tr><td>Texto</td><td>Hasta 100 caracteres. Se recomiendan 32 a 48.</td></tr>
+          <tr><td>Imagen</td><td>Cuadrada, JPEG, PNG o WebP, de al menos 640 × 640 px (máximo recomendado 1200 × 1200).</td></tr>
+          <tr><td>URL de destino</td><td>HTTP o HTTPS, máximo 2.048 caracteres, accesible para el rastreador de OpenAI y coherente con el anuncio.</td></tr>
+          <tr><td>Parámetros de seguimiento</td><td>Se configuran por cuenta, campaña, grupo o anuncio; manda el nivel más específico.</td></tr>
+        </tbody></table></div>
+      <p class="note">El formato estándar es la tarjeta de chat (<i>chat card</i>). OpenAI está probando un formato con imágenes más grandes, por ahora solo en Estados Unidos. También hay anuncios de catálogo de productos, que no aplican a UPB.</p>
+    </div>
+    <div class="mock">
+      <p class="lbl">Así se ve un anuncio (referencia)</p>
+      <div class="chat">
+        <div class="bubble user">¿Qué maestrías virtuales acreditadas hay en Colombia para trabajar y estudiar al tiempo?</div>
+        <div class="bubble bot">Hay varias opciones. Conviene revisar la acreditación, la duración y si las clases son sincrónicas… <span class="dots">···</span></div>
+        <div class="card">
+          <div class="card-top"><span class="ico">UPB</span><b>UPB Virtual</b><span class="spon">Patrocinado</span></div>
+          <div class="card-body"><div class="img"></div><div><b>Posgrados virtuales UPB</b><p>Especializaciones y maestrías 100% virtuales con Acreditación de Alta Calidad.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Compra</span><h2>Objetivos, pujas e inversión mínima</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Objetivo</th><th>Para qué sirve</th><th>Cómo se paga</th><th>Puja</th></tr></thead>
+    <tbody>
+      <tr><td><b>Impresiones (CPM)</b></td><td>Alcance y recordación</td><td>Por cada 1.000 impresiones</td><td>Puja fija</td></tr>
+      <tr><td><b>Clics (CPC)</b></td><td>Llevar tráfico a la landing</td><td>Por clic válido</td><td>Puja fija o «Maximizar clics»</td></tr>
+      <tr class="hl"><td><b>Conversiones (oCPC)</b></td><td>Leads: optimiza hacia el evento <code>lead_created</code></td><td>Por clic válido, no por lead</td><td>Puja fija (CPA objetivo) o «Maximizar conversiones»</td></tr>
+    </tbody></table></div>
+  <div class="cards3" style="margin-top:6px">
+    <div class="box"><h3>Inversión mínima</h3><p><b>USD 25 al día por campaña</b> en cuentas en dólares, según el centro de ayuda (citado por terceros). Algunas monedas tienen su propio mínimo, por ejemplo MXN 150 o BRL 40. No encontramos el valor en pesos colombianos: Ads Manager lo muestra al crear la cuenta. Si se pone un presupuesto menor, el sistema avisa con el mínimo exacto.</p></div>
+    <div class="box"><h3>Cómo se gasta</h3><p>El presupuesto diario es un promedio: un día puede gastar hasta el <b>doble</b> y una semana hasta <b>7 veces</b> el diario. También existe el presupuesto total (vitalicio) con puja fija. «Maximizar» solo funciona con presupuesto diario.</p></div>
+    <div class="box"><h3>Puja de referencia</h3><p>OpenAI sugiere arrancar las campañas por clic con una puja máxima de <b>USD 3 a 5</b>. El objetivo de conversiones está en beta abierta. Necesita el pixel funcionando y no se puede cambiar el evento después de crear la campaña.</p></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Medición</span><h2>Cómo se miden los resultados</h2></div>
+  <div class="split2">
+    <div>
+      <h3 class="h3">Fuentes de conversiones</h3>
+      <ul class="list">
+        <li><b>Pixel de medición</b> (JavaScript) en la web: el más rápido de instalar.</li>
+        <li><b>Conversions API</b> (servidor a servidor): más confiable. Sirve para mandar los leads desde el CRM, con un <code>event_id</code> igual al del pixel para no contarlos dos veces.</li>
+        <li><b>Image tag</b>: alternativa sin JavaScript.</li>
+      </ul>
+      <h3 class="h3">Eventos útiles para UPB</h3>
+      <div class="tbl"><table><thead><tr><th>Evento</th><th>Cuándo</th></tr></thead><tbody>
+        <tr class="hl"><td><code>lead_created</code></td><td>Se envía el formulario de interés</td></tr>
+        <tr><td><code>page_viewed</code></td><td>Carga la landing del programa</td></tr>
+        <tr><td><code>appointment_scheduled</code></td><td>Agenda una cita con un asesor</td></tr>
+        <tr><td><code>registration_completed</code></td><td>Completa la inscripción o el registro a un evento</td></tr>
+      </tbody></table></div>
+      <p class="note">Solo los eventos estándar pueden ser objetivo de optimización. Los eventos propios (<code>custom</code>) solo se reportan.</p>
+    </div>
+    <div>
+      <h3 class="h3">Atribución</h3>
+      <ul class="list">
+        <li><b>Clic:</b> ventana de 7, 14 o 30 días. Por defecto, 30 días.</li>
+        <li><b>Vista:</b> 1 día después de ver el anuncio (o 0 para excluirlas). Se reporta aparte y no cuenta para el CPA, la puja ni el cobro.</li>
+        <li>Si una conversión califica por clic y por vista, se cuenta como de clic.</li>
+      </ul>
+      <h3 class="h3">Métricas del reporte</h3>
+      <p>Impresiones, clics, inversión, CTR, CPC, CPM, conversiones, CPA y tasa de conversión después del clic. Se pueden desglosar por país, dispositivo o plataforma, y exportar por API para llevarlas a la hoja «[UPB] Fuente de datos».</p>
+      <h3 class="h3">Para el equipo web de UPB</h3>
+      <ul class="list">
+        <li>Código del pixel en el <code>&lt;head&gt;</code>, apuntando a <code>bzrcdn.openai.com/sdk/oaiq.min.js</code>.</li>
+        <li>CSP: <code>script-src bzrcdn.openai.com</code>; <code>connect-src bzr.openai.com bzrcdn.openai.com</code>; <code>img-src bzr.openai.com</code>.</li>
+        <li>Consentimiento: <code>oaiq("consent", false)</code> antes de iniciar el pixel y <code>true</code> cuando la persona acepte las cookies.</li>
+        <li>Cookies propias: <code>__oppref</code> (30 días) y <code>__obref</code> (365 días).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Políticas</span><h2>Qué se puede y qué no anunciar</h2></div>
+  <div class="cards3">
+    <div class="box ok"><h3>Educación está permitida</h3><p>Educación aparece entre las categorías de consumo con las que OpenAI arrancó la publicidad. UPB entra en una categoría permitida.</p></div>
+    <div class="box"><h3>Revisión caso a caso</h3><p>Salud, servicios financieros y servicios legales pasan por verificación y revisión manual. La educación legal general sí se permite. Programas como Derecho o la Especialización en Educación para Profesionales de la Salud pueden tener una revisión más estricta.</p></div>
+    <div class="box no"><h3>Prohibido</h3><p>Contenido para adultos y citas, apuestas, alcohol, tabaco y vapeadores, drogas, política, armas y cualquier anuncio engañoso.</p></div>
+  </div>
+  <div class="checklist">
+    <p class="lbl">Reglas para los textos de UPB</p>
+    <ul>
+      <li>Toda afirmación debe ser cierta y comprobable: acreditación con número de resolución, SNIES, duración.</li>
+      <li>No prometer resultados: nada de «empleo garantizado» ni «el mejor de Colombia» sin una fuente.</li>
+      <li>La landing debe funcionar y hablar del mismo programa que el anuncio.</li>
+      <li>No comparar ni hablar mal de otras universidades.</li>
+      <li>OpenAI puede rechazar anunciantes, anuncios o enlaces. Un anuncio rechazado trae el motivo y se corrige con una nueva versión.</li>
+    </ul>
+  </div>
+  <p class="note">El texto completo de las políticas está en <a href="https://openai.com/es-419/policies/ad-policies/" target="_blank" rel="noopener">openai.com/es-419/policies/ad-policies</a>. La página bloquea la lectura automática, así que este resumen sale de citas publicadas por terceros. Antes de lanzar, conviene que UPB lea la versión vigente.</p>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Industria</span><h2>Cuánto pesa la educación en ChatGPT</h2></div>
+  <div class="stats">
+    <div class="stat"><b>~10%</b><span>de los mensajes son pedidos de enseñanza o tutoría (estudio de OpenAI con 1,1 millones de conversaciones, 2024–2025)</span></div>
+    <div class="stat"><b>17%</b><span>de los estudiantes internacionales nuevos usaron IA para buscar universidad (encuesta INTO, 1.622 estudiantes, 2025)</span></div>
+    <div class="stat"><b>81%</b><span>de quienes la usaron la encontraron más útil que webs, folletos o agentes</span></div>
+    <div class="stat"><b>39%</b><span>preguntó por detalles del programa; 61% por rankings y 34% por empleabilidad</span></div>
+  </div>
+  <div class="cards3" style="margin-top:6px">
+    <div class="box"><h3>Qué tan grande es el canal</h3><p>ChatGPT tenía <b>900 millones de usuarios semanales</b> en febrero de 2026. OpenAI dice que más de <b>100.000 anunciantes</b> ya han usado la plataforma; un análisis de New Street Research estima unos 60.000 activos a comienzos de octubre. No hay cifras públicas de usuarios en Colombia.</p></div>
+    <div class="box"><h3>¿Ya hay leads en educación?</h3><p>No encontramos ningún caso publicado con número de leads o costo por inscrito de una universidad en ChatGPT. <b>UNIVO Education</b> (India) ya pauta para universidades aliadas y la agencia <b>Carnegie</b> está probando con instituciones en Estados Unidos, pero ninguno ha publicado resultados.</p></div>
+    <div class="box"><h3>Dónde encaja UPB</h3><p>Las agencias de educación coinciden en que la mejor oportunidad está en <b>posgrados, programas virtuales y adultos que estudian y trabajan</b>, que es justo la oferta de UPB Virtual. Ser de los primeros anunciantes de educación en Colombia da ventaja en un canal con poca competencia.</p></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Propuesta</span><h2>Cómo arrancaríamos con UPB</h2></div>
+  <div class="split2">
+    <div>
+      <h3 class="h3">Prueba de 4 a 6 semanas</h3>
+      <ul class="list">
+        <li><b>Campaña 1, Posgrados virtuales UPB:</b> objetivo Clics con «Maximizar clics», mientras el pixel acumula leads.</li>
+        <li><b>Campaña 2, el programa con más demanda</b> (por ejemplo MBA o Ciencia de Datos): mismo esquema.</li>
+        <li>Con leads suficientes, crear campañas nuevas con objetivo <b>Conversiones</b> y el evento <code>lead_created</code>.</li>
+        <li>Ubicación Colombia, todas las plataformas, una imagen y dos o tres variantes de texto por grupo.</li>
+        <li><b>Inversión:</b> el mínimo de USD 25 diarios por campaña, unos USD 750 al mes por campaña. Su valor en pesos se confirma en Ads Manager.</li>
+        <li><b>Se evalúa por:</b> CTR, CPC, leads en el CRM con <code>utm_medium=ChatGPTAds</code> y costo por lead frente a Google y Meta.</li>
+      </ul>
+      <h3 class="h3">Ejemplos de «context hints» para posgrados</h3>
+      <ul class="chips">
+        <li>Profesional en Colombia que busca una maestría virtual para crecer en su carrera</li>
+        <li>Comparar maestrías en línea acreditadas en Colombia</li>
+        <li>Estudiar un posgrado mientras se trabaja tiempo completo</li>
+        <li>Cuánto dura y cómo funciona una especialización virtual</li>
+        <li>Universidades con acreditación de alta calidad que ofrecen MBA virtual</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="h3">Anuncios de ejemplo</h3>
+      <div class="adlist">
+        <div class="mini"><b>Posgrados virtuales UPB</b><p>Especializaciones y maestrías 100% virtuales con Acreditación de Alta Calidad.</p><small>23 / 50 · 78 / 100</small></div>
+        <div class="mini"><b>MBA virtual UPB</b><p>Maestría en Administración 100% virtual. Estudia a tu ritmo desde Colombia.</p><small>15 / 50 · 75 / 100</small></div>
+        <div class="mini"><b>Maestría en Ciencia de Datos</b><p>Fórmate 100% virtual en la UPB y lidera proyectos con datos. Inscríbete.</p><small>28 / 50 · 72 / 100</small></div>
+        <div class="mini"><b>Pregrados virtuales UPB</b><p>Ingeniería de Software, Administración y más, 100% virtuales. Inscríbete.</p><small>23 / 50 · 73 / 100</small></div>
+      </div>
+      <p class="note">Los números indican caracteres usados frente al máximo: título / 50 y texto / 100.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><span class="lbl">Fuentes</span><h2>De dónde sale esta información</h2></div>
+  <ul class="sources">
+    <li><b>Documentación oficial de OpenAI Ads para desarrolladores</b>: cuenta, campañas, objetivos y pujas, presupuestos, formato chat card, segmentación, context hints, pixel, eventos, atribución, reportes y revisiones. <a href="https://developers.openai.com/ads/measurement-pixel" target="_blank" rel="noopener">developers.openai.com/ads</a></li>
+    <li><b>Centro de ayuda de OpenAI</b>, artículo «Measure results», y <b>políticas de anuncios</b>: bloquean la lectura automática; los datos de inversión mínima, pasos de verificación y políticas vienen de citas de terceros. <a href="https://help.openai.com/en/articles/20001214-measure-results" target="_blank" rel="noopener">help.openai.com</a> · <a href="https://openai.com/es-419/policies/ad-policies/" target="_blank" rel="noopener">openai.com/es-419/policies/ad-policies</a></li>
+    <li><b>Expansión a 89 países y Colombia</b> (21-oct-2026): <a href="https://www.adexchanger.com/marketers/chatgpt-ads-is-expanding-to-new-markets-and-exploring-new-ad-formats/" target="_blank" rel="noopener">AdExchanger</a> · <a href="https://openai.com/index/chatgpt-ads-expands-26-new-countries/" target="_blank" rel="noopener">OpenAI</a></li>
+    <li><b>Inversión mínima por moneda</b>: <a href="https://help.openai.com/en/articles/20001413-daily-budgets" target="_blank" rel="noopener">help.openai.com (Daily budgets)</a> · <a href="https://www.indexlab.ai/guides/chatgpt-ads/costs" target="_blank" rel="noopener">Indexlab</a> · <a href="https://justinmckelvey.com/blog/chatgpt-ads-cost" target="_blank" rel="noopener">Justin McKelvey</a></li>
+    <li><b>Creación y verificación de la cuenta</b>: <a href="https://www.gptadsai.com/guides/ads-manager-account-setup" target="_blank" rel="noopener">GPT Ads AI</a> · <a href="https://www.lyfemarketing.com/blog/chatgpt-ads-manager/" target="_blank" rel="noopener">LyfeMarketing</a></li>
+    <li><b>Políticas</b>: <a href="https://www.searchenginejournal.com/openai-allows-some-health-finance-ads-in-chatgpt/585516/" target="_blank" rel="noopener">Search Engine Journal</a> · <a href="https://ceaksan.com/en/chatgpt-ads-access-eligibility" target="_blank" rel="noopener">Ceaksan</a></li>
+    <li><b>Uso de ChatGPT en educación</b>: <a href="https://cdn.openai.com/pdf/a253471f-8260-40c6-a2cc-aa93fe9f142e/economic-research-chatgpt-usage-paper.pdf" target="_blank" rel="noopener">OpenAI, «How People Use ChatGPT»</a> · <a href="https://monitor.icef.com/2026/01/the-chatgpt-generation-how-ai-is-quietly-rewriting-the-global-student-search-experience/" target="_blank" rel="noopener">ICEF Monitor (encuesta INTO)</a> · <a href="https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users" target="_blank" rel="noopener">TechCrunch</a></li>
+    <li><b>Educación en ChatGPT Ads</b>: <a href="https://mediabrief.com/univo-education-launches-conversational-ai-advertising-on-chatgpt/" target="_blank" rel="noopener">UNIVO Education</a> · <a href="https://www.carnegiehighered.com/chatgpt-ads-higher-education/" target="_blank" rel="noopener">Carnegie</a> · <a href="https://manifesto.co.uk/thinking/insights/the-newest-channel-in-he-marketing-has-an-18plus-problem" target="_blank" rel="noopener">Manifesto</a></li>
+  </ul>
+</section>
+
+<footer>Información consultada el 22 de octubre de 2026. ChatGPT Ads cambia rápido: los mínimos, formatos y países deben confirmarse en Ads Manager al crear la cuenta. ADCOM.</footer>
+</main>
+
+</body>
+</html>
