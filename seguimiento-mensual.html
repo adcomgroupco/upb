@@ -167,7 +167,7 @@ td.nomen div+div{margin-top:3px}
     <div class="card tcard"><div class="tscroll"><table>
       <thead><tr><th>Mes</th><th class="r">Google Virtual</th><th class="r">Meta Virtual</th><th class="r">UPB Open</th><th class="r grp">Meta del mes</th><th class="r">Consumo</th><th class="r">% cumplimiento</th><th class="r">% ideal</th><th>Estado</th><th class="r grp">Ppto diario ideal</th></tr></thead>
       <tbody id="metas-body"></tbody></table></div>
-      <div class="foot-note">Distribución del flow: 10 % septiembre, 15 % octubre, 20 % noviembre, 15 % diciembre, 20 % enero y 20 % febrero. UPB Open solo tiene pauta asignada de septiembre a noviembre; en octubre (20 % de Google) y noviembre el flow trae el total sin repartir por programa.</div>
+      <div class="foot-note">Distribución del flow: 10 % septiembre, 15 % octubre, 20 % noviembre, 15 % diciembre, 20 % enero y 20 % febrero. UPB Open solo tiene pauta asignada de septiembre a noviembre; en noviembre el flow trae el total sin repartir por programa.</div>
     </div>
 
     <div class="sec-title" id="sec-gen"><span></span>Metas generales del semestre<span class="sec-note" id="gen-note"></span></div>
@@ -290,11 +290,11 @@ const FLOW = [
   ['Open','Meta','Ambiental','Microcredencial Transición en los Mercados de Energía',OI([260981,228359,0,0,0,0]),['2.10 '],'Pauta hasta el 13 de octubre · desde el 20-oct al mínimo ($3.250/día) por decisión de UPB',{'2026-10':13}],
   ['Open','Meta','Proyectos','Microcredencial Estudios de Viabilidad de Proyectos',OI([260981,228359,0,0,0,0]),['2.11 '],'Pauta hasta el 18 de octubre · desde el 20-oct al mínimo ($3.250/día) por decisión de UPB',{'2026-10':18}],
   ['Open','Meta','Administración','Microcredencial Inteligencia de Negocios',OI([260981,228359,0,0,0,0]),['2.13 '],'Pauta hasta el 19 de octubre · desde el 20-oct al mínimo ($3.250/día) por decisión de UPB',{'2026-10':19}],
-  ['Open','—','Por asignar','Presupuesto Open sin repartir por programa',OI([0,228356.55,18268680.74,0,0,0]),[],'Octubre: 20 % de Google · noviembre: total del mes'],
+  ['Open','—','Por asignar','Presupuesto Open sin repartir por programa',OI([0,0,18268680.74,0,0,0]),[],'Noviembre: total de Open del mes, sin repartir por programa'],
 ].map(([l,m,n,p,b,px,nota,end]) => ({l, m, n, p, b, px, nota: nota || '', end: end || {}}));
 const GEN = {   // metas generales del semestre (archivo de presupuestos)
   Virtual: {sin: FLOW.filter(r => r.l === 'Virtual').reduce((a,r) => a + r.b.reduce((x,y) => x+y, 0), 0), con: 136377328},
-  Open:    {sin: 22835850.92 / IVA, con: 22835850.92},
+  Open:    {sin: 22607494.37 / IVA, con: 22607494.37},   // total del archivo sin la diferencia de octubre que no está asignada a ningún programa ($228.356)
 };
 const SEM_INI = '2026-09-01', SEM_FIN = '2027-02-28';
 
@@ -448,7 +448,7 @@ function render(){
     return kpi(t, fM(s), `de ${fCOP(sin)} sin IVA (${fCOP(con)} con IVA) · ${st(ee)}<br>${nota}`, bar(div(s, sin), semIdeal, ee, `${fP(div(s, sin))} consumido`, `tiempo ${fP(semIdeal)}`)) };
   document.getElementById('gen-grid').innerHTML =
     genCard('UPB Virtual', GEN.Virtual.sin, GEN.Virtual.con, sl('Virtual'), 'Google 70 % · Meta 30 %') +
-    genCard('UPB Open', GEN.Open.sin, GEN.Open.con, sl('Open'), 'sep 15 % · oct 5 % · nov 80 %') +
+    genCard('UPB Open', GEN.Open.sin, GEN.Open.con, sl('Open'), 'pauta de septiembre a noviembre') +
     genCard('Total UPB', metaSem, GEN.Virtual.con + GEN.Open.con, semSpend, `faltan ${fCOP(metaSem - semSpend)} por invertir`);
 
   // Línea y medio
