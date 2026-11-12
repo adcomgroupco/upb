@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Comportamiento en Meta y Google de los cuatro programas de sostenibilidad antes y después de separar el carrusel del núcleo Ambiental en Meta.">
+<title>UPB · Sostenibilidad: separación del núcleo · ADCOM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+/* Plantilla ADCOM para documentos de cliente (igual que los de Corpas): cabecera negra redondeada, acento amarillo, fondo blanco. Solo claro. */
+:root {
+  --bg:#FFFFFF; --ink:#141414; --muted:#63635E; --line:#E6E6E1; --panel:#F7F7F5;
+  --accent:#FFC000; --accent-soft:#FFF5D1; --head:#141414; --head-ink:#FFFFFF; --link:#1A0DAB; --img:#EDEBE4; --fb:#1877F2;
+  --f:"Poppins","Segoe UI",Helvetica,Arial,sans-serif; color-scheme:light;
+}
+* { box-sizing:border-box; }
+html,body { background:var(--bg); margin:0; }
+body { color:var(--ink); font-family:var(--f); font-size:15px; line-height:1.6; }
+.wrap { max-width:1080px; margin:0 auto; padding-inline:16px; padding-block:20px 64px; display:grid; gap:44px; }
+h1,h2,h3 { margin:0; line-height:1.2; text-wrap:balance; }
+p,ul,dl { margin:0; }
+a { color:var(--link); overflow-wrap:anywhere; }
+code { font-size:12px; background:var(--panel); border-radius:6px; padding:1px 6px; overflow-wrap:anywhere; }
+.lbl { font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.top { background:var(--head); color:var(--head-ink); border-radius:20px; padding:clamp(24px,4vw,44px); display:grid; gap:14px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.16em; font-size:13px; }
+.brand i { width:12px; height:12px; border-radius:3px; background:var(--accent); }
+.top h1 { font-size:clamp(28px,4.6vw,42px); font-weight:700; }
+.top h1 span { color:var(--accent); }
+.top p { max-width:64ch; color:#D6D6D2; font-size:16px; }
+.back { color:#D6D6D2; font-size:13px; text-decoration:none; justify-self:start; }
+.back:hover { color:var(--accent); }
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+.stat { border:1px solid var(--line); border-radius:16px; padding:16px 18px; display:grid; gap:2px; }
+.stat b { font-size:30px; line-height:1.1; font-variant-numeric:tabular-nums; }
+.stat b::after { content:""; display:block; width:32px; height:4px; border-radius:2px; background:var(--accent); margin-top:8px; }
+.stat span { font-size:13px; color:var(--muted); }
+.sec { display:grid; gap:16px; }
+.sec-head { display:grid; gap:4px; padding-bottom:12px; border-bottom:3px solid var(--accent); }
+.sec-head h2 { font-size:clamp(21px,3vw,26px); }
+.flags { display:grid; gap:10px; }
+.flags li { list-style:none; background:var(--accent-soft); border:1px solid var(--accent); border-radius:12px; padding:12px 16px; font-size:14px; }
+.flags { padding:0; }
+.tbl { overflow-x:auto; border:1px solid var(--line); border-radius:16px; }
+table { border-collapse:collapse; width:100%; font-size:13px; min-width:640px; }
+th,td { padding:9px 12px; text-align:left; vertical-align:top; }
+thead th { font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:2px solid var(--line); }
+tbody tr + tr td { border-top:1px solid var(--line); }
+.filters { display:flex; flex-wrap:wrap; gap:6px; position:sticky; top:0; z-index:5; background:var(--bg); padding-block:10px; border-bottom:1px solid var(--line); }
+.chip { font:inherit; font-size:13px; font-weight:500; border:1px solid var(--line); background:var(--bg); color:var(--ink); border-radius:99px; padding:6px 14px; cursor:pointer; }
+.chip:hover { background:var(--accent-soft); }
+.chip[aria-pressed="true"] { background:var(--head); color:var(--head-ink); border-color:var(--head); font-weight:600; }
+.chip:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.ads { display:grid; gap:20px; }
+.ad { border:1px solid var(--line); border-bottom:4px solid var(--accent); border-radius:16px; padding:clamp(16px,3vw,24px); display:grid; gap:14px; scroll-margin-top:70px; }
+.ad[hidden] { display:none; }
+.ad-head { display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:flex-start; }
+.ad-head h3 { font-size:19px; }
+.tags { display:flex; gap:6px; flex-wrap:wrap; }
+.tag { font-size:11px; font-weight:600; letter-spacing:.04em; border-radius:99px; padding:3px 10px; background:var(--panel); }
+.tag.on { background:#DCFCE7; color:#14532D; } .tag.off { background:#FEE2E2; color:#991B1B; }
+.flag { background:var(--accent-soft); border-radius:10px; padding:8px 12px; font-size:13px; }
+.ad-grid { display:grid; grid-template-columns:minmax(0,420px) minmax(0,1fr); gap:24px; align-items:start; }
+@media (max-width:820px) { .ad-grid { grid-template-columns:1fr; } }
+.mock { border:1px solid var(--line); border-radius:12px; background:#fff; overflow:hidden; box-shadow:0 1px 3px rgba(20,20,20,.06); }
+.mock-top { display:flex; gap:10px; align-items:center; padding:12px 14px 6px; }
+.mock-top b { display:block; font-size:14px; line-height:1.2; }
+.mock-top small { color:var(--muted); font-size:12px; }
+.av { width:36px; height:36px; border-radius:50%; background:var(--head); color:var(--accent); display:grid; place-items:center; font-size:11px; font-weight:700; flex:0 0 auto; }
+.mock-body { padding:4px 14px 12px; font-size:13px; line-height:1.45; max-height:9.2em; overflow:auto; }
+.strip { display:flex; gap:8px; overflow-x:auto; padding:0 14px 14px; scroll-snap-type:x mandatory; }
+.strip figure { flex:0 0 72%; scroll-snap-align:start; }
+.single figure { margin:0; }
+figure { margin:0; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--img); }
+figure img { display:block; width:100%; aspect-ratio:1/1; object-fit:cover; }
+figcaption { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 10px; background:var(--panel); font-size:12px; }
+figcaption span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+figcaption b { font-size:11px; background:#E4E6EB; border-radius:6px; padding:4px 8px; white-space:nowrap; }
+.meta { display:grid; grid-template-columns:110px 1fr; gap:8px 12px; font-size:13px; }
+.meta dt { color:var(--muted); font-weight:600; font-size:12px; }
+.meta dd { margin:0; }
+.meta ul { padding-left:16px; }
+.note { font-size:13px; color:var(--muted); max-width:72ch; }
+footer { font-size:12px; color:var(--muted); }
+
+.chart { border:1px solid var(--line); border-radius:16px; padding:16px 18px; display:grid; gap:8px; }
+.chart svg { width:100%; height:auto; display:block; }
+.chart .ax { fill:var(--muted); font-size:11px; font-family:var(--f); }
+.legend { display:flex; flex-wrap:wrap; gap:4px 16px; font-size:12px; color:var(--muted); }
+.legend i { display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-2px; margin-right:6px; }
+.hb { display:grid; grid-template-columns:200px 1fr 120px; gap:10px; align-items:center; font-size:13px; }
+.hb-t { height:12px; background:var(--panel); border-radius:4px; position:relative; }
+.hb-t b { position:absolute; inset:0 auto 0 0; background:var(--head); border-radius:0 4px 4px 0; }
+.hb-v { text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; }
+.hbars { display:grid; gap:7px; }
+.tbl td.r, .tbl th.r { text-align:right; font-variant-numeric:tabular-nums; }
+.tbl td.name { white-space:normal; min-width:220px; }
+.tbl tr.tot td { font-weight:700; border-top:2px solid var(--ink); }
+.tag2 { font-size:11px; font-weight:600; border-radius:99px; padding:2px 8px; background:var(--panel); white-space:nowrap; }
+.tag2.on { background:#DCFCE7; color:#14532D; } .tag2.off { background:#FEE2E2; color:#991B1B; }
+.read { border-left:4px solid var(--accent); background:var(--panel); border-radius:10px; padding:12px 16px; font-size:14px; }
+.read ul { margin:6px 0 0; padding-left:18px; display:grid; gap:4px; }
+.prog { border:1px solid var(--line); border-bottom:4px solid var(--accent); border-radius:16px; padding:clamp(16px,3vw,24px); display:grid; gap:16px; }
+.prog h3 { font-size:20px; margin:0; }
+.twocol { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px; align-items:start; }
+.twocol h4 { margin:0 0 8px; font-size:14px; }
+.kv { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; }
+.kv div { background:var(--panel); border-radius:10px; padding:8px 10px; display:grid; }
+.kv b { font-size:17px; font-variant-numeric:tabular-nums; } .kv span { font-size:11px; color:var(--muted); }
+.terms { margin:0; padding-left:18px; font-size:13px; display:grid; gap:3px; }
+@media (max-width:600px) { .hb { grid-template-columns:110px 1fr 90px; } }
+.tbl table { min-width:0; } .tbl td, .tbl th { white-space:normal; }
+.donuts { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:16px; }
+.donut { margin:0; border:1px solid var(--line); border-radius:16px; padding:16px 18px; display:grid; gap:10px; }
+.donut figcaption { font-weight:600; font-size:15px; }
+.donut-in { display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:center; }
+.donut svg { width:160px; height:160px; }
+.donut ul { list-style:none; margin:0; padding:0; display:grid; gap:8px; font-size:13px; }
+.donut li { display:grid; grid-template-columns:14px 1fr auto; gap:2px 8px; align-items:center; }
+.donut li i { width:12px; height:12px; border-radius:3px; }
+.donut li b { font-variant-numeric:tabular-nums; }
+.donut li small { grid-column:2 / 4; color:var(--muted); font-size:12px; }
+.gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; }
+.gcard { border:1px solid var(--line); border-radius:14px; overflow:hidden; display:grid; grid-template-rows:auto 1fr; background:#fff; }
+.gcard img, .gcard .noimg { width:100%; aspect-ratio:1/1; object-fit:cover; background:var(--img); display:block; }
+.gbody { padding:10px 12px; display:grid; gap:4px; font-size:13px; align-content:start; }
+.gbody small { font-size:11px; line-height:1.3; }
+.gk { display:flex; flex-wrap:wrap; gap:4px 10px; font-size:12px; color:var(--muted); margin-top:4px; }
+.gk b { color:var(--ink); }
+@media (max-width:600px) { .donut-in { grid-template-columns:1fr; justify-items:center; } }
+.prog .tbl table { font-size:12px; } .prog .tbl td, .prog .tbl th { padding:7px 8px; }
+
+
+:root{--color-fg:#141414;--color-fg-muted:#63635E;--color-bg:#FFFFFF;--color-panel:#F7F7F5;--color-border-line:#E6E6E1;--color-ok:#2E9E6B;--color-warn:#FFC000;--color-bad:#D64545;
+--font-anthropic-sans:"Poppins","Segoe UI",Helvetica,Arial,sans-serif;--font-anthropic-serif:"Poppins","Segoe UI",Helvetica,Arial,sans-serif;
+--cds-font-size-caption:12.5px;--cds-font-size-body:15px;--cds-font-size-heading:21px;--cds-font-size-title:30px;--cds-font-weight-medium:600;
+--cds-gap-xs:4px;--cds-gap-sm:8px;--cds-gap-md:14px;--cds-gap-lg:20px;--cds-gap-xl:40px;--cds-pad-sm:6px;--cds-pad-md:10px;--cds-pad-lg:20px;--cds-radius:14px;
+--cds-chart-muted:#BDBDB8;--cds-chart-grid:#EEEEEA;--cds-chart-axis:#D6D6D2;--cds-chart-reference:#141414;--cds-text-secondary:#63635E;
+--cds-surface-popover:#FFFFFF;--cds-border:#E6E6E1;--cds-shadow-popover:0 6px 20px rgba(0,0,0,.12);}
+.su .su-card .big{font-weight:700}
+
+
+.su { display: flex; flex-direction: column; gap: var(--cds-gap-xl); max-width: 980px; font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+.su h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+.su h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; text-wrap: balance; }
+.su h3 { font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.su p, .su li { line-height: 1.55; max-width: 68ch; margin: 0; }
+.su-eyebrow { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .04em; text-transform: uppercase; }
+.su-lede { font-size: var(--cds-font-size-body); }
+.su-sec { display: flex; flex-direction: column; gap: var(--cds-gap-md); min-width: 0; }
+.su-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: var(--cds-gap-md); }
+.su-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xs); min-width: 0; }
+.su-card .lab { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.su-card .big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; }
+.su-card .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.su-card.is-bad { border-color: var(--color-bad); }
+.su-card.is-ok { border-color: var(--color-ok); }
+.su-verdict { display: flex; flex-direction: column; gap: var(--cds-gap-sm); padding-left: 1.1em; margin: 0; }
+.su-num { font-variant-numeric: tabular-nums; font-weight: var(--cds-font-weight-medium); }
+.su-chart { position: relative; min-height: 260px; width: 100%; }
+.su-chart.short { min-height: 150px; }
+.su-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.su-chart .axis text { fill: var(--cds-text-secondary); font-size: var(--cds-font-size-caption); font-family: var(--font-anthropic-sans); }
+.su-chart .axis path, .su-chart .axis line { stroke: var(--cds-chart-axis); }
+.su-chart .grid line { stroke: var(--cds-chart-grid); }
+.su-chart .lbl { fill: var(--color-fg); font-size: var(--cds-font-size-caption); font-family: var(--font-anthropic-sans); font-variant-numeric: tabular-nums; }
+.su-chart .ref { stroke: var(--cds-chart-reference); stroke-dasharray: 4 3; }
+.su-chart .reflbl { fill: var(--cds-text-secondary); font-size: var(--cds-font-size-caption); font-family: var(--font-anthropic-sans); }
+.su-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: var(--cds-pad-sm) var(--cds-pad-md); font-size: var(--cds-font-size-caption); color: var(--color-fg); font-variant-numeric: tabular-nums; white-space: nowrap; z-index: 2; }
+.su-tip[hidden] { display: none; }
+.su-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.su-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.su-sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; background: var(--cds-chart-muted); }
+.su-tw { overflow-x: auto; min-width: 0; }
+.su-t { border-collapse: collapse; width: 100%; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.su-t th, .su-t td { padding: 7px 10px; border-bottom: 1px solid var(--color-border-line); text-align: right; white-space: nowrap; }
+.su-t th { color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); }
+.su-t th:first-child, .su-t td:first-child, .su-t th.l, .su-t td.l { text-align: left; }
+.su-t td.wrap { white-space: normal; min-width: 220px; }
+.su-t tr.grp td { border-top: 2px solid var(--color-border-line); }
+.su-recs { display: flex; flex-direction: column; gap: var(--cds-gap-sm); padding-left: 1.2em; margin: 0; }
+.su-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.su details { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.su details summary { cursor: pointer; color: var(--color-fg); }
+.su details ul { display: flex; flex-direction: column; gap: 6px; padding-left: 1.2em; }
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(function(){
+  const DATA={"meta_periodos": [{"periodo": "1. Carrusel del núcleo", "desde": "2026-08-01", "hasta": "2026-10-13", "dias": 74, "programa": "Maestría Energías Renovables", "inversion": 266447, "inversion_dia": 3601, "impresiones": 6424, "clics": 455, "leads": 18, "registros": 30, "costo_por_lead": 14803}, {"periodo": "1. Carrusel del núcleo", "desde": "2026-08-01", "hasta": "2026-10-13", "dias": 74, "programa": "Maestría en Sostenibilidad", "inversion": 33365, "inversion_dia": 451, "impresiones": 742, "clics": 32, "leads": 0, "registros": 24, "costo_por_lead": null}, {"periodo": "1. Carrusel del núcleo", "desde": "2026-08-01", "hasta": "2026-10-13", "dias": 74, "programa": "Esp. Gestión de la Sostenibilidad", "inversion": 19291, "inversion_dia": 261, "impresiones": 297, "clics": 19, "leads": 0, "registros": 1, "costo_por_lead": null}, {"periodo": "1. Carrusel del núcleo", "desde": "2026-08-01", "hasta": "2026-10-13", "dias": 74, "programa": "Esp. Preservación y Conservación de Recursos Naturales", "inversion": 14365, "inversion_dia": 194, "impresiones": 392, "clics": 14, "leads": 0, "registros": 4, "costo_por_lead": null}, {"periodo": "2. Separadas, $60.000/día c/u", "desde": "2026-10-14", "hasta": "2026-10-19", "dias": 6, "programa": "Maestría Energías Renovables", "inversion": 328580, "inversion_dia": 54763, "impresiones": 9111, "clics": 900, "leads": 46, "registros": 45, "costo_por_lead": 7143}, {"periodo": "2. Separadas, $60.000/día c/u", "desde": "2026-10-14", "hasta": "2026-10-19", "dias": 6, "programa": "Maestría en Sostenibilidad", "inversion": 297319, "inversion_dia": 49553, "impresiones": 8303, "clics": 440, "leads": 3, "registros": 159, "costo_por_lead": 99106}, {"periodo": "2. Separadas, $60.000/día c/u", "desde": "2026-10-14", "hasta": "2026-10-19", "dias": 6, "programa": "Esp. Gestión de la Sostenibilidad", "inversion": 329391, "inversion_dia": 54898, "impresiones": 10918, "clics": 524, "leads": 12, "registros": 28, "costo_por_lead": 27449}, {"periodo": "2. Separadas, $60.000/día c/u", "desde": "2026-10-14", "hasta": "2026-10-19", "dias": 6, "programa": "Esp. Preservación y Conservación de Recursos Naturales", "inversion": 23894, "inversion_dia": 3982, "impresiones": 857, "clics": 14, "leads": 0, "registros": 0, "costo_por_lead": null}, {"periodo": "3. Separadas, ~$6.600/día c/u", "desde": "2026-10-20", "hasta": "2026-11-11", "dias": 23, "programa": "Maestría Energías Renovables", "inversion": 22541, "inversion_dia": 980, "impresiones": 580, "clics": 52, "leads": 2, "registros": 3, "costo_por_lead": 11270}, {"periodo": "3. Separadas, ~$6.600/día c/u", "desde": "2026-10-20", "hasta": "2026-11-11", "dias": 23, "programa": "Maestría en Sostenibilidad", "inversion": 17694, "inversion_dia": 769, "impresiones": 1256, "clics": 21, "leads": 0, "registros": 21, "costo_por_lead": null}, {"periodo": "3. Separadas, ~$6.600/día c/u", "desde": "2026-10-20", "hasta": "2026-11-11", "dias": 23, "programa": "Esp. Gestión de la Sostenibilidad", "inversion": 20605, "inversion_dia": 896, "impresiones": 705, "clics": 30, "leads": 0, "registros": 2, "costo_por_lead": null}, {"periodo": "3. Separadas, ~$6.600/día c/u", "desde": "2026-10-20", "hasta": "2026-11-11", "dias": 23, "programa": "Esp. Preservación y Conservación de Recursos Naturales", "inversion": 11658, "inversion_dia": 507, "impresiones": 521, "clics": 11, "leads": 0, "registros": 3, "costo_por_lead": null}], "meta_mensual": [{"mes": "2026-09", "programa": "Maestría Energías Renovables", "inversion": 152788, "leads": 13, "flow": null}, {"mes": "2026-09", "programa": "Maestría en Sostenibilidad", "inversion": 8070, "leads": 0, "flow": null}, {"mes": "2026-09", "programa": "Esp. Gestión de la Sostenibilidad", "inversion": 139, "leads": 0, "flow": null}, {"mes": "2026-09", "programa": "Esp. Preservación y Conservación de Recursos Naturales", "inversion": 1258, "leads": 0, "flow": null}, {"mes": "2026-10", "programa": "Maestría Energías Renovables", "inversion": 366059, "leads": 48, "flow": 130428}, {"mes": "2026-10", "programa": "Maestría en Sostenibilidad", "inversion": 336967, "leads": 3, "flow": 130428}, {"mes": "2026-10", "programa": "Esp. Gestión de la Sostenibilidad", "inversion": 367498, "leads": 12, "flow": 130428}, {"mes": "2026-10", "programa": "Esp. Preservación y Conservación de Recursos Naturales", "inversion": 45618, "leads": 0, "flow": 130428}, {"mes": "2026-11", "programa": "Maestría Energías Renovables", "inversion": 662, "leads": 0, "flow": 173904}, {"mes": "2026-11", "programa": "Maestría en Sostenibilidad", "inversion": 0, "leads": 0, "flow": 173904}, {"mes": "2026-11", "programa": "Esp. Gestión de la Sostenibilidad", "inversion": 1277, "leads": 0, "flow": 173904}, {"mes": "2026-11", "programa": "Esp. Preservación y Conservación de Recursos Naturales", "inversion": 0, "leads": 0, "flow": 173904}], "semanal": [{"semana": "2026-08-31", "dias": 7, "meta_inversion": 37347, "meta_leads": 3, "google_inversion": 105049, "google_conversiones": 4.0}, {"semana": "2026-09-07", "dias": 7, "meta_inversion": 36127, "meta_leads": 1, "google_inversion": 147979, "google_conversiones": 12.5}, {"semana": "2026-09-14", "dias": 7, "meta_inversion": 35050, "meta_leads": 6, "google_inversion": 134424, "google_conversiones": 12.5}, {"semana": "2026-09-21", "dias": 7, "meta_inversion": 36823, "meta_leads": 1, "google_inversion": 139054, "google_conversiones": 10.0}, {"semana": "2026-09-28", "dias": 7, "meta_inversion": 37032, "meta_leads": 3, "google_inversion": 137150, "google_conversiones": 11.0}, {"semana": "2026-10-05", "dias": 7, "meta_inversion": 35971, "meta_leads": 0, "google_inversion": 134695, "google_conversiones": 10.0}, {"semana": "2026-10-12", "dias": 7, "meta_inversion": 857788, "meta_leads": 56, "google_inversion": 151084, "google_conversiones": 11.0}, {"semana": "2026-10-19", "dias": 7, "meta_inversion": 206804, "meta_leads": 7, "google_inversion": 387852, "google_conversiones": 18.5}, {"semana": "2026-10-26", "dias": 7, "meta_inversion": 24, "meta_leads": 0, "google_inversion": 527036, "google_conversiones": 28.0}, {"semana": "2026-11-02", "dias": 7, "meta_inversion": 1939, "meta_leads": 0, "google_inversion": 372689, "google_conversiones": 23.0}, {"semana": "2026-11-09", "dias": 3, "meta_inversion": 0, "meta_leads": 0, "google_inversion": 187195, "google_conversiones": 7.0}], "google_mensual": [{"mes": "2026-09", "programa": "Maestría Energías Renovables", "campana": "1.29", "inversion": 179541, "clics": 176, "conversiones": 13.0, "costo_por_conversion": 13811, "flow": 202888, "pct_flow": 88}, {"mes": "2026-09", "programa": "Maestría en Sostenibilidad", "campana": "1.28", "inversion": 185099, "clics": 136, "conversiones": 13.5, "costo_por_conversion": 13711, "flow": 202888, "pct_flow": 91}, {"mes": "2026-09", "programa": "Esp. Gestión de la Sostenibilidad", "campana": "1.27", "inversion": 30246, "clics": 59, "conversiones": 4.5, "costo_por_conversion": 6721, "flow": 202888, "pct_flow": 15}, {"mes": "2026-09", "programa": "Esp. Preservación y Conservación de Recursos Naturales", "campana": "1.26", "inversion": 181913, "clics": 148, "conversiones": 14.0, "costo_por_conversion": 12994, "flow": 202888, "pct_flow": 90}, {"mes": "2026-10", "programa": "Maestría Energías Renovables", "campana": "1.29", "inversion": 289825, "clics": 248, "conversiones": 13.0, "costo_por_conversion": 22294, "flow": 304332, "pct_flow": 95}, {"mes": "2026-10", "programa": "Maestría en Sostenibilidad", "campana": "1.28", "inversion": 292316, "clics": 179, "conversiones": 11.5, "costo_por_conversion": 25419, "flow": 304332, "pct_flow": 96}, {"mes": "2026-10", "programa": "Esp. Gestión de la Sostenibilidad", "campana": "1.27", "inversion": 295534, "clics": 230, "conversiones": 20.5, "costo_por_conversion": 14416, "flow": 304332, "pct_flow": 97}, {"mes": "2026-10", "programa": "Esp. Preservación y Conservación de Recursos Naturales", "campana": "1.26", "inversion": 289571, "clics": 198, "conversiones": 23.0, "costo_por_conversion": 12590, "flow": 304332, "pct_flow": 95}, {"mes": "2026-11", "programa": "Maestría Energías Renovables", "campana": "1.29", "inversion": 171917, "clics": 286, "conversiones": 5.0, "costo_por_conversion": 34383, "flow": 405776, "pct_flow": 42}, {"mes": "2026-11", "programa": "Maestría en Sostenibilidad", "campana": "1.28", "inversion": 166413, "clics": 140, "conversiones": 9.5, "costo_por_conversion": 17517, "flow": 405776, "pct_flow": 41}, {"mes": "2026-11", "programa": "Esp. Gestión de la Sostenibilidad", "campana": "1.27", "inversion": 169387, "clics": 141, "conversiones": 14.0, "costo_por_conversion": 12099, "flow": 405776, "pct_flow": 42}, {"mes": "2026-11", "programa": "Esp. Preservación y Conservación de Recursos Naturales", "campana": "1.26", "inversion": 168925, "clics": 138, "conversiones": 6.0, "costo_por_conversion": 28154, "flow": 405776, "pct_flow": 42}], "google_calidad": [{"programa": "Maestría Energías Renovables", "campana": "1.29", "conversiones_oct_nov": 9.0, "conv_terminos_sena_cursos": 3.0, "pct_inversion_terminos_sena_cursos": 43, "cuota_impresiones": 19, "perdida_presupuesto": 24, "perdida_ranking": 58, "observacion": "Sin la lista de negativas «Negativas UPB Virtual 2027-1»"}, {"programa": "Maestría en Sostenibilidad", "campana": "1.28", "conversiones_oct_nov": 13.0, "conv_terminos_sena_cursos": 3.0, "pct_inversion_terminos_sena_cursos": 15, "cuota_impresiones": 10, "perdida_presupuesto": 27, "perdida_ranking": 64, "observacion": "1 de 10 anuncios lleva a la página de Maestría en Innovación Social y Territorio"}, {"programa": "Esp. Gestión de la Sostenibilidad", "campana": "1.27", "conversiones_oct_nov": 28.5, "conv_terminos_sena_cursos": 0.0, "pct_inversion_terminos_sena_cursos": 3, "cuota_impresiones": 13, "perdida_presupuesto": 27, "perdida_ranking": 60, "observacion": "URL igual al flow"}, {"programa": "Esp. Preservación y Conservación de Recursos Naturales", "campana": "1.26", "conversiones_oct_nov": 19.0, "conv_terminos_sena_cursos": 6.0, "pct_inversion_terminos_sena_cursos": 30, "cuota_impresiones": 13, "perdida_presupuesto": 33, "perdida_ranking": 54, "observacion": "URL igual al flow"}]}, CALCS={}, DRAWS=[];
+  const cache={};
+  window.dash={
+    colors:['#1877F2','#FFC000','#63635E','#2E9E6B'],
+    calc:(id,o)=>{CALCS[id]=o;},
+    loader:()=>{}, onData:(fn)=>fn(), setLink:()=>{}, params:()=>({}), setParams:()=>{}, refresh:()=>{},
+    data:(id)=>{
+      if(DATA[id]) return {status:'ok',data:DATA[id]};
+      if(CALCS[id]){ if(!(id in cache)) cache[id]=CALCS[id].fn(...CALCS[id].inputs.map(i=>dash.data(i).data)); return {status:'ok',data:cache[id]}; }
+      return {status:'missing',data:[]};
+    },
+    draw:(name,f)=>DRAWS.push([name,f]),
+  };
+  const run=()=>DRAWS.forEach(([name,f])=>document.querySelectorAll('[data-draw="'+name+'"]').forEach(el=>{
+    if(typeof f==='function') return f(el);
+    if(!el.__m){el.__m=f.mount(el)||{};} f.update(el,el.__m);
+  }));
+  window.addEventListener('DOMContentLoaded',run);
+  let t; window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(run,150);});
+})();
+</script>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+  <a class="back" href="index.html">← Documentos UPB</a>
+  <div class="brand"><i></i>ADCOM <span style="color:#8A8A85;font-weight:400;letter-spacing:0">/</span> UPB VIRTUAL</div>
+  <h1>Programas de sostenibilidad: <span>¿ayudó separar el núcleo?</span></h1>
+  <p>Maestría Energías Renovables, Maestría en Sostenibilidad, Especialización en Gestión de la Sostenibilidad y Especialización en Preservación y Conservación de Recursos Naturales, en Meta y Google Search, del 1 de agosto al 11 de noviembre de 2026.</p>
+</header>
+<div class="su" data-read lang="es-CO">
+  <header class="su-sec" id="encabezado">
+    <p class="su-lede">Separadas y con presupuesto, las campañas de Meta consiguieron <span class="su-num" data-draw="n" data-source="meta_totales" data-field="leads" data-where="p=separadas" data-fmt="int">—</span> leads en <span class="su-num" data-draw="n" data-source="meta_totales" data-field="dias" data-where="p=separadas" data-fmt="int">—</span> días a <span class="su-num" data-draw="n" data-source="meta_totales" data-field="costo_por_lead" data-where="p=separadas" data-fmt="cop">—</span> por lead. Con el carrusel del núcleo fueron <span class="su-num" data-draw="n" data-source="meta_totales" data-field="leads" data-where="p=antes" data-fmt="int">—</span> en <span class="su-num" data-draw="n" data-source="meta_totales" data-field="dias" data-where="p=antes" data-fmt="int">—</span> días a <span class="su-num" data-draw="n" data-source="meta_totales" data-field="costo_por_lead" data-where="p=antes" data-fmt="cop">—</span>. Desde el recorte de presupuesto del 20 de octubre, Meta casi no entrega: <span class="su-num" data-draw="n" data-source="meta_totales" data-field="leads" data-where="p=recorte" data-fmt="int">—</span> leads en <span class="su-num" data-draw="n" data-source="meta_totales" data-field="dias" data-where="p=recorte" data-fmt="int">—</span> días.</p>
+  </header>
+
+  <section class="su-sec" id="resumen-meta">
+    <h2>Meta en tres etapas</h2>
+    <div class="su-cards">
+      <div class="su-card" id="card-antes">
+        <div class="lab">1. Carrusel del núcleo · 1-ago al 13-oct</div>
+        <div class="big"><span data-draw="n" data-source="meta_totales" data-field="leads" data-where="p=antes" data-fmt="int">—</span> leads</div>
+        <div class="sub">Costo por lead <span data-draw="n" data-source="meta_totales" data-field="costo_por_lead" data-where="p=antes" data-fmt="cop">—</span></div>
+        <div class="sub">Inversión <span data-draw="n" data-source="meta_totales" data-field="inversion" data-where="p=antes" data-fmt="cop">—</span> · <span data-draw="n" data-source="meta_totales" data-field="inversion_dia" data-where="p=antes" data-fmt="cop">—</span> al día</div>
+      </div>
+      <div class="su-card is-ok" id="card-separadas">
+        <div class="lab">2. Cuatro campañas separadas · 14 al 19-oct</div>
+        <div class="big"><span data-draw="n" data-source="meta_totales" data-field="leads" data-where="p=separadas" data-fmt="int">—</span> leads</div>
+        <div class="sub">Costo por lead <span data-draw="n" data-source="meta_totales" data-field="costo_por_lead" data-where="p=separadas" data-fmt="cop">—</span></div>
+        <div class="sub">Inversión <span data-draw="n" data-source="meta_totales" data-field="inversion" data-where="p=separadas" data-fmt="cop">—</span> · <span data-draw="n" data-source="meta_totales" data-field="inversion_dia" data-where="p=separadas" data-fmt="cop">—</span> al día</div>
+      </div>
+      <div class="su-card is-bad" id="card-recorte">
+        <div class="lab">3. Separadas tras el recorte · 20-oct al 11-nov</div>
+        <div class="big"><span data-draw="n" data-source="meta_totales" data-field="leads" data-where="p=recorte" data-fmt="int">—</span> leads</div>
+        <div class="sub">Costo por lead <span data-draw="n" data-source="meta_totales" data-field="costo_por_lead" data-where="p=recorte" data-fmt="cop">—</span></div>
+        <div class="sub">Inversión <span data-draw="n" data-source="meta_totales" data-field="inversion" data-where="p=recorte" data-fmt="cop">—</span> · <span data-draw="n" data-source="meta_totales" data-field="inversion_dia" data-where="p=recorte" data-fmt="cop">—</span> al día</div>
+      </div>
+    </div>
+    <p class="su-note">Lead de Meta = visita a la página de gracias del formulario (la conversión que optimizan los conjuntos y la columna «UPB Virtual - Leads (Gracias page)» de la Fuente de datos). No incluye la campaña de evento del 27-oct, que capta inscritos a una charla con formulario de Meta.</p>
+  </section>
+
+  <section class="su-sec" id="reparto">
+    <h2>Con el carrusel, casi todo el presupuesto iba a un solo programa</h2>
+    <p>En el carrusel del núcleo, Meta repartía la inversión según el anuncio que mejor respondía: Maestría Energías Renovables se llevó el <span class="su-num" data-draw="n" data-source="reparto" data-field="pct" data-where="p=antes&amp;programa=Maestr%C3%ADa%20Energ%C3%ADas%20Renovables" data-fmt="pct">—</span> y los otros tres programas casi no salieron. Separadas, la inversión se repartió entre las tres campañas nuevas. Preservación y Conservación de Recursos Naturales no tuvo campaña propia y se quedó en el carrusel del núcleo.</p>
+    <div class="su-legend" id="reparto-leyenda">
+      <span><i class="su-sw" data-sw="0"></i>Maestría Energías Renovables</span>
+      <span><i class="su-sw" data-sw="1"></i>Maestría en Sostenibilidad</span>
+      <span><i class="su-sw" data-sw="2"></i>Esp. Gestión de la Sostenibilidad</span>
+      <span><i class="su-sw" data-sw="3"></i>Esp. Preservación y Conservación de Recursos Naturales</span>
+    </div>
+    <div class="su-chart short" id="reparto-grafico" data-source="reparto" data-draw="reparto"></div>
+  </section>
+
+  <section class="su-sec" id="semanal">
+    <h2>Leads por semana: Meta se apagó después del recorte, Google siguió</h2>
+    <div class="su-legend" id="semanal-leyenda">
+      <span><i class="su-sw" data-sw="0"></i>Meta · leads de página de gracias</span>
+      <span><i class="su-sw" data-sw="1"></i>Google · conversiones</span>
+    </div>
+    <div class="su-chart" id="semanal-grafico" data-source="semanal" data-draw="semanal"></div>
+    <p class="su-note">Semanas de lunes a domingo. La última semana va del 9 al 11 de noviembre. Las líneas marcan la separación (14-oct) y el recorte de presupuesto (20-oct).</p>
+  </section>
+
+  <section class="su-sec" id="veredicto">
+    <h2>¿Ayudó la separación?</h2>
+    <p><b>Sí ayudó a repartir y a abaratar el lead, pero dividir el presupuesto en cuatro campañas pequeñas las dejó sin entrega.</b></p>
+    <ul class="su-verdict">
+      <li>El costo por lead bajó de <span class="su-num" data-draw="n" data-source="meta_totales" data-field="costo_por_lead" data-where="p=antes" data-fmt="cop">—</span> a <span class="su-num" data-draw="n" data-source="meta_totales" data-field="costo_por_lead" data-where="p=separadas" data-fmt="cop">—</span>, y los clics por día pasaron de <span class="su-num" data-draw="n" data-source="meta_totales" data-field="clics_dia" data-where="p=antes" data-fmt="int">—</span> a <span class="su-num" data-draw="n" data-source="meta_totales" data-field="clics_dia" data-where="p=separadas" data-fmt="int">—</span>.</li>
+      <li>El resultado siguió concentrado: Energías Renovables aportó <span class="su-num" data-draw="n" data-source="meta_periodos" data-field="leads" data-where="periodo=2.%20Separadas%2C%20%2460.000%2Fd%C3%ADa%20c%2Fu&amp;programa=Maestr%C3%ADa%20Energ%C3%ADas%20Renovables" data-fmt="int">—</span> de esos leads a <span class="su-num" data-draw="n" data-source="meta_periodos" data-field="costo_por_lead" data-where="periodo=2.%20Separadas%2C%20%2460.000%2Fd%C3%ADa%20c%2Fu&amp;programa=Maestr%C3%ADa%20Energ%C3%ADas%20Renovables" data-fmt="cop">—</span> cada uno. Gestión de la Sostenibilidad sumó <span class="su-num" data-draw="n" data-source="meta_periodos" data-field="leads" data-where="periodo=2.%20Separadas%2C%20%2460.000%2Fd%C3%ADa%20c%2Fu&amp;programa=Esp.%20Gesti%C3%B3n%20de%20la%20Sostenibilidad" data-fmt="int">—</span>.</li>
+      <li>Maestría en Sostenibilidad marcó <span class="su-num" data-draw="n" data-source="meta_periodos" data-field="registros" data-where="periodo=2.%20Separadas%2C%20%2460.000%2Fd%C3%ADa%20c%2Fu&amp;programa=Maestr%C3%ADa%20en%20Sostenibilidad" data-fmt="int">—</span> registros en el píxel pero solo <span class="su-num" data-draw="n" data-source="meta_periodos" data-field="leads" data-where="periodo=2.%20Separadas%2C%20%2460.000%2Fd%C3%ADa%20c%2Fu&amp;programa=Maestr%C3%ADa%20en%20Sostenibilidad" data-fmt="int">—</span> leads de página de gracias. Su carrusel tiene una tarjeta que lleva a la página de Energías Renovables, y hay que revisar qué evento marca su formulario antes de juzgarla.</li>
+      <li>Esos seis días se gastó por encima del flow: en octubre Meta invirtió <span class="su-num" data-draw="n" data-source="meta_mes" data-field="inversion" data-where="mes=2026-10" data-fmt="cop">—</span> en estos programas, frente a <span class="su-num" data-draw="n" data-source="meta_mes" data-field="flow" data-where="mes=2026-10" data-fmt="cop">—</span> del flow. El 20-oct se recortó cada campaña a unos $6.600 diarios para compensar. Con ese monto los conjuntos no salen de la fase de aprendizaje (Meta los marca como «aprendizaje fallido») y dejaron de entregar desde el 22-oct.</li>
+      <li>En noviembre Meta lleva <span class="su-num" data-draw="n" data-source="meta_mes" data-field="inversion" data-where="mes=2026-11" data-fmt="cop">—</span> de <span class="su-num" data-draw="n" data-source="meta_mes" data-field="flow" data-where="mes=2026-11" data-fmt="cop">—</span> del flow para los cuatro programas.</li>
+    </ul>
+  </section>
+
+  <section class="su-sec" id="tabla-meta">
+    <h2>Meta por programa y etapa</h2>
+    <div class="su-tw">
+      <table class="su-t" data-source="meta_periodos" data-row-key="periodo,programa">
+        <thead><tr>
+          <th data-field="periodo" class="l">Etapa</th>
+          <th data-field="programa" class="l">Programa</th>
+          <th data-field="inversion" data-fmt="cop">Inversión</th>
+          <th data-field="inversion_dia" data-fmt="cop">Por día</th>
+          <th data-field="clics" data-fmt="int">Clics</th>
+          <th data-field="leads" data-fmt="int">Leads</th>
+          <th data-field="costo_por_lead" data-fmt="cop">Costo por lead</th>
+          <th data-field="registros" data-fmt="int">Registros píxel</th>
+        </tr></thead>
+        <tbody data-draw="tabla"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="su-sec" id="tabla-meta-flow">
+    <h2>Meta frente al flow, por mes</h2>
+    <div class="su-tw">
+      <table class="su-t" data-source="meta_mensual" data-row-key="mes,programa">
+        <thead><tr>
+          <th data-field="mes" class="l">Mes</th>
+          <th data-field="programa" class="l">Programa</th>
+          <th data-field="inversion" data-fmt="cop">Inversión</th>
+          <th data-field="flow" data-fmt="cop">Flow</th>
+          <th data-field="leads" data-fmt="int">Leads</th>
+        </tr></thead>
+        <tbody data-draw="tabla"></tbody>
+      </table>
+    </div>
+    <p class="su-note">Septiembre no tiene flow por programa: ese mes el flow asignaba un solo valor al carrusel del núcleo. Noviembre va con datos hasta el día 11.</p>
+  </section>
+
+  <section class="su-sec" id="google">
+    <h2>Google: estable, sin depender de la separación</h2>
+    <p>Google maneja una campaña Search por programa desde antes, así que la separación de Meta no la cambió. En octubre invirtió <span class="su-num" data-draw="n" data-source="google_mes" data-field="inversion" data-where="mes=2026-10" data-fmt="cop">—</span> (<span class="su-num" data-draw="n" data-source="google_mes" data-field="pct_flow" data-where="mes=2026-10" data-fmt="pct">—</span> del flow) con <span class="su-num" data-draw="n" data-source="google_mes" data-field="conversiones" data-where="mes=2026-10" data-fmt="dec1">—</span> conversiones a <span class="su-num" data-draw="n" data-source="google_mes" data-field="costo_por_conversion" data-where="mes=2026-10" data-fmt="cop">—</span> cada una. En noviembre, al día 11, lleva <span class="su-num" data-draw="n" data-source="google_mes" data-field="inversion" data-where="mes=2026-11" data-fmt="cop">—</span> (<span class="su-num" data-draw="n" data-source="google_mes" data-field="pct_flow" data-where="mes=2026-11" data-fmt="pct">—</span> del flow del mes) y <span class="su-num" data-draw="n" data-source="google_mes" data-field="conversiones" data-where="mes=2026-11" data-fmt="dec1">—</span> conversiones a <span class="su-num" data-draw="n" data-source="google_mes" data-field="costo_por_conversion" data-where="mes=2026-11" data-fmt="cop">—</span>. El costo por conversión subió frente a septiembre (<span class="su-num" data-draw="n" data-source="google_mes" data-field="costo_por_conversion" data-where="mes=2026-09" data-fmt="cop">—</span>).</p>
+    <div class="su-tw">
+      <table class="su-t" data-source="google_mensual" data-row-key="mes,programa">
+        <thead><tr>
+          <th data-field="mes" class="l">Mes</th>
+          <th data-field="campana" class="l">Campaña</th>
+          <th data-field="programa" class="l">Programa</th>
+          <th data-field="inversion" data-fmt="cop">Inversión</th>
+          <th data-field="pct_flow" data-fmt="pct">% del flow</th>
+          <th data-field="clics" data-fmt="int">Clics</th>
+          <th data-field="conversiones" data-fmt="dec1">Conversiones</th>
+          <th data-field="costo_por_conversion" data-fmt="cop">Costo por conversión</th>
+        </tr></thead>
+        <tbody data-draw="tabla"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="su-sec" id="google-calidad">
+    <h2>Google: calidad del tráfico y lo que hay que corregir</h2>
+    <p>Las cuatro campañas usan concordancia amplia y parte de las conversiones vienen de búsquedas de cursos gratuitos o del SENA. Además, pierden más de la mitad de las impresiones posibles por ranking y cerca de una cuarta parte por presupuesto.</p>
+    <div class="su-tw">
+      <table class="su-t" data-source="google_calidad" data-row-key="programa">
+        <thead><tr>
+          <th data-field="campana" class="l">Campaña</th>
+          <th data-field="programa" class="l">Programa</th>
+          <th data-field="conversiones_oct_nov" data-fmt="dec1">Conversiones oct–nov</th>
+          <th data-field="conv_terminos_sena_cursos" data-fmt="dec1">De búsquedas SENA/cursos</th>
+          <th data-field="pct_inversion_terminos_sena_cursos" data-fmt="pct">Inversión en esas búsquedas</th>
+          <th data-field="cuota_impresiones" data-fmt="pct">Cuota de impresiones</th>
+          <th data-field="perdida_ranking" data-fmt="pct">Perdida por ranking</th>
+          <th data-field="perdida_presupuesto" data-fmt="pct">Perdida por presupuesto</th>
+          <th data-field="observacion" class="l">Observación</th>
+        </tr></thead>
+        <tbody data-draw="tabla"></tbody>
+      </table>
+    </div>
+    <p class="su-note">Cuota de impresiones y pérdidas del 1 al 11 de noviembre. Búsquedas SENA/cursos: términos que contienen sena, sofía, betowa, gratis, curso o icetex.</p>
+  </section>
+
+  <section class="su-sec" id="recomendaciones">
+    <h2>Recomendaciones</h2>
+    <ol class="su-recs">
+      <li><b>Meta: volver a una sola campaña del núcleo con anuncios individuales.</b> El flow pide separar el carrusel en anuncios individuales, no en campañas. Una campaña con presupuesto de campaña (CBO) y un conjunto por programa junta el volumen que el algoritmo necesita para optimizar, y cada programa conserva su anuncio y su URL.</li>
+      <li><b>Meta: poner el presupuesto pendiente de noviembre.</b> Quedan <span class="su-num" data-draw="n" data-source="meta_nov" data-field="pendiente" data-row="0" data-fmt="cop">—</span> del flow, unos <span class="su-num" data-draw="n" data-source="meta_nov" data-field="por_dia" data-row="0" data-fmt="cop">—</span> diarios entre el 12 y el 30 de noviembre para la campaña consolidada.</li>
+      <li><b>Meta: corregir la tarjeta del carrusel de Maestría en Sostenibilidad</b> que lleva a la página de Energías Renovables, revisar el evento del formulario y darle anuncio propio a Preservación y Conservación de Recursos Naturales.</li>
+      <li><b>Google 1.29 Energías Renovables:</b> asignarle la lista «Negativas UPB Virtual 2027-1». Es la única de las cuatro sin ella y la que más invierte en búsquedas de cursos.</li>
+      <li><b>Google 1.28 Maestría en Sostenibilidad:</b> corregir el anuncio que lleva a Maestría en Innovación Social y Territorio.</li>
+      <li><b>Google, las cuatro:</b> sumar negativas de SENA, cursos gratuitos y otras universidades (Univalle, Adventista, Barranquilla aparecen entre los términos que convirtieron).</li>
+      <li><b>Sitio web:</b> desde la mañana del 12-nov upb.edu.co no carga desde Colombia. Antes de mover presupuesto hay que confirmar que las páginas de los programas abren.</li>
+    </ol>
+  </section>
+
+  <details id="notas">
+    <summary>Notas sobre los datos</summary>
+    <ul>
+      <li>Fuente: API de Meta (cuenta act_402450040363124) y API de Google Ads (281-583-9788), consultadas el 12-nov-2026 con datos hasta el 11-nov.</li>
+      <li>Leads de Meta: conversión personalizada «página de gracias» con atribución de 7 días tras clic y 1 día tras impresión. Registros píxel: evento CompleteRegistration del píxel, que algunas páginas disparan sin llegar a la página de gracias.</li>
+      <li>Conversiones de Google: columna Conversiones de cada campaña Search; incluyen leads de baja calidad cuando la búsqueda fue de SENA o cursos.</li>
+      <li>Reparto por programa en la etapa 1: inversión de cada anuncio del carrusel del núcleo, asignado al programa de su nombre.</li>
+      <li>Flow: archivo «Presupuestos VOOK_ADCOM_UPB_1 2027» vigente desde el 1-nov. Meta: $130.428 por programa en octubre y $173.904 en noviembre. Google: $304.332 por programa en octubre y $405.776 en noviembre.</li>
+    </ul>
+  </details>
+</div>
+<footer>Fuentes: Meta Marketing API (402450040363124), campañas 1.5, 1.9.6, 1.9.7 y 1.9.8 · Google Ads (281-583-9788), campañas 1.26 a 1.29 · flow de noviembre. Datos al 11 de noviembre de 2026. ADCOM.</footer>
+</main>
+<script>
+window.suFmt = (() => {
+  const L = d3.formatLocale({ decimal: ',', thousands: '.', grouping: [3], currency: ['$', ''] });
+  const cop = L.format('$,.0f'), int = L.format(',.0f'), dec1 = L.format(',.1~f');
+  return (v, kind) => {
+    if (v === null || v === undefined || v === '' || Number.isNaN(+v)) return kind === 'text' ? (v ?? '—') : '—';
+    if (kind === 'cop') return cop(+v);
+    if (kind === 'int') return int(+v);
+    if (kind === 'dec1') return dec1(+v);
+    if (kind === 'pct') return int(+v) + ' %';
+    return String(v);
+  };
+})();
+window.suFind = (rows, el) => {
+  if (!Array.isArray(rows)) return null;
+  if (el.dataset.where) {
+    const conds = el.dataset.where.split('&').map((p) => p.split('=').map(decodeURIComponent));
+    return rows.find((r) => conds.every(([k, v]) => String(r[k]) === v)) || null;
+  }
+  return rows[+(el.dataset.row || 0)] || null;
+};
+document.querySelectorAll('.su-sw[data-sw]').forEach((s) => { s.style.background = dash.colors[+s.dataset.sw % dash.colors.length]; });
+</script>
+<script>
+const PROGS = ['Maestría Energías Renovables', 'Maestría en Sostenibilidad', 'Esp. Gestión de la Sostenibilidad', 'Esp. Preservación y Conservación de Recursos Naturales'];
+const etapa = (periodo) => ({ '1': 'antes', '2': 'separadas', '3': 'recorte' })[String(periodo).charAt(0)];
+
+dash.calc('meta_totales', {
+  inputs: ['meta_periodos'],
+  title: 'Meta: totales por etapa',
+  description: 'Suma de los cuatro programas en cada etapa; costo por lead = inversión / leads.',
+  fn: (meta_periodos) => d3.groups(meta_periodos, (r) => r.periodo).map(([periodo, rs]) => {
+    const inversion = d3.sum(rs, (r) => +r.inversion), leads = d3.sum(rs, (r) => +r.leads), clics = d3.sum(rs, (r) => +r.clics), dias = +rs[0].dias;
+    return { p: etapa(periodo), periodo, dias, inversion, inversion_dia: Math.round(inversion / dias), clics, clics_dia: Math.round(clics / dias), leads, registros: d3.sum(rs, (r) => +r.registros), costo_por_lead: leads ? Math.round(inversion / leads) : null };
+  }),
+});
+
+dash.calc('reparto', {
+  inputs: ['meta_periodos'],
+  title: 'Meta: reparto de la inversión por programa',
+  description: 'Porcentaje de la inversión de Meta de cada etapa que fue a cada programa.',
+  fn: (meta_periodos) => d3.groups(meta_periodos, (r) => r.periodo).flatMap(([periodo, rs]) => {
+    const tot = d3.sum(rs, (r) => +r.inversion);
+    return rs.map((r) => ({ p: etapa(periodo), periodo, programa: r.programa, inversion: +r.inversion, pct: tot ? Math.round(+r.inversion / tot * 100) : 0 }));
+  }),
+});
+
+dash.calc('meta_mes', {
+  inputs: ['meta_mensual'],
+  title: 'Meta: totales por mes frente al flow',
+  description: 'Suma de los cuatro programas por mes: inversión, flow y leads.',
+  fn: (meta_mensual) => d3.groups(meta_mensual, (r) => r.mes).map(([mes, rs]) => ({ mes, inversion: d3.sum(rs, (r) => +r.inversion), flow: rs.every((r) => r.flow == null) ? null : d3.sum(rs, (r) => +r.flow), leads: d3.sum(rs, (r) => +r.leads) })),
+});
+
+dash.calc('meta_nov', {
+  inputs: ['meta_mensual'],
+  title: 'Meta: flow pendiente de noviembre',
+  description: 'Flow de noviembre menos lo invertido al día 11, repartido en los 19 días del 12 al 30 de noviembre.',
+  fn: (meta_mensual) => {
+    const nov = meta_mensual.filter((r) => r.mes === '2026-11');
+    const pendiente = d3.sum(nov, (r) => +r.flow) - d3.sum(nov, (r) => +r.inversion);
+    return [{ pendiente, por_dia: Math.round(pendiente / 19) }];
+  },
+});
+
+dash.calc('google_mes', {
+  inputs: ['google_mensual'],
+  title: 'Google: totales por mes',
+  description: 'Suma de las cuatro campañas Search por mes; costo por conversión = inversión / conversiones.',
+  fn: (google_mensual) => d3.groups(google_mensual, (r) => r.mes).map(([mes, rs]) => {
+    const inversion = d3.sum(rs, (r) => +r.inversion), conversiones = Math.round(d3.sum(rs, (r) => +r.conversiones) * 10) / 10, flow = d3.sum(rs, (r) => +r.flow);
+    return { mes, inversion, flow, pct_flow: Math.round(inversion / flow * 100), conversiones, costo_por_conversion: conversiones ? Math.round(inversion / conversiones) : null };
+  }),
+});
+
+dash.draw('n', (el) => {
+  const d = dash.data(el.dataset.source);
+  if (d.status !== 'ok') { el.textContent = '—'; return; }
+  const row = suFind(d.data, el);
+  el.textContent = row ? suFmt(row[el.dataset.field], el.dataset.fmt) : '—';
+});
+
+dash.draw('tabla', (tbody) => {
+  const table = tbody.closest('table');
+  const d = dash.data(table.dataset.source);
+  if (d.status !== 'ok') { tbody.replaceChildren(); return; }
+  const ths = [...table.querySelectorAll('thead th[data-field]')];
+  const keys = table.dataset.rowKey.split(',');
+  let prev = null;
+  const trs = d.data.map((r) => {
+    const tr = document.createElement('tr');
+    tr.dataset.key = keys.map((k) => encodeURIComponent(r[k])).join(',');
+    if (prev !== null && r[keys[0]] !== prev) tr.className = 'grp';
+    prev = r[keys[0]];
+    ths.forEach((th) => {
+      const td = document.createElement('td');
+      const f = th.dataset.field, kind = th.dataset.fmt;
+      td.textContent = kind ? suFmt(r[f], kind) : (r[f] ?? '—');
+      if (th.classList.contains('l')) td.className = f === 'observacion' ? 'l wrap' : 'l';
+      tr.appendChild(td);
+    });
+    return tr;
+  });
+  tbody.replaceChildren(...trs);
+});
+</script>
+<script>
+dash.draw('reparto', {
+  mount: (el) => {
+    const svg = d3.select(el).append('svg').attr('role', 'img').attr('aria-label', 'Reparto de la inversión de Meta por programa: carrusel del núcleo frente a campañas separadas');
+    const tip = d3.select(el).append('div').attr('class', 'su-tip').attr('hidden', true);
+    return { svg, tip };
+  },
+  update: (el, { svg, tip }) => {
+    const d = dash.data('reparto');
+    svg.selectAll('*').remove();
+    if (d.status !== 'ok') { if (d.status === 'error') svg.attr('viewBox', '0 0 300 30').append('text').attr('class', 'reflbl').attr('y', 18).text('No cargó'); return; }
+    const W = Math.max(280, el.clientWidth), etapas = [['antes', 'Carrusel del núcleo'], ['separadas', 'Campañas separadas']];
+    const tmp = svg.append('text').attr('class', 'lbl').text('Campañas separadas');
+    const left = tmp.node().getComputedTextLength() + 12; tmp.remove();
+    const barH = 30, gap = 18, H = etapas.length * (barH + gap) + 4;
+    svg.attr('viewBox', `0 0 ${W} ${H}`);
+    const x = d3.scaleLinear().domain([0, 100]).range([left, W - 4]);
+    etapas.forEach(([p, lab], i) => {
+      const y = i * (barH + gap) + 2;
+      svg.append('text').attr('class', 'lbl').attr('x', 0).attr('y', y + barH / 2).attr('dominant-baseline', 'middle').text(lab);
+      let acc = 0;
+      PROGS.forEach((prog, j) => {
+        const r = d.data.find((z) => z.p === p && z.programa === prog);
+        const v = r ? r.pct : 0;
+        const g = svg.append('g');
+        g.append('rect').attr('x', x(acc)).attr('y', y).attr('width', Math.max(0, x(acc + v) - x(acc))).attr('height', barH).style('fill', dash.colors[j % dash.colors.length])
+          .on('pointermove', (ev) => {
+            const [mx, my] = d3.pointer(ev, el);
+            tip.attr('hidden', null).text(`${prog}: ${v} % · ${suFmt(r ? r.inversion : null, 'cop')}`);
+            const tw = tip.node().offsetWidth;
+            tip.style('left', `${Math.min(Math.max(0, mx - tw / 2), el.clientWidth - tw)}px`).style('top', `${my - 40}px`);
+          })
+          .on('pointerleave', () => tip.attr('hidden', true));
+        if (x(acc + v) - x(acc) > 34) g.append('text').attr('class', 'lbl').attr('x', x(acc) + 6).attr('y', y + barH / 2).attr('dominant-baseline', 'middle').style('fill', 'var(--color-bg)').style('pointer-events', 'none').text(`${v} %`);
+        acc += v;
+      });
+    });
+  },
+});
+
+dash.draw('semanal', {
+  mount: (el) => {
+    const svg = d3.select(el).append('svg').attr('role', 'img').attr('aria-label', 'Leads por semana de Meta y conversiones de Google para los cuatro programas de sostenibilidad, del 31 de agosto al 11 de noviembre');
+    const tip = d3.select(el).append('div').attr('class', 'su-tip').attr('hidden', true);
+    return { svg, tip };
+  },
+  update: (el, { svg, tip }) => {
+    const d = dash.data('semanal');
+    svg.selectAll('*').remove();
+    if (d.status !== 'ok') { if (d.status === 'error') svg.attr('viewBox', '0 0 300 30').append('text').attr('class', 'reflbl').attr('y', 18).text('No cargó'); return; }
+    const rows = d.data.map((r) => ({ ...r, meta_leads: +r.meta_leads, google_conversiones: +r.google_conversiones }));
+    const W = Math.max(300, el.clientWidth), H = 260;
+    const ymax = d3.max(rows, (r) => Math.max(r.meta_leads, r.google_conversiones)) || 1;
+    const y = d3.scaleLinear().domain([0, ymax]).nice().range([H - 28, 22]);
+    const probe = svg.append('text').attr('class', 'lbl').text(String(y.domain()[1]));
+    const left = probe.node().getComputedTextLength() + 10; probe.remove();
+    const x0 = d3.scaleBand().domain(rows.map((r) => r.semana)).range([left, W - 4]).paddingInner(0.25);
+    const x1 = d3.scaleBand().domain(['meta_leads', 'google_conversiones']).range([0, x0.bandwidth()]).padding(0.08);
+    svg.attr('viewBox', `0 0 ${W} ${H}`);
+    const yt = y.ticks(4);
+    svg.append('g').attr('class', 'grid').selectAll('line').data(yt).join('line').attr('x1', left).attr('x2', W - 4).attr('y1', (t) => y(t)).attr('y2', (t) => y(t));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(${left},0)`).call(d3.axisLeft(y).tickValues(yt).tickSize(0).tickPadding(6)).call((g) => g.select('.domain').remove());
+    const fmtD = d3.utcFormat('%d/%m');
+    const every = Math.ceil(rows.length / Math.max(1, Math.floor((W - left) / 46)));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - 28})`).call(d3.axisBottom(x0).tickValues(rows.map((r) => r.semana).filter((_, i) => i % every === 0)).tickFormat((s) => fmtD(new Date(s + 'T00:00:00Z'))).tickSize(0).tickPadding(8));
+    const refs = [['2026-10-12', 'Separación 14-oct'], ['2026-10-19', 'Recorte 20-oct']];
+    refs.forEach(([wk, lab], i) => {
+      if (x0(wk) === undefined) return;
+      const xx = x0(wk) - x0.step() * x0.paddingInner() / 2;
+      svg.append('line').attr('class', 'ref').attr('x1', xx).attr('x2', xx).attr('y1', 14).attr('y2', H - 28);
+      svg.append('text').attr('class', 'reflbl').attr('x', xx + 4).attr('y', 10 + i * 0).attr('text-anchor', i === 0 ? 'end' : 'start').attr('dx', i === 0 ? -8 : 0).text(lab);
+    });
+    const series = [['meta_leads', 0, 'Meta'], ['google_conversiones', 1, 'Google']];
+    rows.forEach((r) => {
+      const g = svg.append('g').attr('transform', `translate(${x0(r.semana)},0)`);
+      series.forEach(([k, ci]) => {
+        g.append('rect').attr('x', x1(k)).attr('width', x1.bandwidth()).attr('y', y(r[k])).attr('height', Math.max(0, y(0) - y(r[k]))).style('fill', dash.colors[ci]);
+        if (x1.bandwidth() >= 16) g.append('text').attr('class', 'lbl').attr('x', x1(k) + x1.bandwidth() / 2).attr('y', y(r[k]) - 4).attr('text-anchor', 'middle').text(suFmt(r[k], 'int'));
+      });
+      g.append('rect').attr('x', 0).attr('y', 14).attr('width', x0.bandwidth()).attr('height', H - 42).style('fill', 'transparent')
+        .on('pointermove', (ev) => {
+          const [mx, my] = d3.pointer(ev, el);
+          tip.attr('hidden', null).text(`Semana del ${fmtD(new Date(r.semana + 'T00:00:00Z'))} · Meta ${suFmt(r.meta_leads, 'int')} leads (${suFmt(r.meta_inversion, 'cop')}) · Google ${suFmt(r.google_conversiones, 'dec1')} conv. (${suFmt(r.google_inversion, 'cop')})`);
+          const tw = tip.node().offsetWidth;
+          tip.style('left', `${Math.min(Math.max(0, mx - tw / 2), el.clientWidth - tw)}px`).style('top', `${Math.max(0, my - 44)}px`);
+        })
+        .on('pointerleave', () => tip.attr('hidden', true));
+    });
+  },
+});
+</script>
+</body>
+</html>
